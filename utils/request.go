@@ -2,6 +2,7 @@ package utils
 
 import (
 	"crypto/md5"
+	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	log "github.com/sirupsen/logrus"
@@ -20,6 +21,9 @@ func EapiRequest(eapiOption EapiOption, options RequestData) (result, header str
 	data := SpliceStr(eapiOption.Path, eapiOption.Json)
 	answer, header, err := CreateNewRequest(Format2Params(data), eapiOption.Url, options)
 	if err == nil {
+		if log.GetLevel() == log.DebugLevel {
+			log.Debugf("[EapiRespBodyHex]: %s", hex.EncodeToString([]byte(answer)))
+		}
 		var decrypted []byte
 		decrypted = AesDecryptECB([]byte(answer))
 		if log.GetLevel() == log.DebugLevel {
@@ -27,6 +31,18 @@ func EapiRequest(eapiOption EapiOption, options RequestData) (result, header str
 			log.Debugf("[EapiRespHeaderJson]: %s", header)
 		}
 		return string(decrypted), header, nil
+	}
+	return "", "", err
+}
+
+func ApiRequest(eapiOption EapiOption, options RequestData) (result, header string, err error) {
+	data := SpliceStr(eapiOption.Path, eapiOption.Json)
+	answer, header, err := CreateNewRequest(Format2Params(data), eapiOption.Url, options)
+	if err == nil {
+		if log.GetLevel() == log.DebugLevel {
+			log.Debugf("[EapiRespBodyHex]: %s", hex.EncodeToString([]byte(answer)))
+		}
+		return answer, header, nil
 	}
 	return "", "", err
 }
@@ -153,7 +169,7 @@ func CreateNewRequest(data string, url string, options RequestData) (answer, res
 
 	if log.GetLevel() == log.DebugLevel {
 		log.Debugf("[EapiReq]: %+v", req)
-		log.Debugf("[EapiReqBodyJson]: %s", AesDecryptECB([]byte(data)))
+		log.Debugf("[EapiReqBody]: %s", data)
 	}
 
 	resp, err := client.Do(req)

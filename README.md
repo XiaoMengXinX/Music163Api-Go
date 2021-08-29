@@ -79,12 +79,15 @@ data := utils.RequestData{
 
 batch := api.Batch{} // 创建 Batch 对象
 batch.Init() // Batch 初始化
-batch.Add(api.BatchAPI{Key: api.BatchUserSetting}) // 添加要 Batch 的 API (API 列表详见 api/Batch.go 中的 constants)
+batch.Add(api.BatchAPI{Key: api.UserSetting}) // 添加要 Batch 的 API
 
 result, _ := batch.Do(data) // 请求 Batch API
 
 var userData types.BatchUserSettingData
 _ = json.Unmarshal([]byte(result), &userData) // Batch 需额外解析 json 数据
 
-fmt.Println(userData.ApiUserSetting.Setting.UserId) // 打印用户 ID
+fmt.Println(userData.Api.Setting.UserId) // 打印用户 ID
 ```
+
+Batch 可用的 API 列表详见 https://pkg.go.dev/github.com/XiaoMengXinX/Music163Api-Go/api#pkg-constants
+

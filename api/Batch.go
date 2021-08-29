@@ -5,14 +5,6 @@ import (
 	"github.com/XiaoMengXinX/Music163Api-Go/utils"
 )
 
-// 一些只能通过 Batch 请求的 API
-const (
-	// UserSetting 用户设置 API
-	UserSetting = "/api/user/setting"
-	// UserInfo 用户信息 API
-	UserInfo = "/api/v1/user/info"
-)
-
 // Batch 批处理 APi
 type Batch struct {
 	API map[string]interface{}
@@ -39,15 +31,15 @@ func (b *Batch) Add(apis ...BatchAPI) {
 }
 
 // Do 请求批处理 API
-func (b *Batch) Do(data utils.RequestData) (string, error) {
+func (b *Batch) Do(data utils.RequestData) (resBody, header string, err error) {
 	reqBodyJson, err := json.Marshal(b.API)
 	if err != nil {
-		return "", err
+		return resBody, header, err
 	}
 	var options utils.EapiOption
 	options.Path = "/api/batch"
 	options.Url = "https://music.163.com/eapi/batch"
 	options.Json = string(reqBodyJson)
-	resBody, _, err := utils.EapiRequest(options, data)
-	return resBody, err
+	resBody, header, err = utils.EapiRequest(options, data)
+	return resBody, header, err
 }
