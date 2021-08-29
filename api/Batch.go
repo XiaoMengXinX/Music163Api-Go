@@ -6,8 +6,8 @@ import (
 )
 
 const (
-	// UserSetting 获取用户设置 API
-	UserSetting = "/api/user/setting"
+	// BatchUserSetting 获取用户设置 API
+	BatchUserSetting = "/api/user/setting"
 )
 
 // Batch 批处理 APi
@@ -29,8 +29,10 @@ func (b *Batch) Init() {
 }
 
 // Add 添加 API
-func (b *Batch) Add(api BatchAPI) {
-	b.API[api.Key] = api.Json
+func (b *Batch) Add(apis ...BatchAPI) {
+	for _, api := range apis {
+		b.API[api.Key] = api.Json
+	}
 }
 
 // Do 请求批处理 API
