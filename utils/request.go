@@ -2,6 +2,7 @@ package utils
 
 import (
 	"crypto/md5"
+	"encoding/json"
 	"fmt"
 	log "github.com/sirupsen/logrus"
 	"io"
@@ -15,18 +16,19 @@ import (
 )
 
 // EapiRequest eapi 请求
-func EapiRequest(eapiOption EapiOption, options RequestData) (result string, err error) {
+func EapiRequest(eapiOption EapiOption, options RequestData) (result, header string, err error) {
 	data := SpliceStr(eapiOption.Path, eapiOption.Json)
-	answer, err := CreateNewRequest(Format2Params(data), eapiOption.Url, options)
+	answer, header, err := CreateNewRequest(Format2Params(data), eapiOption.Url, options)
 	if err == nil {
 		var decrypted []byte
 		decrypted = AesDecryptECB([]byte(answer))
 		if log.GetLevel() == log.DebugLevel {
 			log.Debugf("[EapiRespBodyJson]: %s", string(decrypted))
+			log.Debugf("[EapiRespHeaderJson]: %s", header)
 		}
-		return string(decrypted), nil
+		return string(decrypted), header, nil
 	}
-	return "", err
+	return "", "", err
 }
 
 // SpliceStr 拼接字符串
@@ -69,12 +71,12 @@ func encodeURIComponent(str string) string {
 }
 
 // CreateNewRequest 创建 eapi 请求
-func CreateNewRequest(data string, url string, options RequestData) (answer string, err error) {
+func CreateNewRequest(data string, url string, options RequestData) (answer, resHeader string, err error) {
 	client := &http.Client{}
 	reqBody := strings.NewReader(data)
 	req, err := http.NewRequest("POST", url, reqBody)
 	if err != nil {
-		return "", err
+		return "", "", err
 	}
 
 	cookie := map[string]interface{}{}
@@ -156,7 +158,7 @@ func CreateNewRequest(data string, url string, options RequestData) (answer stri
 
 	resp, err := client.Do(req)
 	if err != nil {
-		return "", err
+		return "", "", err
 	}
 
 	defer func(Body io.ReadCloser) {
@@ -165,14 +167,20 @@ func CreateNewRequest(data string, url string, options RequestData) (answer stri
 			log.Errorln(err)
 		}
 	}(resp.Body)
+
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return "", err
+		return "", "", err
+	}
+
+	resultHeader, err := json.Marshal(resp.Header)
+	if err != nil {
+		return "", "", err
 	}
 
 	if log.GetLevel() == log.DebugLevel {
 		log.Debugf("[EapiResp]: %+v", resp)
 	}
 
-	return string(body), nil
+	return string(body), string(resultHeader), nil
 }

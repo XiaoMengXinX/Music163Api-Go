@@ -48,6 +48,6 @@ func (b *Batch) Do(data utils.RequestData) (string, error) {
 	options.Path = "/api/batch"
 	options.Url = "https://music.163.com/eapi/batch"
 	options.Json = string(reqBodyJson)
-	resBody, err := utils.EapiRequest(options, data)
+	resBody, _, err := utils.EapiRequest(options, data)
 	return resBody, err
 }

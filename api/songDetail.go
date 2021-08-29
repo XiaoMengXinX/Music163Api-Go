@@ -45,7 +45,10 @@ func GetSongDetail(data utils.RequestData, ids []int) (result types.SongDetailDa
 	options.Url = "https://music.163.com/eapi/v3/song/detail"
 	reqBodyJson := CreateSongDetailReqJson(ids)
 	options.Json = reqBodyJson
-	resBody, err := utils.EapiRequest(options, data)
+	resBody, _, err := utils.EapiRequest(options, data)
+	if err != nil {
+		return result, err
+	}
 	err = json.Unmarshal([]byte(resBody), &result)
 	return result, err
 }

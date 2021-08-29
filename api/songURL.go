@@ -57,7 +57,10 @@ func GetSongURL(data utils.RequestData, config SongURLConfig) (result types.Song
 	options.Url = "https://music.163.com/eapi/song/enhance/player/url/v1"
 	reqBodyJson := CreateSongURLJSON(config)
 	options.Json = reqBodyJson
-	resBody, err := utils.EapiRequest(options, data)
+	resBody, _, err := utils.EapiRequest(options, data)
+	if err != nil {
+		return result, err
+	}
 	err = json.Unmarshal([]byte(resBody), &result)
 	return result, err
 }
