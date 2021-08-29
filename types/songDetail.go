@@ -74,7 +74,7 @@ type SongDetailData struct {
 	Privileges []struct {
 		Id                 int         `json:"id"`
 		Fee                int         `json:"fee"`
-		Payed              int         `json:"payed"`
+		Paied              int         `json:"payed"`
 		St                 int         `json:"st"`
 		Pl                 int         `json:"pl"`
 		Dl                 int         `json:"dl"`

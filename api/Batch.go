@@ -5,9 +5,12 @@ import (
 	"github.com/XiaoMengXinX/Music163Api-Go/utils"
 )
 
+// 一些只能通过 Batch 请求的 API
 const (
-	// BatchUserSetting 获取用户设置 API
-	BatchUserSetting = "/api/user/setting"
+	// UserSetting 用户设置 API
+	UserSetting = "/api/user/setting"
+	// UserInfo 用户信息 API
+	UserInfo = "/api/v1/user/info"
 )
 
 // Batch 批处理 APi

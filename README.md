@@ -79,7 +79,7 @@ data := utils.RequestData{
 
 batch := api.Batch{} // 创建 Batch 对象
 batch.Init() // Batch 初始化
-batch.Add(api.BatchAPI{Key: api.BatchUserSetting, Json: ""}) // 添加要 Batch 的 API (API 列表详见 api/Batch.go 中的 constants)
+batch.Add(api.BatchAPI{Key: api.BatchUserSetting}) // 添加要 Batch 的 API (API 列表详见 api/Batch.go 中的 constants)
 
 result, _ := batch.Do(data) // 请求 Batch API
 

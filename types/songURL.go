@@ -14,7 +14,7 @@ type SongURLData struct {
 		Gain               float64     `json:"gain"`
 		Fee                int         `json:"fee"`
 		Uf                 interface{} `json:"uf"`
-		Payed              int         `json:"payed"`
+		Paied              int         `json:"payed"`
 		Flag               int         `json:"flag"`
 		CanExtend          bool        `json:"canExtend"`
 		FreeTrialInfo      interface{} `json:"freeTrialInfo"`
