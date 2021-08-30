@@ -1,5 +1,6 @@
 package types
 
+// UserInfoData 用户信息数据
 type UserInfoData struct {
 	Level     int `json:"level"`
 	UserPoint struct {

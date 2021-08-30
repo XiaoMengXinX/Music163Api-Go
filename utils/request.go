@@ -35,6 +35,7 @@ func EapiRequest(eapiOption EapiOption, options RequestData) (result, header str
 	return "", "", err
 }
 
+// ApiRequest 用于非 eapi (即返回 body 未加密的 API) 请求
 func ApiRequest(eapiOption EapiOption, options RequestData) (result, header string, err error) {
 	data := SpliceStr(eapiOption.Path, eapiOption.Json)
 	answer, header, err := CreateNewRequest(Format2Params(data), eapiOption.Url, options)

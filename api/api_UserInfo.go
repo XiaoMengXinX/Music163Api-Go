@@ -9,6 +9,7 @@ import (
 // UserInfo 用户信息 API
 const UserInfo = "/api/v1/user/info"
 
+// GetUserInfo 获取用户信息
 func GetUserInfo(data utils.RequestData) (result types.UserInfoData, err error) {
 	var options utils.EapiOption
 	options.Path = UserInfo
