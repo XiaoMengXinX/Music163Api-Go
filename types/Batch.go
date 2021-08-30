@@ -24,8 +24,44 @@ type BatchSongDetailData struct {
 	Code int            `json:"code"`
 }
 
-// BatchUserDetailData 批处理 UserDetailData 数据
+// BatchUserDetailData 批处理 UserDetail 数据
 type BatchUserDetailData struct {
 	Api  UserDetailData `json:"/api/v1/user/detail"`
 	Code int            `json:"code"`
+}
+
+// BatchCloudbeanNumData 批处理 CloudbeanNum 数据
+type BatchCloudbeanNumData struct {
+	Api  CloudBeanNumData `json:"/api/cloudbean/get"`
+	Code int              `json:"code"`
+}
+
+// MusicianTasksData 批处理 MusicianTasks 数据
+type BatchMusicianTasksData struct {
+	Api  MusicianTasksData `json:"/api/nmusician/workbench/mission/cycle/list"`
+	Code int               `json:"code"`
+}
+
+// BatchLoginStatusData 批处理 LoginStatus 数据
+type BatchLoginStatusData struct {
+	Api  LoginStatusData `json:"/api/w/nuser/account/get"`
+	Code int             `json:"code"`
+}
+
+// BatchMusicianSignData 批处理 MusicianSign 数据
+type BatchMusicianSignData struct {
+	Api  MusicianSignData `json:"/api/creator/user/access"`
+	Code int              `json:"code"`
+}
+
+// BatchObtainCLoudbeanData 批处理 ObtainCLoudbean 数据
+type BatchObtainCLoudbeanData struct {
+	Api  ObtainCloudebeanData `json:"/api/nmusician/workbench/mission/reward/obtain/new"`
+	Code int                  `json:"code"`
+}
+
+// BatchUserSignData 批处理 UserSign 数据
+type BatchUserSignData struct {
+	Api  UserSignData `json:"/api/point/dailyTask"`
+	Code int          `json:"code"`
 }

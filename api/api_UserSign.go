@@ -1,0 +1,45 @@
+package api
+
+import (
+	"encoding/json"
+	"github.com/XiaoMengXinX/Music163Api-Go/types"
+	"github.com/XiaoMengXinX/Music163Api-Go/utils"
+)
+
+// UserSignAPI 用户签到 API
+const UserSignAPI = "/api/point/dailyTask"
+
+// UserSignReqJson 签到参数
+type UserSignReqJson struct {
+	Type int `json:"type"` // 签到类型 ,默认 0 ,其中0 为安卓端签到 ,1 为 web/PC 签到
+}
+
+// CreateUserSignReqJson 创建请求 json
+func CreateUserSignReqJson(signType int) string {
+	reqBody := UserSignReqJson{}
+	switch signType {
+	case 0:
+		reqBody.Type = 0
+	case 1:
+		reqBody.Type = 1
+	default:
+		reqBody.Type = 0
+	}
+	reqBodyJson, _ := json.Marshal(reqBody)
+	return string(reqBodyJson)
+}
+
+// UserSign 用户签到
+func UserSign(data utils.RequestData, signType int) (result types.UserSignData, err error) {
+	var options utils.EapiOption
+	options.Path = UserSignAPI
+	options.Url = "https://music.163.com/eapi/point/dailyTask"
+	reqBodyJson := CreateUserSignReqJson(signType)
+	options.Json = reqBodyJson
+	resBody, _, err := utils.ApiRequest(options, data)
+	if err != nil {
+		return result, err
+	}
+	err = json.Unmarshal([]byte(resBody), &result)
+	return result, err
+}
