@@ -7,7 +7,7 @@ import (
 	"github.com/XiaoMengXinX/Music163Api-Go/utils"
 )
 
-// DelEvent 删除动态 API
+// DelEventAPI 删除动态 API
 const DelEventAPI = "/api/event/delete"
 
 // DelEventReq DelEvent API 的 body json
