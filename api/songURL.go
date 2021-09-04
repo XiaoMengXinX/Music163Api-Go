@@ -26,8 +26,8 @@ type SongUrlReq struct {
 	Level      string `json:"level"` // loseless, higher
 }
 
-// CreateSongURLJSON 创建请求 body json
-func CreateSongURLJSON(config SongURLConfig) string {
+// CreateSongURLJson 创建请求 body json
+func CreateSongURLJson(config SongURLConfig) string {
 	var IDs []string
 	for i := 0; i < len(config.Ids); i++ {
 		IDs = append(IDs, fmt.Sprintf("%d", config.Ids[i]))
@@ -55,8 +55,7 @@ func GetSongURL(data utils.RequestData, config SongURLConfig) (result types.Song
 	var options utils.EapiOption
 	options.Path = SongURL
 	options.Url = "https://music.163.com/eapi/song/enhance/player/url/v1"
-	reqBodyJson := CreateSongURLJSON(config)
-	options.Json = reqBodyJson
+	options.Json = CreateSongURLJson(config)
 	resBody, _, err := utils.EapiRequest(options, data)
 	if err != nil {
 		return result, err
