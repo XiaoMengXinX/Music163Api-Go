@@ -21,5 +21,6 @@ func GetUserDetail(data utils.RequestData, userID int) (result types.UserDetailD
 		return result, err
 	}
 	err = json.Unmarshal([]byte(resBody), &result)
+	result.RawJson = resBody
 	return result, err
 }

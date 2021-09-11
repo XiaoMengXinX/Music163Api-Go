@@ -2,7 +2,8 @@ package types
 
 // SongURLData 获取歌曲 URL API 的返回数据
 type SongURLData struct {
-	Data []struct {
+	RawJson string
+	Data    []struct {
 		Id                 int         `json:"id"`
 		Url                string      `json:"url"`
 		Br                 int         `json:"br"`

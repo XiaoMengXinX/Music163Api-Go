@@ -50,5 +50,6 @@ func GetSongDetail(data utils.RequestData, ids []int) (result types.SongDetailDa
 		return result, err
 	}
 	err = json.Unmarshal([]byte(resBody), &result)
+	result.RawJson = resBody
 	return result, err
 }

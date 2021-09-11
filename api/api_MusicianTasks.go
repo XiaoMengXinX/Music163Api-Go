@@ -19,5 +19,6 @@ func GetMusicianTasks(data utils.RequestData) (result types.MusicianTasksData, e
 		return result, err
 	}
 	err = json.Unmarshal([]byte(resBody), &result)
+	result.RawJson = resBody
 	return result, err
 }

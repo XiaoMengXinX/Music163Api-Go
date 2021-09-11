@@ -41,11 +41,23 @@ func ApiRequest(eapiOption EapiOption, options RequestData) (result, header stri
 	answer, header, err := CreateNewRequest(Format2Params(data), eapiOption.Url, options)
 	if err == nil {
 		if log.GetLevel() == log.DebugLevel {
-			log.Debugf("[EapiRespBodyHex]: %s", hex.EncodeToString([]byte(answer)))
+			log.Debugf("[ApiRespBodyHex]: %s", hex.EncodeToString([]byte(answer)))
 		}
 		return answer, header, nil
 	}
 	return "", "", err
+}
+
+// RawRequest 用于上传文件
+func RawRequest(url string, options RequestData) (result string, err error) {
+	answer, _, err := CreateNewRequest(options.Body, url, options)
+	if err == nil {
+		if log.GetLevel() == log.DebugLevel {
+			log.Debugf("[RespBody]: %s", answer)
+		}
+		return answer, nil
+	}
+	return "", err
 }
 
 // SpliceStr 拼接字符串
@@ -99,6 +111,10 @@ func CreateNewRequest(data string, url string, options RequestData) (answer, res
 	cookie := map[string]interface{}{}
 	for i := 0; i < len(options.Cookies); i++ {
 		cookie[options.Cookies[i].Key] = options.Cookies[i].Value
+	}
+
+	for i := 0; i < len(options.Headers); i++ {
+		req.Header.Set(options.Headers[i].Key, options.Headers[i].Value)
 	}
 
 	csrfValue, isok := cookie["__csrf"]
@@ -165,12 +181,17 @@ func CreateNewRequest(data string, url string, options RequestData) (answer, res
 	}
 	req.Header.Set("Cookie", strings.TrimRight(cookies, "; "))
 
-	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	if len(req.Header["Content-Type"]) == 0 {
+		req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	}
+
 	req.Header.Set("User-Agent", ChooseUserAgent())
 
 	if log.GetLevel() == log.DebugLevel {
-		log.Debugf("[EapiReq]: %+v", req)
-		log.Debugf("[EapiReqBody]: %s", data)
+		log.Debugf("[Req]: %+v", req)
+		if len([]byte(data)) < 51200 {
+			log.Debugf("[ReqBody]: %+v", data)
+		}
 	}
 
 	resp, err := client.Do(req)

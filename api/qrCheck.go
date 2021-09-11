@@ -40,5 +40,6 @@ func CheckQrLogin(data utils.RequestData, key string) (result types.QrCheckData,
 		return result, resHeader, err
 	}
 	err = json.Unmarshal([]byte(resBody), &result)
+	result.RawJson = resBody
 	return result, resHeader, err
 }

@@ -19,5 +19,6 @@ func GetUserInfo(data utils.RequestData) (result types.UserInfoData, err error) 
 		return result, err
 	}
 	err = json.Unmarshal([]byte(resBody), &result)
+	result.RawJson = resBody
 	return result, err
 }

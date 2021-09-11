@@ -2,6 +2,7 @@ package types
 
 // LoginStatusData 登录状态数据'
 type LoginStatusData struct {
+	RawJson string
 	Code    int `json:"code"`
 	Account struct {
 		Id                 int    `json:"id"`

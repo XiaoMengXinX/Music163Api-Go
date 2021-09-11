@@ -47,5 +47,6 @@ func SendTextMsg(data utils.RequestData, userIDs []int, text string) (result typ
 		return result, err
 	}
 	err = json.Unmarshal([]byte(resBody), &result)
+	result.RawJson = resBody
 	return result, err
 }

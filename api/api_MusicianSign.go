@@ -19,5 +19,6 @@ func MusicianSign(data utils.RequestData) (result types.MusicianSignData, err er
 		return result, err
 	}
 	err = json.Unmarshal([]byte(resBody), &result)
+	result.RawJson = resBody
 	return result, err
 }

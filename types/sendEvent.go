@@ -2,10 +2,12 @@ package types
 
 // SendEventData 发送动态 API 的返回数据
 type SendEventData struct {
+	RawJson string
+
 	Code    int    `json:"code"`
 	Message string `json:"message"`
 	UserId  int    `json:"userId"`
-	Id      int    `json:"id"`
+	Id      int64  `json:"id"`
 	Event   struct {
 		ActName          interface{} `json:"actName"`
 		PendantData      interface{} `json:"pendantData"`
@@ -21,15 +23,15 @@ type SendEventData struct {
 			AccountStatus      int         `json:"accountStatus"`
 			Gender             int         `json:"gender"`
 			City               int         `json:"city"`
-			Birthday           int         `json:"birthday"`
+			Birthday           int64       `json:"birthday"`
 			UserId             int         `json:"userId"`
 			UserType           int         `json:"userType"`
 			Nickname           string      `json:"nickname"`
 			Signature          string      `json:"signature"`
 			Description        string      `json:"description"`
 			DetailDescription  string      `json:"detailDescription"`
-			AvatarImgId        int         `json:"avatarImgId"`
-			BackgroundImgId    int         `json:"backgroundImgId"`
+			AvatarImgId        int64       `json:"avatarImgId"`
+			BackgroundImgId    int64       `json:"backgroundImgId"`
 			BackgroundUrl      string      `json:"backgroundUrl"`
 			Authority          int         `json:"authority"`
 			Mutual             bool        `json:"mutual"`
@@ -51,19 +53,46 @@ type SendEventData struct {
 			} `json:"avatarDetail"`
 			CommonIdentity interface{} `json:"commonIdentity"`
 		} `json:"user"`
-		Uuid               string        `json:"uuid"`
-		ExpireTime         int           `json:"expireTime"`
-		RcmdInfo           interface{}   `json:"rcmdInfo"`
-		EventTime          int           `json:"eventTime"`
-		ActId              int           `json:"actId"`
-		Pics               []interface{} `json:"pics"`
-		TmplId             int           `json:"tmplId"`
-		ShowTime           int           `json:"showTime"`
-		InsertTime         int           `json:"insertTime"`
-		Id                 int           `json:"id"`
-		Type               int           `json:"type"`
-		TopEvent           bool          `json:"topEvent"`
-		InsiteForwardCount int           `json:"insiteForwardCount"`
+		Uuid       string      `json:"uuid"`
+		ExpireTime int         `json:"expireTime"`
+		RcmdInfo   interface{} `json:"rcmdInfo"`
+		EventTime  int64       `json:"eventTime"`
+		ActId      int         `json:"actId"`
+		Pics       []struct {
+			OriginUrl      string `json:"originUrl"`
+			SquareUrl      string `json:"squareUrl"`
+			RectangleUrl   string `json:"rectangleUrl"`
+			PcSquareUrl    string `json:"pcSquareUrl"`
+			PcRectangleUrl string `json:"pcRectangleUrl"`
+			Format         string `json:"format"`
+			Width          int    `json:"width"`
+			Height         int    `json:"height"`
+			PicInfo        struct {
+				OriginId         int64       `json:"originId"`
+				SquareId         int64       `json:"squareId"`
+				RectangleId      int64       `json:"rectangleId"`
+				PcSquareId       int64       `json:"pcSquareId"`
+				PcRectangleId    int64       `json:"pcRectangleId"`
+				OriginJpgId      int         `json:"originJpgId"`
+				Format           string      `json:"format"`
+				Width            int         `json:"width"`
+				Height           int         `json:"height"`
+				OriginIdStr      string      `json:"originIdStr"`
+				PcSquareIdStr    string      `json:"pcSquareIdStr"`
+				PcRectangleIdStr string      `json:"pcRectangleIdStr"`
+				PcSquareUrl      interface{} `json:"pcSquareUrl"`
+				PcRectangleUrl   interface{} `json:"pcRectangleUrl"`
+				SquareIdStr      string      `json:"squareIdStr"`
+				RectangleIdStr   string      `json:"rectangleIdStr"`
+			} `json:"picInfo"`
+		} `json:"pics"`
+		TmplId             int   `json:"tmplId"`
+		ShowTime           int64 `json:"showTime"`
+		InsertTime         int64 `json:"insertTime"`
+		Id                 int64 `json:"id"`
+		Type               int   `json:"type"`
+		TopEvent           bool  `json:"topEvent"`
+		InsiteForwardCount int   `json:"insiteForwardCount"`
 		Info               struct {
 			CommentThread struct {
 				Id               string        `json:"id"`
@@ -81,7 +110,7 @@ type SendEventData struct {
 			Liked            bool          `json:"liked"`
 			Comments         []interface{} `json:"comments"`
 			ResourceType     int           `json:"resourceType"`
-			ResourceId       int           `json:"resourceId"`
+			ResourceId       int64         `json:"resourceId"`
 			ThreadId         string        `json:"threadId"`
 			ShareCount       int           `json:"shareCount"`
 			CommentCount     int           `json:"commentCount"`

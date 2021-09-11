@@ -2,6 +2,7 @@ package types
 
 // AddCommentData 新增评论返回数据
 type AddCommentData struct {
+	RawJson          string
 	Code             int `json:"code"`
 	MusicianSaidTips struct {
 		Toast          string `json:"toast"`
@@ -58,6 +59,7 @@ type AddCommentData struct {
 
 // ReplyCommentData 回复评论返回数据
 type ReplyCommentData struct {
+	RawJson string
 	Code    int `json:"code"`
 	Comment struct {
 		User struct {
@@ -129,5 +131,6 @@ type ReplyCommentData struct {
 
 // DelCommentData 删除评论返回数据
 type DelCommentData struct {
-	Code int `json:"code"`
+	RawJson string
+	Code    int `json:"code"`
 }

@@ -6,9 +6,16 @@ type Cookies []struct {
 	Value string
 }
 
+// Headers 自定义 Headers 数据类型 (仅对于非 eapi 有效)
+type Headers []struct {
+	Key   string
+	Value string
+}
+
 // RequestData 传入请求数据类型
 type RequestData struct {
 	Cookies Cookies
+	Headers Headers
 	Body    string
 }
 
@@ -17,20 +24,4 @@ type EapiOption struct {
 	Json string
 	Path string
 	Url  string
-}
-
-// Headers 返回内容的 Headers
-type Headers struct {
-	CacheControl  []string `json:"Cache-Control"`
-	ContentType   []string `json:"Content-Type"`
-	Date          []string `json:"Date"`
-	Expires       []string `json:"Expires"`
-	GwThread      []string `json:"Gw-Thread"`
-	GwTime        []string `json:"Gw-Time"`
-	MconfigBucket []string `json:"Mconfig-Bucket"`
-	Server        []string `json:"Server"`
-	SetCookie     []string `json:"Set-Cookie"`
-	XFromSrc      []string `json:"X-From-Src"`
-	XTraceid      []string `json:"X-Traceid"`
-	XVia          []string `json:"X-Via"`
 }

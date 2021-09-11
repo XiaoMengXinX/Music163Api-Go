@@ -2,6 +2,7 @@ package types
 
 // CloudBeanNumData 音乐人云豆数量
 type CloudBeanNumData struct {
+	RawJson string
 	Code    int    `json:"code"`
 	Message string `json:"message"`
 	Data    struct {

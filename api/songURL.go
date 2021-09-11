@@ -61,5 +61,6 @@ func GetSongURL(data utils.RequestData, config SongURLConfig) (result types.Song
 		return result, err
 	}
 	err = json.Unmarshal([]byte(resBody), &result)
+	result.RawJson = resBody
 	return result, err
 }

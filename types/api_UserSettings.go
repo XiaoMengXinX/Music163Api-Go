@@ -2,6 +2,7 @@ package types
 
 // UserSettingData UserSetting API 返回数据
 type UserSettingData struct {
+	RawJson string
 	Setting struct {
 		ProfileSetting                   int         `json:"profileSetting"`
 		AgeSetting                       int         `json:"ageSetting"`

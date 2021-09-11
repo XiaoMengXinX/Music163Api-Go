@@ -105,6 +105,7 @@ func AddComment(data utils.RequestData, config CommentConfig) (result types.AddC
 		return result, err
 	}
 	err = json.Unmarshal([]byte(resBody), &result)
+	result.RawJson = resBody
 	return result, err
 }
 
@@ -119,6 +120,7 @@ func ReplyComment(data utils.RequestData, config CommentConfig) (result types.Re
 		return result, err
 	}
 	err = json.Unmarshal([]byte(resBody), &result)
+	result.RawJson = resBody
 	return result, err
 }
 
@@ -133,5 +135,6 @@ func DelComment(data utils.RequestData, config CommentConfig) (result types.DelC
 		return result, err
 	}
 	err = json.Unmarshal([]byte(resBody), &result)
+	result.RawJson = resBody
 	return result, err
 }

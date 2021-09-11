@@ -19,5 +19,6 @@ func GetCloudbeanNum(data utils.RequestData) (result types.CloudBeanNumData, err
 		return result, err
 	}
 	err = json.Unmarshal([]byte(resBody), &result)
+	result.RawJson = resBody
 	return result, err
 }

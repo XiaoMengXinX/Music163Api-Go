@@ -38,5 +38,6 @@ func GetQrUnikey(data utils.RequestData) (result types.QrUnikeyData, err error) 
 		return result, err
 	}
 	err = json.Unmarshal([]byte(resBody), &result)
+	result.RawJson = resBody
 	return result, err
 }

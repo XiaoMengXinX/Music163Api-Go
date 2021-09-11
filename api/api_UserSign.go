@@ -41,5 +41,6 @@ func UserSign(data utils.RequestData, signType int) (result types.UserSignData, 
 		return result, err
 	}
 	err = json.Unmarshal([]byte(resBody), &result)
+	result.RawJson = resBody
 	return result, err
 }

@@ -39,5 +39,6 @@ func DelEvent(data utils.RequestData, eventID int) (result types.DelEventData, e
 		return result, err
 	}
 	err = json.Unmarshal([]byte(resBody), &result)
+	result.RawJson = resBody
 	return result, err
 }

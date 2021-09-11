@@ -22,14 +22,22 @@ type SendEventReq struct {
 	ER         string `json:"e_r"`
 }
 
-// CreateTextEventReqJson 创建请求 body json
-func CreateTextEventReqJson(text string) string {
+// EventPic 用于发送动态的图片数据
+type EventPic struct {
+	OriginId    int64  `json:"originId"`
+	SquareId    int64  `json:"squareId"`
+	RectangleId int64  `json:"rectangleId"`
+	Format      string `json:"format"`
+}
+
+// CreateEventReqJson 创建请求 body json
+func CreateEventReqJson(text, pics string) string {
 	UUID := uuid.New()
 	shareConfig := SendEventReq{
 		Msg:        text,
+		Pics:       pics,
 		Type:       "noresource",
 		UUID:       strings.Replace(UUID.String(), "-", "", -1),
-		Pics:       "[]",
 		AddComment: "false",
 		Header:     "{}",
 		ER:         "true",
@@ -38,16 +46,54 @@ func CreateTextEventReqJson(text string) string {
 	return string(reqBodyJson)
 }
 
-// SendTextEvent 发送文本动态
-func SendTextEvent(data utils.RequestData, text string) (result types.SendEventData, err error) {
+// CreateEventPicsJson 创建动态图片数据 json
+func CreateEventPicsJson(picData []types.UploadEventImgData) string {
+	var eventPicData []EventPic
+	for i := 0; i < len(picData); i++ {
+		eventPicData = append(eventPicData, EventPic{
+			OriginId:    picData[i].PicInfo.OriginId,
+			SquareId:    picData[i].PicInfo.SquareId,
+			RectangleId: picData[i].PicInfo.RectangleId,
+			Format:      picData[i].PicSubtype,
+		})
+	}
+	resultJson, _ := json.Marshal(eventPicData)
+	return string(resultJson)
+}
+
+// SendEvent 发送动态（可以带图片）
+func SendEvent(data utils.RequestData, text string, picPath []string) (result types.SendEventData, err error) {
 	var options utils.EapiOption
 	options.Path = SendEventAPI
 	options.Url = "https://music.163.com/eapi/share/friends/resource"
-	options.Json = CreateTextEventReqJson(text)
+	if len(picPath) != 0 {
+		var picData []types.UploadEventImgData
+		for i := 0; i < len(picPath); i++ {
+			nosToken, file, err := GetNosToken(data, picPath[i])
+			if err != nil {
+				return result, err
+			}
+			_, err = UploadFile(data, file, nosToken)
+			if err != nil {
+				return result, err
+			}
+			uploadResult, err := UploadEventImg(data, nosToken.Result.DocId, "jpeg")
+			if err != nil {
+				return result, err
+			}
+			_, uploadResult.PicSubtype = utils.DetectFileType(file[:32])
+			picData = append(picData, uploadResult)
+		}
+		picDataJson := CreateEventPicsJson(picData)
+		options.Json = CreateEventReqJson(text, picDataJson)
+	} else {
+		options.Json = CreateEventReqJson(text, "[]")
+	}
 	resBody, _, err := utils.EapiRequest(options, data)
 	if err != nil {
 		return result, err
 	}
 	err = json.Unmarshal([]byte(resBody), &result)
+	result.RawJson = resBody
 	return result, err
 }

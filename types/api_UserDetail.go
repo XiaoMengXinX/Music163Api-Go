@@ -2,6 +2,7 @@ package types
 
 // UserDetailData 用户详细信息数据
 type UserDetailData struct {
+	RawJson     string
 	Level       int `json:"level"`
 	ListenSongs int `json:"listenSongs"`
 	UserPoint   struct {

@@ -2,7 +2,8 @@ package types
 
 // SongDetailData 获取歌曲详细信息 API 的返回数据
 type SongDetailData struct {
-	Songs []struct {
+	RawJson string
+	Songs   []struct {
 		Name string `json:"name"`
 		Id   int    `json:"id"`
 		Pst  int    `json:"pst"`

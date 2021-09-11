@@ -2,6 +2,7 @@ package types
 
 // MusicianTasksData 音乐人任务列表数据
 type MusicianTasksData struct {
+	RawJson string
 	Code    int    `json:"code"`
 	Message string `json:"message"`
 	Data    struct {

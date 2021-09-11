@@ -37,5 +37,6 @@ func ObtainCloudbean(data utils.RequestData, userMissionID, period int) (result 
 		return result, err
 	}
 	err = json.Unmarshal([]byte(resBody), &result)
+	result.RawJson = resBody
 	return result, err
 }
