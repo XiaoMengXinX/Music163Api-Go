@@ -18,11 +18,15 @@ func GetUploadNode() (result types.UploadNodeData, err error) {
 		return result, err
 	}
 	err = json.Unmarshal([]byte(resBody), &result)
+	result.RawJson = resBody
 	return result, err
 }
 
 // UploadFile 上传文件
 func UploadFile(data utils.RequestData, file []byte, nosToken types.NosTokenData) (result types.UploadFileData, err error) {
+	if len(file) <= 32 {
+		return types.UploadFileData{}, fmt.Errorf("文件不能为空 ")
+	}
 	if UploadNode == "" {
 		nodeData, err := GetUploadNode()
 		if err != nil {
@@ -66,6 +70,7 @@ func UploadFile(data utils.RequestData, file []byte, nosToken types.NosTokenData
 		return result, err
 	}
 	err = json.Unmarshal([]byte(resBody), &result)
+	result.RawJson = resBody
 	return result, err
 }
 
@@ -103,5 +108,6 @@ func UploadEventImg(data utils.RequestData, imgID, imgType string) (result types
 		return result, err
 	}
 	err = json.Unmarshal([]byte(resBody), &result)
+	result.RawJson = resBody
 	return result, err
 }

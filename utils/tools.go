@@ -1,10 +1,25 @@
 package utils
 
 import (
+	"bytes"
 	"encoding/hex"
+	"image"
+	_ "image/gif"
+	_ "image/jpeg"
+	_ "image/png"
 	"math/rand"
 	"time"
 )
+
+// ImageSize 获取图片尺寸
+func ImageSize(file []byte) (width, height int, err error) {
+	reader := bytes.NewReader(file)
+	img, _, err := image.DecodeConfig(reader)
+	if err != nil {
+		return
+	}
+	return img.Width, img.Height, err
+}
 
 // RandHex 生成随机十六进制字符串
 func RandHex(n int) []byte {

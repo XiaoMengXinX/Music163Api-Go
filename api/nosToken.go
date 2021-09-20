@@ -28,6 +28,9 @@ type NosTokenReq struct {
 // CreateNosTokenReqJson 创建请求 body json
 func CreateNosTokenReqJson(filePath string) (string, []byte, error) {
 	file, err := utils.ReadFile(filePath)
+	if len(file) <= 32 {
+		return "", file, fmt.Errorf("文件不能为空 ")
+	}
 	fileType, _ := utils.DetectFileType(file[:32])
 	size := len(file)
 	md5str := fmt.Sprintf("%+x", md5.Sum(file))
@@ -82,6 +85,9 @@ type MlogNosTokenReq struct {
 // CreateMlogNosTokenReqJson 创建请求 body json
 func CreateMlogNosTokenReqJson(filePath string) (string, []byte, error) {
 	file, err := utils.ReadFile(filePath)
+	if len(file) <= 32 {
+		return "", file, fmt.Errorf("文件不能为空 ")
+	}
 	fileType, _ := utils.DetectFileType(file[:32])
 	size := len(file)
 	md5str := fmt.Sprintf("%+x", md5.Sum(file))

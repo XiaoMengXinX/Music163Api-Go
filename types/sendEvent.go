@@ -3,7 +3,6 @@ package types
 // SendEventData 发送动态 API 的返回数据
 type SendEventData struct {
 	RawJson string
-
 	Code    int    `json:"code"`
 	Message string `json:"message"`
 	UserId  int    `json:"userId"`

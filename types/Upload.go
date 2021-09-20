@@ -2,6 +2,7 @@ package types
 
 // UploadFileData 上传文件返回数据
 type UploadFileData struct {
+	RawJson        string
 	RequestId      string `json:"requestId"`
 	Offset         int    `json:"offset"`
 	Context        string `json:"context"`
@@ -12,12 +13,14 @@ type UploadFileData struct {
 
 // UploadNodeData 上传加速节点地址
 type UploadNodeData struct {
-	Lbs    string   `json:"lbs"`
-	Upload []string `json:"upload"`
+	RawJson string
+	Lbs     string   `json:"lbs"`
+	Upload  []string `json:"upload"`
 }
 
 // UploadEventImgData 用于发送动态的图片信息
 type UploadEventImgData struct {
+	RawJson    string
 	PicSubtype string
 	PicInfo    struct {
 		OriginId         int64  `json:"originId"`

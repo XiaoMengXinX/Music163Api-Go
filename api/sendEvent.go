@@ -77,11 +77,12 @@ func SendEvent(data utils.RequestData, text string, picPath []string) (result ty
 			if err != nil {
 				return result, err
 			}
-			uploadResult, err := UploadEventImg(data, nosToken.Result.DocId, "jpeg")
+			_, picSubtype := utils.DetectFileType(file[:32])
+			uploadResult, err := UploadEventImg(data, nosToken.Result.DocId, picSubtype)
 			if err != nil {
 				return result, err
 			}
-			_, uploadResult.PicSubtype = utils.DetectFileType(file[:32])
+			uploadResult.PicSubtype = picSubtype
 			picData = append(picData, uploadResult)
 		}
 		picDataJson := CreateEventPicsJson(picData)
