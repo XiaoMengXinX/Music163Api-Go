@@ -31,17 +31,21 @@ const (
 	ResTypeVideo = "R_VI_62"
 	// ResTypeMlog Mlog
 	ResTypeMlog = "R_MLOG_1001"
+	// ResTypeEvent 动态
+	ResTypeEvent = "A_EV_2"
 )
 
-// CommentConfig 回复/发送/删除评论参数
+// CommentConfig 回复/发送/删除评论参数.
+// ResType 0: 歌曲(默认), 1: mv, 2: 歌单, 3: 专辑, 4: 电台, 5: 视频, 6: Mlog, 7: 动态.
+// ForwardEvent 只在发送或回复评论时有效.
 type CommentConfig struct {
-	// ResType 0: 歌曲(默认), 1: mv, 2: 歌单, 3: 专辑, 4: 电台, 5: 视频, 6: Mlog
-	ResType   int
-	ResID     int
-	CommentID int
-	// ForwardEvent 只在发送或回复评论时有效
+	ResType int
+	// ResType 0: 歌曲(默认), 1: mv, 2: 歌单, 3: 专辑, 4: 电台, 5: 视频, 6: Mlog, 7: 动态
+	ResID        int
+	CommentID    int
 	ForwardEvent bool
-	Content      string
+	// ForwardEvent 只在发送或回复评论时有效
+	Content string
 }
 
 // CommentReq 评论 API 的 body json
@@ -90,6 +94,8 @@ func parseRestype(resType int) string {
 		resExt = ResTypeVideo
 	case 6:
 		resExt = ResTypeMlog
+	case 7:
+		resExt = ResTypeEvent
 	}
 	return resExt
 }
