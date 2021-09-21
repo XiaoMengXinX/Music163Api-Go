@@ -70,7 +70,7 @@ data := utils.RequestData{
     Cookies: utils.Cookies{
         {
             Key:   "MUSIC_U", // 获取无损音质需填写 Cookies 中的 MUSIC_U
-            Value: "984e8c072dc9c670f40d019a3699f326a6d9565cd22e7bcb944dfa4deb7124ae33a649814e309366",
+            Value: "984e8c072dc9c670f40d019a3699f326a6d9565cd22e7bcb944dfa4deb7124ae33a649814",
         },
     },
 }
