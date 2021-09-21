@@ -5,6 +5,7 @@ import (
 )
 
 const eapiKey = "e82ckenh8dichen8"
+const markerKey = "#14ljk_!\\]&0U<'("
 
 func generateKey(key []byte) (genKey []byte) {
 	genKey = make([]byte, 16)
@@ -53,4 +54,41 @@ func AesDecryptECB(encrypted []byte) (decrypted []byte) {
 	}
 
 	return decrypted[:trim]
+}
+
+// MarkerAesDecryptECB 163 key 解密
+func MarkerAesDecryptECB(encrypted []byte) (decrypted []byte) {
+	key := []byte(markerKey)
+	cipher, _ := aes.NewCipher(generateKey(key))
+	decrypted = make([]byte, len(encrypted))
+	for bs, be := 0, cipher.BlockSize(); bs < len(encrypted); bs, be = bs+cipher.BlockSize(), be+cipher.BlockSize() {
+		cipher.Decrypt(decrypted[bs:be], encrypted[bs:be])
+	}
+
+	trim := 0
+	if len(decrypted) > 0 {
+		trim = len(decrypted) - int(decrypted[len(decrypted)-1])
+	}
+
+	return decrypted[:trim]
+}
+
+// MarkerAesEncryptECB 163 key 加密
+func MarkerAesEncryptECB(data string) (encrypted []byte) {
+	origData := []byte(data)
+	key := []byte(markerKey)
+	cipher, _ := aes.NewCipher(generateKey(key))
+	length := (len(origData) + aes.BlockSize) / aes.BlockSize
+	plain := make([]byte, length*aes.BlockSize)
+	copy(plain, origData)
+	pad := byte(len(plain) - len(origData))
+	for i := len(origData); i < len(plain); i++ {
+		plain[i] = pad
+	}
+	encrypted = make([]byte, len(plain))
+	for bs, be := 0, cipher.BlockSize(); bs <= len(origData); bs, be = bs+cipher.BlockSize(), be+cipher.BlockSize() {
+		cipher.Encrypt(encrypted[bs:be], plain[bs:be])
+	}
+
+	return encrypted
 }
