@@ -45,10 +45,10 @@ func UploadFile(data utils.RequestData, file []byte, nosToken types.NosTokenData
 		url = fmt.Sprintf("%s/%s/%s?version=1.0&offset=0&complete=true", UploadNode, nosToken.Result.Bucket, nosToken.Result.ObjectKey)
 		data.Headers = utils.Headers{
 			{
-				Key:   "x-nos-token",
+				Name:  "x-nos-token",
 				Value: nosToken.Result.Token,
 			}, {
-				Key:   "Content-Type",
+				Name:  "Content-Type",
 				Value: fmt.Sprintf("%s/%s", fileType, fileSubtype),
 			},
 		}
@@ -56,10 +56,10 @@ func UploadFile(data utils.RequestData, file []byte, nosToken types.NosTokenData
 		url = fmt.Sprintf("%s/%s/%s?version=1.0&offset=0&complete=true", UploadNode, nosToken.Data.Bucket, nosToken.Data.ObjectKey)
 		data.Headers = utils.Headers{
 			{
-				Key:   "x-nos-token",
+				Name:  "x-nos-token",
 				Value: nosToken.Data.Token,
 			}, {
-				Key:   "Content-Type",
+				Name:  "Content-Type",
 				Value: fmt.Sprintf("%s/%s", fileType, fileSubtype),
 			},
 		}

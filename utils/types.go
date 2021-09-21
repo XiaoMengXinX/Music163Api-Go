@@ -1,20 +1,16 @@
 package utils
 
-// Cookies 用户 cookies 数据类型
-type Cookies []struct {
-	Key   string
-	Value string
-}
+import "net/http"
 
 // Headers 自定义 Headers 数据类型 (仅对于非 eapi 有效)
 type Headers []struct {
-	Key   string
+	Name  string
 	Value string
 }
 
 // RequestData 传入请求数据类型
 type RequestData struct {
-	Cookies Cookies
+	Cookies []*http.Cookie
 	Headers Headers
 	Body    string
 }

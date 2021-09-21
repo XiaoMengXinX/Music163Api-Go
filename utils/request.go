@@ -110,11 +110,11 @@ func CreateNewRequest(data string, url string, options RequestData) (answer, res
 
 	cookie := map[string]interface{}{}
 	for i := 0; i < len(options.Cookies); i++ {
-		cookie[options.Cookies[i].Key] = options.Cookies[i].Value
+		cookie[options.Cookies[i].Name] = options.Cookies[i].Value
 	}
 
 	for i := 0; i < len(options.Headers); i++ {
-		req.Header.Set(options.Headers[i].Key, options.Headers[i].Value)
+		req.Header.Set(options.Headers[i].Name, options.Headers[i].Value)
 	}
 
 	csrfValue, isok := cookie["__csrf"]
