@@ -62,10 +62,11 @@ func RawRequest(url string, options RequestData) (result string, err error) {
 
 // SpliceStr 拼接字符串
 func SpliceStr(path string, data string) (result string) {
+	nobodyKnowThis := "36cd479b6b5"
 	text := fmt.Sprintf("nobody%suse%smd5forencrypt", path, data)
 	MD5 := md5.Sum([]byte(text))
 	md5str := fmt.Sprintf("%x", MD5)
-	result = fmt.Sprintf("%s-36cd479b6b5-%s-36cd479b6b5-%s", path, data, md5str)
+	result = fmt.Sprintf("%s-%s-%s-%s-%s", path, nobodyKnowThis, data, nobodyKnowThis, md5str)
 	return result
 }
 

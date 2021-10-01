@@ -33,7 +33,7 @@ func CreateCheckQrLoginJSON(key string) string {
 func CheckQrLogin(data utils.RequestData, key string) (result types.QrCheckData, resHeader string, err error) {
 	var options utils.EapiOption
 	options.Path = QrLogin
-	options.Url = "https://music.163.com/eapi/v3/song/detail"
+	options.Url = "https://music.163.com/eapi/login/qrcode/client/login"
 	options.Json = CreateCheckQrLoginJSON(key)
 	resBody, resHeader, err := utils.EapiRequest(options, data)
 	if err != nil {

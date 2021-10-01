@@ -31,7 +31,7 @@ func CreateGetQrUnikeyJSON() string {
 func GetQrUnikey(data utils.RequestData) (result types.QrUnikeyData, err error) {
 	var options utils.EapiOption
 	options.Path = QrUnikey
-	options.Url = "https://music.163.com/eapi/v3/song/detail"
+	options.Url = "https://music.163.com/eapi/login/qrcode/unikey"
 	options.Json = CreateGetQrUnikeyJSON()
 	resBody, _, err := utils.EapiRequest(options, data)
 	if err != nil {

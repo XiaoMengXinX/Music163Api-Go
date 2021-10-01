@@ -67,8 +67,8 @@ func CreateMlogPicObj(picFile []byte, picData types.NosTokenData) (MlogPic, erro
 func CreatePicMlogReqJson(text string, songInfo types.SongDetailData, picData []MlogPic) string {
 	mlogSong := mlogSong{
 		EndTime:   0,
-		Name:      songInfo.Songs[0].Name,
-		SongId:    fmt.Sprintf("%d", songInfo.Songs[0].Id),
+		Name:      songInfo.Name,
+		SongId:    fmt.Sprintf("%d", songInfo.Id),
 		StartTime: 30000,
 	}
 	mlogContent := picMlogJsonContent{
@@ -118,7 +118,7 @@ func SendPicMlog(data utils.RequestData, text string, songID int, picPath []stri
 		picObj, err := CreateMlogPicObj(file, nosToken)
 		picData = append(picData, picObj)
 	}
-	options.Json = CreatePicMlogReqJson(text, songInfo, picData)
+	options.Json = CreatePicMlogReqJson(text, songInfo.Songs[0], picData)
 	resBody, _, err := utils.EapiRequest(options, data)
 	if err != nil {
 		return result, err
