@@ -14,14 +14,14 @@ type BatchUserInfoData struct {
 
 // BatchSongURLData 批处理 SongURL 数据
 type BatchSongURLData struct {
-	Api  SongURLData `json:"/api/song/enhance/player/url/v1"`
-	Code int         `json:"code"`
+	Api  SongsURLData `json:"/api/song/enhance/player/url/v1"`
+	Code int          `json:"code"`
 }
 
 // BatchSongDetailData 批处理 SongDetail 数据
 type BatchSongDetailData struct {
-	Api  SongDetailData `json:"/api/v3/song/detail"`
-	Code int            `json:"code"`
+	Api  SongsDetailData `json:"/api/v3/song/detail"`
+	Code int             `json:"code"`
 }
 
 // BatchUserDetailData 批处理 UserDetail 数据
