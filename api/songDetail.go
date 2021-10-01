@@ -39,7 +39,7 @@ func CreateSongDetailReqJson(ids []int) string {
 }
 
 // GetSongDetail 获取歌曲详细信息
-func GetSongDetail(data utils.RequestData, ids []int) (result types.SongDetailData, err error) {
+func GetSongDetail(data utils.RequestData, ids []int) (result types.SongsDetailData, err error) {
 	var options utils.EapiOption
 	options.Path = SongDetail
 	options.Url = "https://music.163.com/eapi/v3/song/detail"

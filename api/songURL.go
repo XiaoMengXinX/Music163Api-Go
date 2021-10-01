@@ -51,7 +51,7 @@ func CreateSongURLJson(config SongURLConfig) string {
 }
 
 // GetSongURL 获取歌曲 URL
-func GetSongURL(data utils.RequestData, config SongURLConfig) (result types.SongURLData, err error) {
+func GetSongURL(data utils.RequestData, config SongURLConfig) (result types.SongsURLData, err error) {
 	var options utils.EapiOption
 	options.Path = SongURL
 	options.Url = "https://music.163.com/eapi/song/enhance/player/url/v1"
