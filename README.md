@@ -101,9 +101,14 @@ data := utils.RequestData{
     },
 }
 
+// 旧版本略繁琐的 Batch 处理方法
 batch := api.Batch{} // 创建 Batch 对象
 batch.Init() // Batch 初始化
 batch.Add(api.BatchAPI{Key: api.UserSetting}) // 添加要 Batch 的 API
+
+// 新版本更简洁的 Batch 处理方法
+batch := api.NewBatch(api.BatchAPI{Key: api.UserSetting}) // 创建初始化 Batch 对象并添加 API
+batch.Add(api.BatchAPI{Key: api.SongDetail,Json: api.CreateSongDetailReqJson([]int{1416956209})}) // 也可以继续添加要批处理的 API
 
 result ,_ ,_ := batch.Do(data) // 请求 Batch API
 

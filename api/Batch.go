@@ -43,3 +43,13 @@ func (b *Batch) Do(data utils.RequestData) (resBody, header string, err error) {
 	resBody, header, err = utils.EapiRequest(options, data)
 	return resBody, header, err
 }
+
+// NewBatch 新建 Batch 对象
+func NewBatch(apis ...BatchAPI) Batch {
+	b := Batch{}
+	b.Init()
+	for _, api := range apis {
+		b.API[api.Key] = api.Json
+	}
+	return b
+}
