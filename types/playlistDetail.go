@@ -238,8 +238,8 @@ type PlaylistDetailData struct {
 	Privileges []struct {
 		Id        int  `json:"id"`
 		Fee       int  `json:"fee"`
-		Payed     int  `json:"payed"`
-		RealPayed int  `json:"realPayed"`
+		Paied     int  `json:"payed"`
+		RealPaied int  `json:"realPayed"`
 		St        int  `json:"st"`
 		Pl        int  `json:"pl"`
 		Dl        int  `json:"dl"`

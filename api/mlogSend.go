@@ -116,6 +116,9 @@ func SendPicMlog(data utils.RequestData, text string, songID int, picPath []stri
 			return result, err
 		}
 		picObj, err := NewMlogPicObj(file, nosToken)
+		if err != nil {
+			return result, err
+		}
 		picData = append(picData, picObj)
 	}
 	options.Json = CreatePicMlogReqJson(text, songInfo.Songs[0], picData)

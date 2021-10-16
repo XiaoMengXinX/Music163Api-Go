@@ -4,8 +4,11 @@ import (
 	"bytes"
 	"encoding/hex"
 	"image"
+	// 解析 gif 图片信息
 	_ "image/gif"
+	// 解析 jpg 图片信息
 	_ "image/jpeg"
+	// 解析 png 图片信息
 	_ "image/png"
 	"math/rand"
 	"time"
