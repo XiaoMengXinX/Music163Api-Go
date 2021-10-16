@@ -8,17 +8,6 @@ import (
 )
 
 const (
-	// ReplyCommentAPI 回复评论 API
-	ReplyCommentAPI = "/api/v1/resource/comments/reply"
-	// DelCommentAPI 删除评论 API
-	DelCommentAPI = "/api/resource/comments/delete"
-	// AddCommentAPI 新增评论 API
-	AddCommentAPI = "/api/v1/resource/comments/add"
-	// GetCommentAPI 获取评论 API
-	GetCommentAPI = "/api/v2/resource/comments"
-)
-
-const (
 	// ResTypeMusic 歌曲
 	ResTypeMusic = "R_SO_4"
 	// ResTypeMV MV
@@ -36,6 +25,18 @@ const (
 	// ResTypeEvent 动态
 	ResTypeEvent = "A_EV_2"
 )
+
+// Reply CommentAPI 回复评论 API
+const ReplyCommentAPI = "/api/v1/resource/comments/reply"
+
+// DelCommentAPI 删除评论 API
+const DelCommentAPI = "/api/resource/comments/delete"
+
+// AddCommentAPI 新增评论 API
+const AddCommentAPI = "/api/v1/resource/comments/add"
+
+// GetCommentAPI 获取评论 API
+const GetCommentAPI = "/api/v2/resource/comments"
 
 // CommentConfig 回复/发送/删除评论参数.
 // ResType 0: 歌曲(默认), 1: mv, 2: 歌单, 3: 专辑, 4: 电台, 5: 视频, 6: Mlog, 7: 动态.
