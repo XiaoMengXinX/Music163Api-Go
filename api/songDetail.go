@@ -6,8 +6,8 @@ import (
 	"github.com/XiaoMengXinX/Music163Api-Go/utils"
 )
 
-// SongDetail 歌曲详细信息 API
-const SongDetail = "/api/v3/song/detail"
+// SongDetailAPI 歌曲详细信息 API
+const SongDetailAPI = "/api/v3/song/detail"
 
 // SongDetailReq SongDetail API 的 body json
 type SongDetailReq struct {
@@ -41,7 +41,7 @@ func CreateSongDetailReqJson(ids []int) string {
 // GetSongDetail 获取歌曲详细信息
 func GetSongDetail(data utils.RequestData, ids []int) (result types.SongsDetailData, err error) {
 	var options utils.EapiOption
-	options.Path = SongDetail
+	options.Path = SongDetailAPI
 	options.Url = "https://music.163.com/eapi/v3/song/detail"
 	reqBodyJson := CreateSongDetailReqJson(ids)
 	options.Json = reqBodyJson

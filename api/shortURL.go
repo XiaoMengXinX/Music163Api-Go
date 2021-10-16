@@ -6,8 +6,8 @@ import (
 	"github.com/XiaoMengXinX/Music163Api-Go/utils"
 )
 
-// ShortUrl 短链接 API
-const ShortUrl = "/api/middle/shorturl/generate"
+// ShortUrlAPI 短链接 API
+const ShortUrlAPI = "/api/middle/shorturl/generate"
 
 // ShortUrlReq ShortUrl API 的 body json
 type ShortUrlReq struct {
@@ -27,10 +27,10 @@ func CreateShortUrlJson(url string) string {
 	return string(reqBodyJson)
 }
 
-// CreateShortURL 获取短连接 (只支持 *.163.com *.126.net)
-func CreateShortURL(data utils.RequestData, url string) (result types.ShortURLData, err error) {
+// NewShortURL 获取短连接 (只支持 *.163.com *.126.net)
+func NewShortURL(data utils.RequestData, url string) (result types.ShortURLData, err error) {
 	var options utils.EapiOption
-	options.Path = ShortUrl
+	options.Path = ShortUrlAPI
 	options.Url = "https://music.163.com/eapi/middle/shorturl/generate"
 	options.Json = CreateShortUrlJson(url)
 	resBody, _, err := utils.EapiRequest(options, data)

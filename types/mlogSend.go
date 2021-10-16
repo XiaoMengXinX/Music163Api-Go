@@ -13,7 +13,7 @@ type SendMlogData struct {
 				Text            string      `json:"text"`
 				Desc            string      `json:"desc"`
 				InterveneText   interface{} `json:"interveneText"`
-				PubTime         int64       `json:"pubTime"`
+				PubTime         int         `json:"pubTime"`
 				CoverUrl        string      `json:"coverUrl"`
 				GreatCover      bool        `json:"greatCover"`
 				CoverPicKey     string      `json:"coverPicKey"`
@@ -71,15 +71,15 @@ type SendMlogData struct {
 				AccountStatus     int         `json:"accountStatus"`
 				Gender            int         `json:"gender"`
 				City              int         `json:"city"`
-				Birthday          int64       `json:"birthday"`
+				Birthday          int         `json:"birthday"`
 				UserId            int         `json:"userId"`
 				UserType          int         `json:"userType"`
 				Nickname          string      `json:"nickname"`
 				Signature         string      `json:"signature"`
 				Description       string      `json:"description"`
 				DetailDescription string      `json:"detailDescription"`
-				AvatarImgId       int64       `json:"avatarImgId"`
-				BackgroundImgId   int64       `json:"backgroundImgId"`
+				AvatarImgId       int         `json:"avatarImgId"`
+				BackgroundImgId   int         `json:"backgroundImgId"`
 				BackgroundUrl     string      `json:"backgroundUrl"`
 				Authority         int         `json:"authority"`
 				Mutual            bool        `json:"mutual"`
@@ -95,12 +95,12 @@ type SendMlogData struct {
 			Uuid               interface{}   `json:"uuid"`
 			ExpireTime         int           `json:"expireTime"`
 			RcmdInfo           interface{}   `json:"rcmdInfo"`
-			EventTime          int64         `json:"eventTime"`
+			EventTime          int           `json:"eventTime"`
 			ActId              int           `json:"actId"`
 			Pics               []interface{} `json:"pics"`
 			TmplId             int           `json:"tmplId"`
-			ShowTime           int64         `json:"showTime"`
-			Id                 int64         `json:"id"`
+			ShowTime           int           `json:"showTime"`
+			Id                 int           `json:"id"`
 			Type               int           `json:"type"`
 			TopEvent           bool          `json:"topEvent"`
 			InsiteForwardCount int           `json:"insiteForwardCount"`
@@ -124,7 +124,7 @@ type SendMlogData struct {
 				Liked            bool        `json:"liked"`
 				Comments         interface{} `json:"comments"`
 				ResourceType     int         `json:"resourceType"`
-				ResourceId       int64       `json:"resourceId"`
+				ResourceId       int         `json:"resourceId"`
 				LikedCount       int         `json:"likedCount"`
 				CommentCount     int         `json:"commentCount"`
 				ShareCount       int         `json:"shareCount"`

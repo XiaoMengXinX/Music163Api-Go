@@ -10,7 +10,7 @@ type LoginStatusData struct {
 		Type               int    `json:"type"`
 		Status             int    `json:"status"`
 		WhitelistAuthority int    `json:"whitelistAuthority"`
-		CreateTime         int64  `json:"createTime"`
+		CreateTime         int    `json:"createTime"`
 		TokenVersion       int    `json:"tokenVersion"`
 		Ban                int    `json:"ban"`
 		BaoyueVersion      int    `json:"baoyueVersion"`
@@ -23,16 +23,16 @@ type LoginStatusData struct {
 		UserId              int         `json:"userId"`
 		UserType            int         `json:"userType"`
 		Nickname            string      `json:"nickname"`
-		AvatarImgId         int64       `json:"avatarImgId"`
+		AvatarImgId         int         `json:"avatarImgId"`
 		AvatarUrl           string      `json:"avatarUrl"`
-		BackgroundImgId     int64       `json:"backgroundImgId"`
+		BackgroundImgId     int         `json:"backgroundImgId"`
 		BackgroundUrl       string      `json:"backgroundUrl"`
 		Signature           string      `json:"signature"`
-		CreateTime          int64       `json:"createTime"`
+		CreateTime          int         `json:"createTime"`
 		UserName            string      `json:"userName"`
 		AccountType         int         `json:"accountType"`
 		ShortUserName       string      `json:"shortUserName"`
-		Birthday            int64       `json:"birthday"`
+		Birthday            int         `json:"birthday"`
 		Authority           int         `json:"authority"`
 		Gender              int         `json:"gender"`
 		AccountStatus       int         `json:"accountStatus"`
@@ -50,10 +50,10 @@ type LoginStatusData struct {
 		Followed            bool        `json:"followed"`
 		Mutual              bool        `json:"mutual"`
 		Authenticated       bool        `json:"authenticated"`
-		LastLoginTime       int64       `json:"lastLoginTime"`
+		LastLoginTime       int         `json:"lastLoginTime"`
 		LastLoginIP         string      `json:"lastLoginIP"`
 		RemarkName          interface{} `json:"remarkName"`
-		ViptypeVersion      int64       `json:"viptypeVersion"`
+		ViptypeVersion      int         `json:"viptypeVersion"`
 		AuthenticationTypes int         `json:"authenticationTypes"`
 		AvatarDetail        interface{} `json:"avatarDetail"`
 		Anchor              bool        `json:"anchor"`

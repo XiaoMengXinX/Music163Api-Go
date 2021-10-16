@@ -9,8 +9,8 @@ import (
 	"path"
 )
 
-// NosToken 获取 NosToken API （用于文件上传）
-const NosToken = "/api/nos/token/alloc"
+// NosTokenAPI 获取 NosToken API （用于文件上传）
+const NosTokenAPI = "/api/nos/token/alloc"
 
 // NosTokenReq 获取 NosToken 的 body json
 type NosTokenReq struct {
@@ -54,7 +54,7 @@ func CreateNosTokenReqJson(filePath string) (string, []byte, error) {
 // GetNosToken 获取 NosToken
 func GetNosToken(data utils.RequestData, filePath string) (result types.NosTokenData, file []byte, err error) {
 	var options utils.EapiOption
-	options.Path = NosToken
+	options.Path = NosTokenAPI
 	options.Url = "https://music.163.com/eapi/nos/token/alloc"
 	reqBodyJson, file, err := CreateNosTokenReqJson(filePath)
 	if err != nil {

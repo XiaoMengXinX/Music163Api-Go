@@ -30,12 +30,12 @@ type UserDetailData struct {
 	Level       int `json:"level"`
 	ListenSongs int `json:"listenSongs"`
 	UserPoint   struct {
-		UserId       int   `json:"userId"`
-		Balance      int   `json:"balance"`
-		UpdateTime   int64 `json:"updateTime"`
-		Version      int   `json:"version"`
-		Status       int   `json:"status"`
-		BlockBalance int   `json:"blockBalance"`
+		UserId       int `json:"userId"`
+		Balance      int `json:"balance"`
+		UpdateTime   int `json:"updateTime"`
+		Version      int `json:"version"`
+		Status       int `json:"status"`
+		BlockBalance int `json:"blockBalance"`
 	} `json:"userPoint"`
 	MobileSign bool `json:"mobileSign"`
 	PcSign     bool `json:"pcSign"`
@@ -52,9 +52,9 @@ type UserDetailData struct {
 		Province           int         `json:"province"`
 		VipType            int         `json:"vipType"`
 		Followed           bool        `json:"followed"`
-		CreateTime         int64       `json:"createTime"`
-		AvatarImgId        int64       `json:"avatarImgId"`
-		Birthday           int64       `json:"birthday"`
+		CreateTime         int         `json:"createTime"`
+		AvatarImgId        int         `json:"avatarImgId"`
+		Birthday           int         `json:"birthday"`
 		Gender             int         `json:"gender"`
 		Nickname           string      `json:"nickname"`
 		AvatarImgIdStr     string      `json:"avatarImgIdStr"`
@@ -69,7 +69,7 @@ type UserDetailData struct {
 		ExpertTags      interface{} `json:"expertTags"`
 		City            int         `json:"city"`
 		DefaultAvatar   bool        `json:"defaultAvatar"`
-		BackgroundImgId int64       `json:"backgroundImgId"`
+		BackgroundImgId int         `json:"backgroundImgId"`
 		BackgroundUrl   string      `json:"backgroundUrl"`
 		AvatarUrl       string      `json:"avatarUrl"`
 		Signature       string      `json:"signature"`
@@ -108,16 +108,16 @@ type UserDetailData struct {
 		Url          string      `json:"url"`
 		ExpiresIn    int         `json:"expiresIn"`
 		RefreshTime  int         `json:"refreshTime"`
-		BindingTime  int64       `json:"bindingTime"`
+		BindingTime  int         `json:"bindingTime"`
 		TokenJsonStr interface{} `json:"tokenJsonStr"`
 		Expired      bool        `json:"expired"`
-		Id           int64       `json:"id"`
+		Id           int         `json:"id"`
 		Type         int         `json:"type"`
 	} `json:"bindings"`
-	AdValid            bool  `json:"adValid"`
-	Code               int   `json:"code"`
-	CreateTime         int64 `json:"createTime"`
-	CreateDays         int   `json:"createDays"`
+	AdValid            bool `json:"adValid"`
+	Code               int  `json:"code"`
+	CreateTime         int  `json:"createTime"`
+	CreateDays         int  `json:"createDays"`
 	ProfileVillageInfo struct {
 		Title     string      `json:"title"`
 		ImageUrl  interface{} `json:"imageUrl"`

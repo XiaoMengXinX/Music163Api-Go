@@ -21,16 +21,16 @@ type MusicianTasksData struct {
 			Status          int    `json:"status"`
 			Button          string `json:"button"`
 			SortValue       int    `json:"sortValue"`
-			StartTime       int64  `json:"startTime"`
-			EndTime         int64  `json:"endTime"`
+			StartTime       int    `json:"startTime"`
+			EndTime         int    `json:"endTime"`
 			ExtendInfo      string `json:"extendInfo"`
 			Period          int    `json:"period"`
 			NeedToReceive   int    `json:"needToReceive,omitempty"`
 			TargetCount     int    `json:"targetCount"`
 			RewardWorth     string `json:"rewardWorth"`
 			RewardType      int    `json:"rewardType"`
-			UserMissionId   int64  `json:"userMissionId,omitempty"`
-			UpdateTime      int64  `json:"updateTime,omitempty"`
+			UserMissionId   int    `json:"userMissionId,omitempty"`
+			UpdateTime      int    `json:"updateTime,omitempty"`
 		} `json:"list"`
 	} `json:"data"`
 }

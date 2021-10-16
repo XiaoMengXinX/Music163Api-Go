@@ -11,7 +11,8 @@ const UserSignAPI = "/api/point/dailyTask"
 
 // UserSignReqJson 签到参数
 type UserSignReqJson struct {
-	Type int `json:"type"` // 签到类型 ,默认 0 ,其中0 为安卓端签到 ,1 为 web/PC 签到
+	// Type 签到类型 ,默认 0 ,其中0 为安卓端签到 ,1 为 web/PC 签到
+	Type int `json:"type"`
 }
 
 // CreateUserSignReqJson 创建请求 json
@@ -29,7 +30,7 @@ func CreateUserSignReqJson(signType int) string {
 	return string(reqBodyJson)
 }
 
-// UserSign 用户签到
+// UserSign 用户签到, signType 签到类型 ,默认 0 ,其中0 为安卓端签到 ,1 为 web/PC 签到
 func UserSign(data utils.RequestData, signType int) (result types.UserSignData, err error) {
 	var options utils.EapiOption
 	options.Path = UserSignAPI

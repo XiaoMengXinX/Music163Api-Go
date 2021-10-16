@@ -63,7 +63,7 @@ type SongDetailData struct {
 		PicUrl string        `json:"picUrl"`
 		Tns    []interface{} `json:"tns"`
 		PicStr string        `json:"pic_str"`
-		Pic    int64         `json:"pic"`
+		Pic    int           `json:"pic"`
 	} `json:"al"`
 	Dt int `json:"dt"`
 	H  struct {
@@ -105,5 +105,5 @@ type SongDetailData struct {
 	Rurl                 interface{}   `json:"rurl"`
 	Mst                  int           `json:"mst"`
 	Cp                   int           `json:"cp"`
-	PublishTime          int64         `json:"publishTime"`
+	PublishTime          int           `json:"publishTime"`
 }

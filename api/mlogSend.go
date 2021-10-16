@@ -47,8 +47,8 @@ type SendMlogReqJson struct {
 	ER     string `json:"e_r"`
 }
 
-// CreateMlogPicObj 创建 Mlog 图片对象
-func CreateMlogPicObj(picFile []byte, picData types.NosTokenData) (MlogPic, error) {
+// NewMlogPicObj 创建 Mlog 图片对象
+func NewMlogPicObj(picFile []byte, picData types.NosTokenData) (MlogPic, error) {
 	width, height, err := utils.ImageSize(picFile)
 	if err != nil {
 		return MlogPic{}, err
@@ -115,7 +115,7 @@ func SendPicMlog(data utils.RequestData, text string, songID int, picPath []stri
 		if err != nil {
 			return result, err
 		}
-		picObj, err := CreateMlogPicObj(file, nosToken)
+		picObj, err := NewMlogPicObj(file, nosToken)
 		picData = append(picData, picObj)
 	}
 	options.Json = CreatePicMlogReqJson(text, songInfo.Songs[0], picData)

@@ -6,8 +6,8 @@ import (
 	"github.com/XiaoMengXinX/Music163Api-Go/utils"
 )
 
-// QrLogin 检查 QR 登录状态 API
-const QrLogin = "/api/login/qrcode/client/login"
+// QrLoginAPI 检查 QR 登录状态 API
+const QrLoginAPI = "/api/login/qrcode/client/login"
 
 // CheckQrLoginReq CheckQrLogin API 的 body json
 type CheckQrLoginReq struct {
@@ -17,8 +17,8 @@ type CheckQrLoginReq struct {
 	Header string `json:"header"`
 }
 
-// CreateCheckQrLoginJSON 创建请求 body json
-func CreateCheckQrLoginJSON(key string) string {
+// CreateCheckQrLoginJson 创建请求 body json
+func CreateCheckQrLoginJson(key string) string {
 	reqBody := CheckQrLoginReq{
 		Key:    key,
 		Type:   "3",
@@ -32,9 +32,9 @@ func CreateCheckQrLoginJSON(key string) string {
 // CheckQrLogin 检查 QR 登录状态
 func CheckQrLogin(data utils.RequestData, key string) (result types.QrCheckData, resHeader string, err error) {
 	var options utils.EapiOption
-	options.Path = QrLogin
+	options.Path = QrLoginAPI
 	options.Url = "https://music.163.com/eapi/login/qrcode/client/login"
-	options.Json = CreateCheckQrLoginJSON(key)
+	options.Json = CreateCheckQrLoginJson(key)
 	resBody, resHeader, err := utils.EapiRequest(options, data)
 	if err != nil {
 		return result, resHeader, err

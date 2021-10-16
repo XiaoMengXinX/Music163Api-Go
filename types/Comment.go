@@ -43,9 +43,9 @@ type AddCommentData struct {
 		PendantData         interface{}   `json:"pendantData"`
 		ShowFloorComment    interface{}   `json:"showFloorComment"`
 		Status              int           `json:"status"`
-		CommentId           int64         `json:"commentId"`
+		CommentId           int           `json:"commentId"`
 		Content             string        `json:"content"`
-		Time                int64         `json:"time"`
+		Time                int           `json:"time"`
 		LikedCount          int           `json:"likedCount"`
 		ExpressionUrl       interface{}   `json:"expressionUrl"`
 		CommentLocationType int           `json:"commentLocationType"`
@@ -107,7 +107,7 @@ type ReplyCommentData struct {
 				RemarkName   interface{} `json:"remarkName"`
 				Experts      interface{} `json:"experts"`
 			} `json:"user"`
-			BeRepliedCommentId int64       `json:"beRepliedCommentId"`
+			BeRepliedCommentId int         `json:"beRepliedCommentId"`
 			Content            string      `json:"content"`
 			Status             int         `json:"status"`
 			ExpressionUrl      interface{} `json:"expressionUrl"`
@@ -115,13 +115,13 @@ type ReplyCommentData struct {
 		PendantData         interface{} `json:"pendantData"`
 		ShowFloorComment    interface{} `json:"showFloorComment"`
 		Status              int         `json:"status"`
-		CommentId           int64       `json:"commentId"`
+		CommentId           int         `json:"commentId"`
 		Content             string      `json:"content"`
-		Time                int64       `json:"time"`
+		Time                int         `json:"time"`
 		LikedCount          int         `json:"likedCount"`
 		ExpressionUrl       interface{} `json:"expressionUrl"`
 		CommentLocationType int         `json:"commentLocationType"`
-		ParentCommentId     int64       `json:"parentCommentId"`
+		ParentCommentId     int         `json:"parentCommentId"`
 		Decoration          struct {
 		} `json:"decoration"`
 		RepliedMark interface{} `json:"repliedMark"`

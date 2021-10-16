@@ -24,9 +24,9 @@ type SendEventReq struct {
 
 // EventPic 用于发送动态的图片数据
 type EventPic struct {
-	OriginId    int64  `json:"originId"`
-	SquareId    int64  `json:"squareId"`
-	RectangleId int64  `json:"rectangleId"`
+	OriginId    int    `json:"originId"`
+	SquareId    int    `json:"squareId"`
+	RectangleId int    `json:"rectangleId"`
 	Format      string `json:"format"`
 }
 

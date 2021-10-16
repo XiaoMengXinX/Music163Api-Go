@@ -1,6 +1,6 @@
 package types
 
-// PlaylistDetailData 歌单详细数据
+// PlaylistDetailData 获取歌单详细 API 的返回数据
 type PlaylistDetailData struct {
 	RawJson       string
 	Code          int `json:"code"`
@@ -9,24 +9,24 @@ type PlaylistDetailData struct {
 	Playlist struct {
 		Id                    int           `json:"id"`
 		Name                  string        `json:"name"`
-		CoverImgId            int64         `json:"coverImgId"`
+		CoverImgId            int           `json:"coverImgId"`
 		CoverImgUrl           string        `json:"coverImgUrl"`
 		CoverImgIdStr         string        `json:"coverImgId_str"`
 		AdType                int           `json:"adType"`
 		UserId                int           `json:"userId"`
-		CreateTime            int64         `json:"createTime"`
+		CreateTime            int           `json:"createTime"`
 		Status                int           `json:"status"`
 		OpRecommend           bool          `json:"opRecommend"`
 		HighQuality           bool          `json:"highQuality"`
 		NewImported           bool          `json:"newImported"`
-		UpdateTime            int64         `json:"updateTime"`
+		UpdateTime            int           `json:"updateTime"`
 		TrackCount            int           `json:"trackCount"`
 		SpecialType           int           `json:"specialType"`
 		Privacy               int           `json:"privacy"`
-		TrackUpdateTime       int64         `json:"trackUpdateTime"`
+		TrackUpdateTime       int           `json:"trackUpdateTime"`
 		CommentThreadId       string        `json:"commentThreadId"`
 		PlayCount             int           `json:"playCount"`
-		TrackNumberUpdateTime int64         `json:"trackNumberUpdateTime"`
+		TrackNumberUpdateTime int           `json:"trackNumberUpdateTime"`
 		SubscribedCount       int           `json:"subscribedCount"`
 		CloudTrackCount       int           `json:"cloudTrackCount"`
 		Ordered               bool          `json:"ordered"`
@@ -48,15 +48,15 @@ type PlaylistDetailData struct {
 			AccountStatus       int         `json:"accountStatus"`
 			Gender              int         `json:"gender"`
 			City                int         `json:"city"`
-			Birthday            int64       `json:"birthday"`
+			Birthday            int         `json:"birthday"`
 			UserId              int         `json:"userId"`
 			UserType            int         `json:"userType"`
 			Nickname            string      `json:"nickname"`
 			Signature           string      `json:"signature"`
 			Description         string      `json:"description"`
 			DetailDescription   string      `json:"detailDescription"`
-			AvatarImgId         int64       `json:"avatarImgId"`
-			BackgroundImgId     int64       `json:"backgroundImgId"`
+			AvatarImgId         int         `json:"avatarImgId"`
+			BackgroundImgId     int         `json:"backgroundImgId"`
 			BackgroundUrl       string      `json:"backgroundUrl"`
 			Authority           int         `json:"authority"`
 			Mutual              bool        `json:"mutual"`
@@ -86,15 +86,15 @@ type PlaylistDetailData struct {
 			AccountStatus       int         `json:"accountStatus"`
 			Gender              int         `json:"gender"`
 			City                int         `json:"city"`
-			Birthday            int64       `json:"birthday"`
+			Birthday            int         `json:"birthday"`
 			UserId              int         `json:"userId"`
 			UserType            int         `json:"userType"`
 			Nickname            string      `json:"nickname"`
 			Signature           string      `json:"signature"`
 			Description         string      `json:"description"`
 			DetailDescription   string      `json:"detailDescription"`
-			AvatarImgId         int64       `json:"avatarImgId"`
-			BackgroundImgId     int64       `json:"backgroundImgId"`
+			AvatarImgId         int         `json:"avatarImgId"`
+			BackgroundImgId     int         `json:"backgroundImgId"`
 			BackgroundUrl       string      `json:"backgroundUrl"`
 			Authority           int         `json:"authority"`
 			Mutual              bool        `json:"mutual"`
@@ -135,7 +135,7 @@ type PlaylistDetailData struct {
 				PicUrl string   `json:"picUrl"`
 				Tns    []string `json:"tns"`
 				PicStr string   `json:"pic_str,omitempty"`
-				Pic    int64    `json:"pic"`
+				Pic    int      `json:"pic"`
 			} `json:"al"`
 			Dt int `json:"dt"`
 			H  *struct {
@@ -165,7 +165,7 @@ type PlaylistDetailData struct {
 			DjId                 int           `json:"djId"`
 			Copyright            int           `json:"copyright"`
 			SId                  int           `json:"s_id"`
-			Mark                 int64         `json:"mark"`
+			Mark                 int           `json:"mark"`
 			OriginCoverType      int           `json:"originCoverType"`
 			OriginSongSimpleData *struct {
 				SongId  int    `json:"songId"`
@@ -190,7 +190,7 @@ type PlaylistDetailData struct {
 			Mv          int         `json:"mv"`
 			Rtype       int         `json:"rtype"`
 			Rurl        interface{} `json:"rurl"`
-			PublishTime int64       `json:"publishTime"`
+			PublishTime int         `json:"publishTime"`
 			VideoInfo   struct {
 				MoreThanOne bool `json:"moreThanOne"`
 				Video       *struct {
@@ -199,7 +199,7 @@ type PlaylistDetailData struct {
 					Title       *string     `json:"title"`
 					PlayTime    int         `json:"playTime"`
 					CoverUrl    *string     `json:"coverUrl"`
-					PublishTime int64       `json:"publishTime"`
+					PublishTime int         `json:"publishTime"`
 					Artists     interface{} `json:"artists"`
 					Alias       interface{} `json:"alias"`
 				} `json:"video"`
@@ -223,7 +223,7 @@ type PlaylistDetailData struct {
 			Id         int         `json:"id"`
 			V          int         `json:"v"`
 			T          int         `json:"t"`
-			At         int64       `json:"at"`
+			At         int         `json:"at"`
 			Alg        interface{} `json:"alg"`
 			Uid        int         `json:"uid"`
 			RcmdReason string      `json:"rcmdReason"`
@@ -250,7 +250,7 @@ type PlaylistDetailData struct {
 		Maxbr     int  `json:"maxbr"`
 		Fl        int  `json:"fl"`
 		Pc        *struct {
-			Id                  int64  `json:"id"`
+			Id                  int    `json:"id"`
 			UserId              int    `json:"userId"`
 			SongId              int    `json:"songId"`
 			Md5                 string `json:"md5"`
@@ -260,12 +260,12 @@ type PlaylistDetailData struct {
 			Bitrate             int    `json:"bitrate"`
 			FileName            string `json:"fileName"`
 			SongDfsId           int    `json:"songDfsId"`
-			Cover               int64  `json:"cover"`
+			Cover               int    `json:"cover"`
 			Lyric               int    `json:"lyric"`
 			Cue                 int    `json:"cue"`
 			ConvertLyric        int    `json:"convertLyric"`
 			Version             int    `json:"version"`
-			AddTime             int64  `json:"addTime"`
+			AddTime             int    `json:"addTime"`
 			FileSize            int    `json:"fileSize"`
 			Status              int    `json:"status"`
 			OriginalAudioSongId int    `json:"originalAudioSongId"`

@@ -7,23 +7,26 @@ import (
 	"github.com/XiaoMengXinX/Music163Api-Go/utils"
 )
 
-// SongURL 歌曲 URl API
-const SongURL = "/api/song/enhance/player/url/v1"
+// SongUrlAPI 歌曲 URl API
+const SongUrlAPI = "/api/song/enhance/player/url/v1"
 
 // SongURLConfig 获取歌曲 URL 的参数配置
 type SongURLConfig struct {
+	// EncodeType 编码类型, 可选 "mp3", "aac"
 	EncodeType string
-	Level      string
-	Ids        []int
+	// Level 音质等级, 可选 "loseless", "higher"
+	Level string
+	// Ids 歌曲 ID
+	Ids []int
 }
 
 // SongUrlReq SongURL API 的 body json
 type SongUrlReq struct {
 	ER         string `json:"e_r"`
-	EncodeType string `json:"encodeType"` // mp3, aac
+	EncodeType string `json:"encodeType"`
 	Header     string `json:"header"`
 	Ids        string `json:"ids"`
-	Level      string `json:"level"` // loseless, higher
+	Level      string `json:"level"`
 }
 
 // CreateSongURLJson 创建请求 body json
@@ -53,7 +56,7 @@ func CreateSongURLJson(config SongURLConfig) string {
 // GetSongURL 获取歌曲 URL
 func GetSongURL(data utils.RequestData, config SongURLConfig) (result types.SongsURLData, err error) {
 	var options utils.EapiOption
-	options.Path = SongURL
+	options.Path = SongUrlAPI
 	options.Url = "https://music.163.com/eapi/song/enhance/player/url/v1"
 	options.Json = CreateSongURLJson(config)
 	resBody, _, err := utils.EapiRequest(options, data)

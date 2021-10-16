@@ -7,8 +7,8 @@ type SendMsgData struct {
 	NewMsgs []struct {
 		FromUser struct {
 			Description        string      `json:"description"`
-			BackgroundImgId    int64       `json:"backgroundImgId"`
-			Birthday           int64       `json:"birthday"`
+			BackgroundImgId    int         `json:"backgroundImgId"`
+			Birthday           int         `json:"birthday"`
 			AccountStatus      int         `json:"accountStatus"`
 			City               int         `json:"city"`
 			DetailDescription  string      `json:"detailDescription"`
@@ -17,7 +17,7 @@ type SendMsgData struct {
 			Followed           bool        `json:"followed"`
 			BackgroundUrl      string      `json:"backgroundUrl"`
 			Gender             int         `json:"gender"`
-			AvatarImgId        int64       `json:"avatarImgId"`
+			AvatarImgId        int         `json:"avatarImgId"`
 			AvatarDetail       interface{} `json:"avatarDetail"`
 			UserType           int         `json:"userType"`
 			UserId             int         `json:"userId"`
@@ -37,8 +37,8 @@ type SendMsgData struct {
 		} `json:"fromUser"`
 		ToUser struct {
 			Description        string      `json:"description"`
-			BackgroundImgId    int64       `json:"backgroundImgId"`
-			Birthday           int64       `json:"birthday"`
+			BackgroundImgId    int         `json:"backgroundImgId"`
+			Birthday           int         `json:"birthday"`
 			AccountStatus      int         `json:"accountStatus"`
 			City               int         `json:"city"`
 			DetailDescription  string      `json:"detailDescription"`
@@ -47,7 +47,7 @@ type SendMsgData struct {
 			Followed           bool        `json:"followed"`
 			BackgroundUrl      string      `json:"backgroundUrl"`
 			Gender             int         `json:"gender"`
-			AvatarImgId        int64       `json:"avatarImgId"`
+			AvatarImgId        int         `json:"avatarImgId"`
 			AvatarDetail       interface{} `json:"avatarDetail"`
 			UserType           int         `json:"userType"`
 			UserId             int         `json:"userId"`
@@ -67,11 +67,11 @@ type SendMsgData struct {
 		} `json:"toUser"`
 		RealFromUser interface{} `json:"realFromUser"`
 		Msg          string      `json:"msg"`
-		Time         int64       `json:"time"`
+		Time         int         `json:"time"`
 		BatchId      int         `json:"batchId"`
-		Id           int64       `json:"id"`
+		Id           int         `json:"id"`
 	} `json:"newMsgs"`
-	Id            int64 `json:"id"`
+	Id            int   `json:"id"`
 	Sendblacklist []int `json:"sendblacklist"`
 	Blacklist     []int `json:"blacklist"`
 }

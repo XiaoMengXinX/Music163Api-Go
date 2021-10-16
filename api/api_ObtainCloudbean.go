@@ -25,7 +25,7 @@ func CreateObtainCloudbeanReqJson(userMissionID, period int) string {
 	return string(reqBodyJson)
 }
 
-// ObtainCloudbean 领取云豆
+// ObtainCloudbean 领取云豆, userMissionID, period 需通过 GetMusicianTasks 获取
 func ObtainCloudbean(data utils.RequestData, userMissionID, period int) (result types.ObtainCloudebeanData, err error) {
 	var options utils.EapiOption
 	options.Path = ObtainCloudbeanAPI

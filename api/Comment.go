@@ -39,12 +39,15 @@ const (
 // ResType 0: 歌曲(默认), 1: mv, 2: 歌单, 3: 专辑, 4: 电台, 5: 视频, 6: Mlog, 7: 动态.
 // ForwardEvent 只在发送或回复评论时有效.
 type CommentConfig struct {
-	ResType int
 	// ResType 0: 歌曲(默认), 1: mv, 2: 歌单, 3: 专辑, 4: 电台, 5: 视频, 6: Mlog, 7: 动态
-	ResID        int
-	CommentID    int
+	ResType int
+	// ResID 资源 ID
+	ResID int
+	// CommentID 评论 ID
+	CommentID int
+	// ForwardEvent 是否转发到动态, 只在发送或回复评论时有效
 	ForwardEvent bool
-	// ForwardEvent 只在发送或回复评论时有效
+	// Content 评论内容
 	Content string
 }
 

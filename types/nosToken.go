@@ -18,6 +18,6 @@ type NosTokenData struct {
 		OuterUrl   string `json:"outerUrl"`
 		DocId      string `json:"docId"`
 		ObjectKey  string `json:"objectKey"`
-		ResourceId int64  `json:"resourceId"`
+		ResourceId int    `json:"resourceId"`
 	} `json:"data"`
 }

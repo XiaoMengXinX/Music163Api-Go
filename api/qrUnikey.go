@@ -6,8 +6,8 @@ import (
 	"github.com/XiaoMengXinX/Music163Api-Go/utils"
 )
 
-// QrUnikey 获取 QR 登录的 unikey
-const QrUnikey = "/api/login/qrcode/unikey"
+// QrUnikeyAPI 获取 QR 登录的 unikey
+const QrUnikeyAPI = "/api/login/qrcode/unikey"
 
 // QrUniKeyReq QrUnikey API 的 body json
 type QrUniKeyReq struct {
@@ -16,8 +16,8 @@ type QrUniKeyReq struct {
 	Header string `json:"header"`
 }
 
-// CreateGetQrUnikeyJSON 创建请求 body json
-func CreateGetQrUnikeyJSON() string {
+// CreateGetQrUnikeyJson 创建请求 body json
+func CreateGetQrUnikeyJson() string {
 	reqBody := QrUniKeyReq{
 		Type:   "3",
 		ER:     true,
@@ -30,9 +30,9 @@ func CreateGetQrUnikeyJSON() string {
 // GetQrUnikey 获取 QR 登录的 unikey
 func GetQrUnikey(data utils.RequestData) (result types.QrUnikeyData, err error) {
 	var options utils.EapiOption
-	options.Path = QrUnikey
+	options.Path = QrUnikeyAPI
 	options.Url = "https://music.163.com/eapi/login/qrcode/unikey"
-	options.Json = CreateGetQrUnikeyJSON()
+	options.Json = CreateGetQrUnikeyJson()
 	resBody, _, err := utils.EapiRequest(options, data)
 	if err != nil {
 		return result, err

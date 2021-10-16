@@ -23,12 +23,12 @@ type UploadEventImgData struct {
 	RawJson    string
 	PicSubtype string
 	PicInfo    struct {
-		OriginId         int64  `json:"originId"`
-		SquareId         int64  `json:"squareId"`
-		RectangleId      int64  `json:"rectangleId"`
-		PcSquareId       int64  `json:"pcSquareId"`
-		PcRectangleId    int64  `json:"pcRectangleId"`
-		OriginJpgId      int64  `json:"originJpgId"`
+		OriginId         int    `json:"originId"`
+		SquareId         int    `json:"squareId"`
+		RectangleId      int    `json:"rectangleId"`
+		PcSquareId       int    `json:"pcSquareId"`
+		PcRectangleId    int    `json:"pcRectangleId"`
+		OriginJpgId      int    `json:"originJpgId"`
 		Format           string `json:"format"`
 		Width            int    `json:"width"`
 		Height           int    `json:"height"`
