@@ -41,7 +41,7 @@ func ApiRequest(eapiOption EapiOption, options RequestData) (result, header stri
 	answer, header, err := CreateNewRequest(Format2Params(data), eapiOption.Url, options)
 	if err == nil {
 		if log.GetLevel() == log.DebugLevel {
-			log.Debugf("[ApiRespBodyHex]: %s", hex.EncodeToString([]byte(answer)))
+			log.Debugf("[ApiRespBodyJson]: %s", answer)
 		}
 		return answer, header, nil
 	}
