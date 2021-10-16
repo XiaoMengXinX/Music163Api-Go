@@ -26,7 +26,7 @@ const (
 	ResTypeEvent = "A_EV_2"
 )
 
-// Reply CommentAPI 回复评论 API
+// ReplyCommentAPI 回复评论 API
 const ReplyCommentAPI = "/api/v1/resource/comments/reply"
 
 // DelCommentAPI 删除评论 API
