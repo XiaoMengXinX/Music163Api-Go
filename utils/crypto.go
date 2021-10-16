@@ -60,8 +60,8 @@ func EapiEncrypt(data string) (encrypted []byte) {
 	return encryptECB(data, eapiKey)
 }
 
-// MarkerAesEncryptECB 163 key 加密
-func MarkerAesEncryptECB(data string) (encrypted []byte) {
+// MarkerEncrypt 163 key 加密
+func MarkerEncrypt(data string) (encrypted []byte) {
 	return encryptECB(data, markerKey)
 }
 
@@ -75,7 +75,7 @@ func EapiDecrypt(encrypted []byte) (decrypted []byte) {
 	return decryptECB(encrypted, eapiKey)
 }
 
-// MarkerAesDecryptECB 163 key 解密
-func MarkerAesDecryptECB(encrypted []byte) (decrypted []byte) {
+// MarkerDecrypt 163 key 解密
+func MarkerDecrypt(encrypted []byte) (decrypted []byte) {
 	return decryptECB(encrypted, markerKey)
 }
