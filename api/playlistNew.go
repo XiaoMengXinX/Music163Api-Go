@@ -7,7 +7,7 @@ import (
 )
 
 // NewPlayListAPI 新建歌单 API
-var NewPlayListAPI = "/api/playlist/create"
+const NewPlayListAPI = "/api/playlist/create"
 
 // NewPlaylistReq NewPlaylist API 的 body json
 type NewPlaylistReq struct {

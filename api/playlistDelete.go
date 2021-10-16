@@ -7,7 +7,7 @@ import (
 )
 
 // DelPlayListAPI 删除歌单 API
-var DelPlayListAPI = "/api/playlist/delete"
+const DelPlayListAPI = "/api/playlist/delete"
 
 // DelPlaylistReq DelPlaylist API 的 body json
 type DelPlaylistReq struct {
