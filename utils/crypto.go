@@ -55,7 +55,7 @@ func decryptECB(encrypted []byte, keyStr string) (decrypted []byte) {
 	return decrypted[:trim]
 }
 
-// AesEncryptECB eapi 加密
+// EapiEncrypt eapi 加密
 func EapiEncrypt(data string) (encrypted []byte) {
 	return encryptECB(data, eapiKey)
 }
@@ -70,7 +70,7 @@ func CacheKeyEncrypt(data string) (encrypted []byte) {
 	return encryptECB(data, cacheKey)
 }
 
-// AesDecryptECB eapi 解密
+// EapiDecrypt eapi 解密
 func EapiDecrypt(encrypted []byte) (decrypted []byte) {
 	return decryptECB(encrypted, eapiKey)
 }
