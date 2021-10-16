@@ -25,7 +25,7 @@ func EapiRequest(eapiOption EapiOption, options RequestData) (result, header str
 			log.Debugf("[EapiRespBodyHex]: %s", hex.EncodeToString([]byte(answer)))
 		}
 		var decrypted []byte
-		decrypted = AesDecryptECB([]byte(answer))
+		decrypted = EapiDecrypt([]byte(answer))
 		if log.GetLevel() == log.DebugLevel {
 			log.Debugf("[EapiRespBodyJson]: %s", string(decrypted))
 			log.Debugf("[EapiRespHeaderJson]: %s", header)
@@ -72,7 +72,7 @@ func SpliceStr(path string, data string) (result string) {
 
 // Format2Params 拼接字符串
 func Format2Params(str string) (data string) {
-	data = fmt.Sprintf("params=%X", AesEncryptECB(str))
+	data = fmt.Sprintf("params=%X", EapiEncrypt(str))
 	return data
 }
 
