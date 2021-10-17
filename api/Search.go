@@ -50,6 +50,16 @@ type SearchSongReq struct {
 	ER     string `json:"e_r"`
 }
 
+// SearchSongConfig 搜索歌曲参数
+type SearchSongConfig struct {
+	// Keyword 搜索关键词
+	Keyword string
+	// Limit 最大返回结果个数 (默认为20)
+	Limit int
+	// Offset 偏移数量, 用于分页 (默认为0)
+	Offset int
+}
+
 // CreateSearchSuggestReqJson 创建请求 body json
 func CreateSearchSuggestReqJson(keyword string) string {
 	reqBody := SearchSuggestReq{
@@ -86,14 +96,14 @@ func CreateSearchComplexReqJson(keyword string) string {
 }
 
 // CreateSearchSongReqJson 创建请求 body json
-func CreateSearchSongReqJson(keyword string, offset, limit int) string {
-	if limit == 0 {
-		limit = 20
+func CreateSearchSongReqJson(config SearchSongConfig) string {
+	if config.Limit == 0 {
+		config.Limit = 20
 	}
 	reqBody := SearchSongReq{
-		S:      keyword,
-		Offset: offset,
-		Limit:  limit,
+		S:      config.Keyword,
+		Offset: config.Offset,
+		Limit:  config.Limit,
 		Header: "{}",
 		ER:     "true",
 	}
@@ -149,12 +159,12 @@ func SearchComplex(data utils.RequestData, keyword string) (result types.SearchC
 	return result, err
 }
 
-// SearchSong 歌曲搜索, offset: 偏移数量, 用于分页 (默认为0), limit: 最大返回结果个数 (默认为20)
-func SearchSong(data utils.RequestData, keyword string, offset, limit int) (result types.SearchSongData, err error) {
+// SearchSong 歌曲搜索
+func SearchSong(data utils.RequestData, config SearchSongConfig) (result types.SearchSongData, err error) {
 	var options utils.EapiOption
 	options.Path = SearchSongAPI
 	options.Url = "https://music.163.com/eapi/v1/search/song/get"
-	reqBodyJson := CreateSearchSongReqJson(keyword, offset, limit)
+	reqBodyJson := CreateSearchSongReqJson(config)
 	options.Json = reqBodyJson
 	resBody, _, err := utils.EapiRequest(options, data)
 	if err != nil {

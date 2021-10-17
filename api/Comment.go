@@ -39,11 +39,9 @@ const AddCommentAPI = "/api/v1/resource/comments/add"
 const GetCommentAPI = "/api/v2/resource/comments"
 
 // CommentConfig 回复/发送/删除评论参数.
-// ResType 0: 歌曲(默认), 1: mv, 2: 歌单, 3: 专辑, 4: 电台, 5: 视频, 6: Mlog, 7: 动态.
-// ForwardEvent 只在发送或回复评论时有效.
 type CommentConfig struct {
-	// ResType 0: 歌曲(默认), 1: mv, 2: 歌单, 3: 专辑, 4: 电台, 5: 视频, 6: Mlog, 7: 动态
-	ResType int
+	// ResType 对应常量 ResTypeXXX
+	ResType string
 	// ResID 资源 ID
 	ResID int
 	// CommentID 评论 ID
@@ -66,8 +64,8 @@ type CommentReq struct {
 
 // GetCommentConfig 获取评论参数
 type GetCommentConfig struct {
-	// ResType 0: 歌曲(默认), 1: mv, 2: 歌单, 3: 专辑, 4: 电台, 5: 视频, 6: Mlog, 7: 动态
-	ResType int
+	// ResType 对应常量 ResTypeXXX
+	ResType string
 	// ResID 资源 ID
 	ResID int
 	// PageNo 分页参数,第N页,默认为1
@@ -94,10 +92,9 @@ type GetCommentReq struct {
 
 // CreateCommentJson 创建请求 body json
 func CreateCommentJson(config CommentConfig) string {
-	resExt := parseRestype(config.ResType)
 	reqBody := CommentReq{
 		Content:   config.Content,
-		ThreadId:  fmt.Sprintf("%s_%d", resExt, config.ResID),
+		ThreadId:  fmt.Sprintf("%s_%d", config.ResType, config.ResID),
 		CommentId: fmt.Sprintf("%d", config.CommentID),
 		Header:    "{}",
 		ER:        "true",
@@ -113,10 +110,9 @@ func CreateCommentJson(config CommentConfig) string {
 
 // CreateGetCommentJson 创建请求 body json
 func CreateGetCommentJson(config GetCommentConfig) string {
-	resExt := parseRestype(config.ResType)
 	reqBody := GetCommentReq{
 		ShowInner: false,
-		ThreadId:  fmt.Sprintf("%s_%d", resExt, config.ResID),
+		ThreadId:  fmt.Sprintf("%s_%d", config.ResType, config.ResID),
 		Header:    "{}",
 		ER:        "true",
 	}
@@ -142,29 +138,6 @@ func CreateGetCommentJson(config GetCommentConfig) string {
 	}
 	reqBodyJson, _ := json.Marshal(reqBody)
 	return string(reqBodyJson)
-}
-
-func parseRestype(resType int) string {
-	var resExt string
-	switch resType {
-	case 0:
-		resExt = ResTypeMusic
-	case 1:
-		resExt = ResTypeMV
-	case 2:
-		resExt = ResTypePlaylist
-	case 3:
-		resExt = ResTypeAlbum
-	case 4:
-		resExt = ResTypeRadio
-	case 5:
-		resExt = ResTypeVideo
-	case 6:
-		resExt = ResTypeMlog
-	case 7:
-		resExt = ResTypeEvent
-	}
-	return resExt
 }
 
 // AddComment 新增评论
