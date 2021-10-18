@@ -70,7 +70,7 @@ func main() {
 data := utils.RequestData{
     Cookies: utils.Cookies{
         {
-            Key:   "MUSIC_U", // 获取无损音质需填写 Cookies 中的 MUSIC_U
+            Name:   "MUSIC_U", // 获取无损音质需填写 Cookies 中的 MUSIC_U
             Value: "YOUR_COOKIE",
         },
     },
@@ -95,7 +95,7 @@ http://m8.music.126.net/20210829141922/e77fa9b153aaadd41bf5e344ce7c847e/ymusic/0
 data := utils.RequestData{
     Cookies: utils.Cookies{
         {
-            Key:   "MUSIC_U",
+            Name:   "MUSIC_U",
             Value: "YOUR_COOKIE",
         },
     },

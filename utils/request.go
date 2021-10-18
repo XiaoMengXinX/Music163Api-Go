@@ -2,7 +2,6 @@ package utils
 
 import (
 	"crypto/md5"
-	"encoding/hex"
 	"fmt"
 	log "github.com/sirupsen/logrus"
 	"io"
@@ -20,11 +19,12 @@ func EapiRequest(eapiOption EapiOption, options RequestData) (result string, hea
 	data := SpliceStr(eapiOption.Path, eapiOption.Json)
 	answer, header, err := CreateNewRequest(Format2Params(data), eapiOption.Url, options)
 	if err == nil {
-		if log.GetLevel() == log.DebugLevel {
-			log.Debugf("[EapiRespBodyHex]: %s", hex.EncodeToString([]byte(answer)))
-		}
-		var decrypted []byte
-		decrypted = EapiDecrypt([]byte(answer))
+		/*
+			if log.GetLevel() == log.DebugLevel {
+				log.Debugf("[EapiRespBodyHex]: %s", hex.EncodeToString([]byte(answer)))
+			}
+		*/
+		decrypted := EapiDecrypt([]byte(answer))
 		if log.GetLevel() == log.DebugLevel {
 			log.Debugf("[EapiRespBodyJson]: %s", string(decrypted))
 			log.Debugf("[EapiRespHeader]: %s", header)
@@ -110,74 +110,30 @@ func CreateNewRequest(data string, url string, options RequestData) (answer stri
 	}
 
 	cookie := map[string]interface{}{}
-	for i := 0; i < len(options.Cookies); i++ {
-		cookie[options.Cookies[i].Name] = options.Cookies[i].Value
+	for _, v := range options.Cookies {
+		cookie[v.Name] = v.Value
 	}
 
-	for i := 0; i < len(options.Headers); i++ {
-		req.Header.Set(options.Headers[i].Name, options.Headers[i].Value)
+	for _, v := range options.Headers {
+		req.Header.Set(v.Name, v.Value)
 	}
 
-	csrfValue, isok := cookie["__csrf"]
-	csrfToken := ""
-	if isok {
-		csrfToken = fmt.Sprintf("%v", csrfValue)
-	}
-	header := make(map[string]interface{})
-	keys := [...]string{"osver", "deviceId", "mobilename", "channel"}
-	for _, val := range keys {
-		value, ok := cookie[val]
+	cookie["appver"] = "6.5.0"
+	cookie["versioncode"] = "164"
+	cookie["buildver"] = strconv.FormatInt(time.Now().Unix(), 10)[0:10]
+	cookie["resolution"] = "1920x1080"
+	cookie["os"] = "android"
+
+	_, ok := cookie["MUSIC_U"]
+	if !ok {
+		_, ok := cookie["MUSIC_A"]
 		if ok {
-			header[val] = value
+			cookie["MUSIC_A"] = "4ee5f776c9ed1e4d5f031b09e084c6cb333e43ee4a841afeebbef9bbf4b7e4152b51ff20ecb9e8ee9e89ab23044cf50d1609e4781e805e73a138419e5583bc7fd1e5933c52368d9127ba9ce4e2f233bf5a77ba40ea6045ae1fc612ead95d7b0e0edf70a74334194e1a190979f5fc12e9968c3666a981495b33a649814e309366"
 		}
-	}
-	header["appver"] = func() string {
-		val, ok := cookie["appver"]
-		if ok {
-			return fmt.Sprintf("%v", val)
-		}
-		return "6.5.0"
-	}()
-	header["versioncode"] = func() string {
-		val, ok := cookie["versioncode"]
-		if ok {
-			return fmt.Sprintf("%v", val)
-		}
-		return "164"
-	}()
-	header["buildver"] = func() string {
-		val, ok := cookie["buildver"]
-		if ok {
-			return fmt.Sprintf("%v", val)
-		}
-		return strconv.FormatInt(time.Now().Unix(), 10)[0:10]
-	}()
-	header["resolution"] = func() string {
-		val, ok := cookie["resolution"]
-		if ok {
-			return fmt.Sprintf("%v", val)
-		}
-		return "1920x1080"
-	}()
-	header["os"] = func() string {
-		val, ok := cookie["os"]
-		if ok {
-			return fmt.Sprintf("%v", val)
-		}
-		return "android"
-	}()
-	header["__csrf"] = csrfToken
-	cookieMusicU, ok := cookie["MUSIC_U"]
-	if ok {
-		header["MUSIC_U"] = cookieMusicU
-	}
-	cookieMusicA, ok := cookie["MUSIC_A"]
-	if ok {
-		header["MUSIC_A"] = cookieMusicA
 	}
 
 	var cookies string
-	for key, val := range header {
+	for key, val := range cookie {
 		cookies += encodeURIComponent(key) + "=" + encodeURIComponent(fmt.Sprintf("%v", val)) + "; "
 	}
 	req.Header.Set("Cookie", strings.TrimRight(cookies, "; "))
