@@ -3,7 +3,6 @@ package utils
 import (
 	"crypto/md5"
 	"encoding/hex"
-	"encoding/json"
 	"fmt"
 	log "github.com/sirupsen/logrus"
 	"io"
@@ -17,7 +16,7 @@ import (
 )
 
 // EapiRequest eapi 请求
-func EapiRequest(eapiOption EapiOption, options RequestData) (result, header string, err error) {
+func EapiRequest(eapiOption EapiOption, options RequestData) (result string, header http.Header, err error) {
 	data := SpliceStr(eapiOption.Path, eapiOption.Json)
 	answer, header, err := CreateNewRequest(Format2Params(data), eapiOption.Url, options)
 	if err == nil {
@@ -28,24 +27,25 @@ func EapiRequest(eapiOption EapiOption, options RequestData) (result, header str
 		decrypted = EapiDecrypt([]byte(answer))
 		if log.GetLevel() == log.DebugLevel {
 			log.Debugf("[EapiRespBodyJson]: %s", string(decrypted))
-			log.Debugf("[EapiRespHeaderJson]: %s", header)
+			log.Debugf("[EapiRespHeader]: %s", header)
 		}
 		return string(decrypted), header, nil
 	}
-	return "", "", err
+	return "", header, err
 }
 
 // ApiRequest 用于非 eapi (即返回 body 未加密的 API) 请求
-func ApiRequest(eapiOption EapiOption, options RequestData) (result, header string, err error) {
+func ApiRequest(eapiOption EapiOption, options RequestData) (result string, header http.Header, err error) {
 	data := SpliceStr(eapiOption.Path, eapiOption.Json)
 	answer, header, err := CreateNewRequest(Format2Params(data), eapiOption.Url, options)
 	if err == nil {
 		if log.GetLevel() == log.DebugLevel {
 			log.Debugf("[ApiRespBodyJson]: %s", answer)
+			log.Debugf("[ApiRespHeader]: %s", header)
 		}
 		return answer, header, nil
 	}
-	return "", "", err
+	return "", header, err
 }
 
 // RawRequest 用于上传文件
@@ -101,12 +101,12 @@ func encodeURIComponent(str string) string {
 }
 
 // CreateNewRequest 创建 eapi 请求
-func CreateNewRequest(data string, url string, options RequestData) (answer, resHeader string, err error) {
+func CreateNewRequest(data string, url string, options RequestData) (answer string, resHeader http.Header, err error) {
 	client := &http.Client{}
 	reqBody := strings.NewReader(data)
 	req, err := http.NewRequest("POST", url, reqBody)
 	if err != nil {
-		return "", "", err
+		return "", resHeader, err
 	}
 
 	cookie := map[string]interface{}{}
@@ -197,7 +197,7 @@ func CreateNewRequest(data string, url string, options RequestData) (answer, res
 
 	resp, err := client.Do(req)
 	if err != nil {
-		return "", "", err
+		return "", resHeader, err
 	}
 
 	defer func(Body io.ReadCloser) {
@@ -209,17 +209,12 @@ func CreateNewRequest(data string, url string, options RequestData) (answer, res
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return "", "", err
-	}
-
-	resultHeader, err := json.Marshal(resp.Header)
-	if err != nil {
-		return "", "", err
+		return "", resHeader, err
 	}
 
 	if log.GetLevel() == log.DebugLevel {
 		log.Debugf("[EapiResp]: %+v", resp)
 	}
 
-	return string(body), string(resultHeader), nil
+	return string(body), resp.Header, nil
 }

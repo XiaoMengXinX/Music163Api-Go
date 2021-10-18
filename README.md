@@ -71,7 +71,7 @@ data := utils.RequestData{
     Cookies: utils.Cookies{
         {
             Key:   "MUSIC_U", // 获取无损音质需填写 Cookies 中的 MUSIC_U
-            Value: "984e8c072dc9c670f40d019a3699f326a6d9565cd22e7bcb944dfa4deb7124ae33a649814",
+            Value: "YOUR_COOKIE",
         },
     },
 }
@@ -89,33 +89,32 @@ http://m8.music.126.net/20210829141922/e77fa9b153aaadd41bf5e344ce7c847e/ymusic/0
 
 #### Batch 批处理
 
-示例：获取当前 Cookie 的用户 ID
+示例：获取当前 Cookie 的用户 ID、获取歌曲ID:1416956209 的详细信息
 
 ```go
 data := utils.RequestData{
     Cookies: utils.Cookies{
         {
             Key:   "MUSIC_U",
-            Value: "984e8c072dc9c670f40d019a3699f326a6d9565cd22e7bcb944dfa4deb7124ae33a649814e309366",
+            Value: "YOUR_COOKIE",
         },
     },
 }
 
-// 旧版本略繁琐的 Batch 处理方法
-batch := api.Batch{} // 创建 Batch 对象
-batch.Init() // Batch 初始化
-batch.Add(api.BatchAPI{Key: api.UserSetting}) // 添加要 Batch 的 API
+batch := api.NewBatch(api.BatchAPI{Key: api.UserSettingAPI}) // 创建初始化 Batch 对象并添加 API
+batch.Add(api.BatchAPI{Key: api.SongDetailAPI, Json: api.CreateSongDetailReqJson([]int{1416956209})}) // 继续添加要批处理的 API
 
-// 新版本更简洁的 Batch 处理方法
-batch := api.NewBatch(api.BatchAPI{Key: api.UserSetting}) // 创建初始化 Batch 对象并添加 API
-batch.Add(api.BatchAPI{Key: api.SongDetail,Json: api.CreateSongDetailReqJson([]int{1416956209})}) // 也可以继续添加要批处理的 API
+_, _, _ = batch.Do(data) // 请求 Batch API
 
-result ,_ ,_ := batch.Do(data) // 请求 Batch API
+result := batch.Parse() // 解析返回的 Json
 
-var userData types.BatchUserSettingData
-_ = json.Unmarshal([]byte(result), &userData) // Batch 需额外解析 json 数据
+var userData  types.UserSettingData
+_ = json.Unmarshal([]byte(result[api.UserSettingAPI]), &userData) // 解析 Json 到 struct
 
-fmt.Println(userData.Api.Setting.UserId) // 打印用户 ID
+var songDetail types.SongsDetailData
+_ = json.Unmarshal([]byte(result[api.SongDetailAPI]), &songDetail) // 解析 Json 到 struct
+
+fmt.Println(userData.Setting.UserId) // 打印 UserID
 ```
 
 Batch 可用的 API 列表详见 https://pkg.go.dev/github.com/XiaoMengXinX/Music163Api-Go/api#pkg-constants
