@@ -127,7 +127,7 @@ func CreateNewRequest(data string, url string, options RequestData) (answer stri
 	_, ok := cookie["MUSIC_U"]
 	if !ok {
 		_, ok := cookie["MUSIC_A"]
-		if ok {
+		if !ok {
 			cookie["MUSIC_A"] = "4ee5f776c9ed1e4d5f031b09e084c6cb333e43ee4a841afeebbef9bbf4b7e4152b51ff20ecb9e8ee9e89ab23044cf50d1609e4781e805e73a138419e5583bc7fd1e5933c52368d9127ba9ce4e2f233bf5a77ba40ea6045ae1fc612ead95d7b0e0edf70a74334194e1a190979f5fc12e9968c3666a981495b33a649814e309366"
 		}
 	}

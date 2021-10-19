@@ -72,7 +72,7 @@ type GetCommentConfig struct {
 	PageNo int
 	// PageSize 分页参数,每页多少条数据,默认20
 	PageSize int
-	// SortType 排序方式,1:按推荐排序,2:按热度排序,3:按时间排序
+	// SortType 排序方式,99:按推荐排序,2:按热度排序,3:按时间排序,默认为99
 	SortType int
 	// Cursor 当sortType为3时且页数不是第一页时需传入,值为上一条数据的time
 	Cursor int
@@ -127,7 +127,7 @@ func CreateGetCommentJson(config GetCommentConfig) string {
 		reqBody.PageSize = config.PageSize
 	}
 	if config.SortType == 0 {
-		reqBody.SortType = 1
+		reqBody.SortType = 99
 	} else {
 		reqBody.SortType = config.SortType
 	}
