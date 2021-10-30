@@ -8,12 +8,15 @@
 
 ## 说明
 
-与 [Binaryify/NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi) 不同的是，本项目将全部采用 Eapi（即网易云音乐客户端使用的API）
+与 [Binaryify/NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi) 不同的是，本项目将全部采用
+Eapi（即网易云音乐客户端使用的API）
 
 本项目可能会很咕，欢迎各位的 issue 与 pr
 
 ## API 列表
+
 目前仅实现了少部分API：
+
 - 获取音乐 URL
 - 获取音乐详细信息
 - 发送私信（支持图片）
@@ -44,17 +47,17 @@
 package main
 
 import (
-   "fmt"
-   "github.com/XiaoMengXinX/Music163Api-Go/api"
-   "github.com/XiaoMengXinX/Music163Api-Go/utils"
+	"fmt"
+	"github.com/XiaoMengXinX/Music163Api-Go/api"
+	"github.com/XiaoMengXinX/Music163Api-Go/utils"
 )
 
 func main() {
-   data := utils.RequestData{}
+	data := utils.RequestData{}
 
-    result, _ := api.GetSongDetail(data, []int{1295601353}) // 获取 ID:1295601353 的详细信息
+	result, _ := api.GetSongDetail(data, []int{1295601353}) // 获取 ID:1295601353 的详细信息
 
-   fmt.Println(result.Songs[0].Name) // 打印歌曲名称
+	fmt.Println(result.Songs[0].Name) // 打印歌曲名称
 }
 ```
 
@@ -67,24 +70,35 @@ func main() {
 #### GetSongURL 获取歌曲 URL
 
 ```go
-data := utils.RequestData{
-    Cookies: utils.Cookies{
-        {
-            Name:   "MUSIC_U", // 获取无损音质需填写 Cookies 中的 MUSIC_U
-            Value: "YOUR_COOKIE",
-        },
-    },
+package main
+
+import (
+	"fmt"
+	"github.com/XiaoMengXinX/Music163Api-Go/api"
+	"github.com/XiaoMengXinX/Music163Api-Go/utils"
+	"net/http"
+)
+
+func main() {
+	data := utils.RequestData{
+		Cookies: []*http.Cookie{
+			{
+				Name:  "MUSIC_U", // 获取无损音质需填写 Cookies 中的 MUSIC_U
+				Value: "8bc6da9b916433c064c742a9ca02f1405cccf02062aac31cdfea4eb6024e0d2248eecaa9668dfe7f43124f3fcebe94e446b14e3f0c3f8af929f5e126cc9926cbc3061cd18d77b7a0",
+			},
+		},
+	}
+
+	result, _ := api.GetSongURL(data, api.SongURLConfig{Ids: []int{1295601353}}) // 获取 ID:1295601353 的歌曲 URL
+
+	fmt.Println(result.Data[0].Url) // 打印歌曲 URL
 }
-
-result, _ := api.GetSongURL(data, api.SongURLConfig{Ids: []int{1295601353}}) // 获取 ID:1295601353 的歌曲 URL
-
-fmt.Println(result.Data[0].Url) // 打印歌曲 URL
 ```
 
 返回
 
 ```
-http://m8.music.126.net/20210829141922/e77fa9b153aaadd41bf5e344ce7c847e/ymusic/0edd/e4e3/4eaf/d2db5cbbef195ff34812eb8c82c83d67.flac
+http://m8.music.126.net/20211031014702/3ace83970e99ef576e4fc350f095382f/ymusic/0edd/e4e3/4eaf/d2db5cbbef195ff34812eb8c82c83d67.flac
 ```
 
 #### Batch 批处理
@@ -92,29 +106,41 @@ http://m8.music.126.net/20210829141922/e77fa9b153aaadd41bf5e344ce7c847e/ymusic/0
 示例：获取当前 Cookie 的用户 ID、获取歌曲ID:1416956209 的详细信息
 
 ```go
-data := utils.RequestData{
-    Cookies: utils.Cookies{
-        {
-            Name:   "MUSIC_U",
-            Value: "YOUR_COOKIE",
-        },
-    },
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"github.com/XiaoMengXinX/Music163Api-Go/api"
+	"github.com/XiaoMengXinX/Music163Api-Go/types"
+	"github.com/XiaoMengXinX/Music163Api-Go/utils"
+	"net/http"
+)
+
+func main() {
+	data := utils.RequestData{
+		Cookies: []*http.Cookie{
+			{
+				Name:  "MUSIC_U",
+				Value: "8bc6da9b916433c064c742a9ca02f1405cccf02062aac31cdfea4eb6024e0d2248eecaa9668dfe7f43124f3fcebe94e446b14e3f0c3f8af929f5e126cc9926cbc3061cd18d77b7a0",
+			},
+		},
+	}
+
+	batch := api.NewBatch(api.BatchAPI{Key: api.UserSettingAPI})                                          // 创建初始化 Batch 对象并添加 API
+	batch.Add(api.BatchAPI{Key: api.SongDetailAPI, Json: api.CreateSongDetailReqJson([]int{1416956209})}) // 继续添加要批处理的 API
+
+	_, result := batch.Do(data).Parse()                                                                   // 请求 Batch API 并解析返回的 Json
+
+	var userData types.UserSettingData
+	_ = json.Unmarshal([]byte(result[api.UserSettingAPI]), &userData) // 解析 Json 到 struct
+
+	var songDetail types.SongsDetailData
+	_ = json.Unmarshal([]byte(result[api.SongDetailAPI]), &songDetail) // 解析 Json 到 struct
+
+	fmt.Println(songDetail.Songs[0].Al.Name) // 打印歌曲专辑名称
+	fmt.Println(userData.Setting.UserId) // 打印 UserID
 }
-
-batch := api.NewBatch(api.BatchAPI{Key: api.UserSettingAPI}) // 创建初始化 Batch 对象并添加 API
-batch.Add(api.BatchAPI{Key: api.SongDetailAPI, Json: api.CreateSongDetailReqJson([]int{1416956209})}) // 继续添加要批处理的 API
-
-_, _, _ = batch.Do(data) // 请求 Batch API
-
-result := batch.Parse() // 解析返回的 Json
-
-var userData  types.UserSettingData
-_ = json.Unmarshal([]byte(result[api.UserSettingAPI]), &userData) // 解析 Json 到 struct
-
-var songDetail types.SongsDetailData
-_ = json.Unmarshal([]byte(result[api.SongDetailAPI]), &songDetail) // 解析 Json 到 struct
-
-fmt.Println(userData.Setting.UserId) // 打印 UserID
 ```
 
 Batch 可用的 API 列表详见 https://pkg.go.dev/github.com/XiaoMengXinX/Music163Api-Go/api#pkg-constants

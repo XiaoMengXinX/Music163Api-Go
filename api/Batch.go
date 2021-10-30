@@ -21,10 +21,11 @@ type BatchAPI struct {
 }
 
 // Add 添加 API
-func (b *Batch) Add(apis ...BatchAPI) {
+func (b *Batch) Add(apis ...BatchAPI) *Batch {
 	for _, api := range apis {
 		b.API[api.Key] = api.Json
 	}
+	return b
 }
 
 // Do 请求批处理 API
