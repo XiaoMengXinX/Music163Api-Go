@@ -15,4 +15,4 @@
 # vendor/
 
 .idea/
-testapi.go
+/testapi.go
