@@ -43,6 +43,8 @@ Eapi（即网易云音乐客户端使用的API）
 
 #### GetSongDetail 获取歌曲详细信息
 
+[在 replit 上试试](https://replit.com/@xibaole2333/Music163Api-Go-demo1)
+
 ```go
 package main
 
@@ -68,6 +70,8 @@ func main() {
 ```
 
 #### GetSongURL 获取歌曲 URL
+
+[在 replit 上试试](https://replit.com/@xibaole2333/Music163Api-Go-demo2)
 
 ```go
 package main
@@ -104,6 +108,8 @@ http://m8.music.126.net/20211031014702/3ace83970e99ef576e4fc350f095382f/ymusic/0
 #### Batch 批处理
 
 示例：获取当前 Cookie 的用户 ID、获取歌曲ID:1416956209 的详细信息
+
+[在 replit 上试试](https://replit.com/@xibaole2333/Music163Api-Go-demo3)
 
 ```go
 package main
