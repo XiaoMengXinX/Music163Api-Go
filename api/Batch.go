@@ -10,6 +10,8 @@ import (
 type Batch struct {
 	API    map[string]interface{}
 	Result string
+	Header http.Header
+	Error  error
 }
 
 // BatchAPI 被批处理的 API
@@ -26,22 +28,22 @@ func (b *Batch) Add(apis ...BatchAPI) {
 }
 
 // Do 请求批处理 API
-func (b *Batch) Do(data utils.RequestData) (bodyJson string, heeader http.Header, err error) {
+func (b *Batch) Do(data utils.RequestData) *Batch {
 	reqBodyJson, err := json.Marshal(b.API)
 	if err != nil {
-		return bodyJson, heeader, err
+		b.Error = err
+		return b
 	}
 	var options utils.EapiOption
 	options.Path = "/api/batch"
 	options.Url = "https://music.163.com/eapi/batch"
 	options.Json = string(reqBodyJson)
-	bodyJson, heeader, err = utils.EapiRequest(options, data)
-	b.Result = bodyJson
-	return bodyJson, heeader, err
+	b.Result, b.Header, b.Error = utils.EapiRequest(options, data)
+	return b
 }
 
 // Parse 解析 Batch 的 Json 数据
-func (b *Batch) Parse() map[string]string {
+func (b *Batch) Parse() (*Batch, map[string]string) {
 	jsonData := make(map[string]interface{})
 	jsonMap := make(map[string]string)
 	_ = json.Unmarshal([]byte(b.Result), &jsonData)
@@ -49,12 +51,12 @@ func (b *Batch) Parse() map[string]string {
 		jsonStr, _ := json.Marshal(v)
 		jsonMap[k] = string(jsonStr)
 	}
-	return jsonMap
+	return b, jsonMap
 }
 
 // NewBatch 新建 Batch 对象
-func NewBatch(apis ...BatchAPI) Batch {
-	b := Batch{}
+func NewBatch(apis ...BatchAPI) *Batch {
+	b := &Batch{}
 	b.API = make(map[string]interface{})
 	b.API["e_r"] = "true"
 	b.API["header"] = "{}"
