@@ -9,7 +9,7 @@
 ## 说明
 
 与 [Binaryify/NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi) 不同的是，本项目将全部采用
-Eapi（即网易云音乐客户端使用的API）
+Eapi(即网易云音乐客户端使用的API)
 
 本项目可能会很咕，欢迎各位的 issue 与 pr
 
@@ -19,6 +19,7 @@ Eapi（即网易云音乐客户端使用的API）
 
 - 批处理
 - 获取音乐 URL
+- 获取音乐歌词
 - 获取音乐详细信息
 - 获取专辑详细信息
 - 获取歌单详细信息
@@ -143,7 +144,7 @@ func main() {
 	batch := api.NewBatch(api.BatchAPI{Key: api.UserSettingAPI})                                          // 创建初始化 Batch 对象并添加 API
 	batch.Add(api.BatchAPI{Key: api.SongDetailAPI, Json: api.CreateSongDetailReqJson([]int{1416956209})}) // 继续添加要批处理的 API
 
-	_, result := batch.Do(data).Parse()                                                                   // 请求 Batch API 并解析返回的 Json
+	_, result := batch.Do(data).Parse() // 请求 Batch API 并解析返回的 Json
 
 	var userData types.UserSettingData
 	_ = json.Unmarshal([]byte(result[api.UserSettingAPI]), &userData) // 解析 Json 到 struct
@@ -152,9 +153,14 @@ func main() {
 	_ = json.Unmarshal([]byte(result[api.SongDetailAPI]), &songDetail) // 解析 Json 到 struct
 
 	fmt.Println(songDetail.Songs[0].Al.Name) // 打印歌曲专辑名称
-	fmt.Println(userData.Setting.UserId) // 打印 UserID
+	fmt.Println(userData.Setting.UserId)     // 打印 UserID
 }
 ```
 
 Batch 可用的 API 列表详见 https://pkg.go.dev/github.com/XiaoMengXinX/Music163Api-Go/api#pkg-constants
 
+## 已知问题
+
+#### 待解决：
+
+- API 的返回内容解密是多余的，理论上可以移除所有解密相关代码
