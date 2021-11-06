@@ -7,6 +7,13 @@ type SongsURLData struct {
 	Code    int           `json:"code"`
 }
 
+// SongDownloadURLData SongDownloadURL API 的返回数据
+type SongDownloadURLData struct {
+	RawJson string
+	Data    SongURLData `json:"data"`
+	Code    int         `json:"code"`
+}
+
 // SongURLData 获取歌曲 URL API 的返回数据
 type SongURLData struct {
 	Id                 int         `json:"id"`
