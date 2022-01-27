@@ -23,6 +23,7 @@ type UserStatusDetailData struct {
 
 // UserStatusSetData 用户状态设置数据
 type UserStatusSetData struct {
+	RawJson string
 	Code    int    `json:"code"`
 	Data    string `json:"data"`
 	Message string `json:"message"`
