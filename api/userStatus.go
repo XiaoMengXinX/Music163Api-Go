@@ -63,7 +63,7 @@ func GetUserStatus(data utils.RequestData, userID int) (result types.UserStatusD
 }
 
 // SetUserStatus 设置用户状态
-func SetUserStatus(data utils.RequestData, ctx string) (result types.UserStatusDetailData, err error) {
+func SetUserStatus(data utils.RequestData, ctx string) (result types.UserStatusSetData, err error) {
 	var options utils.EapiOption
 	options.Path = UserStatusEditAPI
 	options.Url = "https://music.163.com/eapi/social/user/status/edit"
