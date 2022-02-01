@@ -9,19 +9,15 @@ import (
 // DelPlayListAPI 删除歌单 API
 const DelPlayListAPI = "/api/playlist/delete"
 
-// DelPlaylistReq DelPlaylist API 的 body json
-type DelPlaylistReq struct {
-	Pid    int    `json:"pid"`
-	Header string `json:"header"`
-	ER     string `json:"e_r"`
+// delPlaylistReq  删除歌单的参数
+type delPlaylistReq struct {
+	Pid int `json:"pid"`
 }
 
-// CreateDelPlaylistReqJson 创建请求 body json
+// CreateDelPlaylistReqJson 创建 删除歌单 请求 json
 func CreateDelPlaylistReqJson(playlistID int) string {
-	reqBody := DelPlaylistReq{
-		Pid:    playlistID,
-		Header: "{}",
-		ER:     "true",
+	reqBody := delPlaylistReq{
+		Pid: playlistID,
 	}
 	reqBodyJson, _ := json.Marshal(reqBody)
 	return string(reqBodyJson)
@@ -34,7 +30,7 @@ func DelPlaylist(data utils.RequestData, playlistID int) (result types.DelPlayli
 	options.Url = "https://music.163.com/eapi/playlist/delete"
 	reqBodyJson := CreateDelPlaylistReqJson(playlistID)
 	options.Json = reqBodyJson
-	resBody, _, err := utils.EapiRequest(options, data)
+	resBody, _, err := utils.ApiRequest(options, data)
 	if err != nil {
 		return result, err
 	}

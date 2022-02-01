@@ -19,26 +19,22 @@ type UserPlaylistConfig struct {
 	Limit int
 }
 
-// UserPlaylistReq UserPlaylist API 的 body json
-type UserPlaylistReq struct {
-	Offset int    `json:"offset"`
-	Limit  int    `json:"limit"`
-	Uid    int    `json:"uid"`
-	ER     string `json:"e_r"`
-	Header string `json:"header"`
+// userPlaylistReq UserPlaylist API 的 body json
+type userPlaylistReq struct {
+	Offset int `json:"offset"`
+	Limit  int `json:"limit"`
+	Uid    int `json:"uid"`
 }
 
-// CreateUserPlaylistReqJson 创建请求 body json
+// CreateUserPlaylistReqJson 创建 获取用户歌单 请求json
 func CreateUserPlaylistReqJson(config UserPlaylistConfig) string {
 	if config.Limit == 0 {
 		config.Limit = 30
 	}
-	reqBody := UserPlaylistReq{
+	reqBody := userPlaylistReq{
 		Offset: config.Offset,
 		Limit:  config.Limit,
 		Uid:    config.UserID,
-		ER:     "true",
-		Header: "{}",
 	}
 	reqBodyJson, _ := json.Marshal(reqBody)
 	return string(reqBodyJson)
@@ -51,7 +47,7 @@ func GetUserPlaylist(data utils.RequestData, config UserPlaylistConfig) (result 
 	options.Url = "https://music.163.com/eapi/user/playlist"
 	reqBodyJson := CreateUserPlaylistReqJson(config)
 	options.Json = reqBodyJson
-	resBody, _, err := utils.EapiRequest(options, data)
+	resBody, _, err := utils.ApiRequest(options, data)
 	if err != nil {
 		return result, err
 	}

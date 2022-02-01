@@ -11,21 +11,17 @@ import (
 // AlbumDetailAPI 获取专辑详细 API
 const AlbumDetailAPI = "/api/album/v3/detail"
 
-// AlbumDetailReq NewPlaylist API 的 body json
-type AlbumDetailReq struct {
+// albumDetailReq NewPlaylist API 的 body json
+type albumDetailReq struct {
 	Id       int    `json:"id"`
 	CacheKey string `json:"cache_key"`
-	ER       string `json:"e_r"`
-	Header   string `json:"header"`
 }
 
-// CreateAlbumDetailReqJson 创建请求 body json
+// CreateAlbumDetailReqJson 创建 获取专辑详细 请求json
 func CreateAlbumDetailReqJson(albumID int) string {
-	reqBody := AlbumDetailReq{
+	reqBody := albumDetailReq{
 		Id:       albumID,
-		CacheKey: base64.StdEncoding.EncodeToString(utils.CacheKeyEncrypt(fmt.Sprintf("e_r=true&id=%d", albumID))),
-		Header:   "{}",
-		ER:       "true",
+		CacheKey: base64.StdEncoding.EncodeToString(utils.CacheKeyEncrypt(fmt.Sprintf("id=%d", albumID))),
 	}
 	reqBodyJson, _ := json.Marshal(reqBody)
 	return string(reqBodyJson)
@@ -38,7 +34,7 @@ func GetAlbumDetail(data utils.RequestData, albumID int) (result types.NewPlayli
 	options.Url = "https://music.163.com/eapi/album/v3/detail"
 	reqBodyJson := CreateAlbumDetailReqJson(albumID)
 	options.Json = reqBodyJson
-	resBody, _, err := utils.EapiRequest(options, data)
+	resBody, _, err := utils.ApiRequest(options, data)
 	if err != nil {
 		return result, err
 	}

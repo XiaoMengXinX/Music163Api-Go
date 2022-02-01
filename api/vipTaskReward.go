@@ -6,22 +6,22 @@ import (
 	"github.com/XiaoMengXinX/Music163Api-Go/utils"
 )
 
-// VipTaskRewardAPI 领取任务成长值奖励 API
+// VipTaskRewardAPI 领取 VIP 任务成长值奖励 API
 const VipTaskRewardAPI = "/api/vipnewcenter/app/level/task/reward/get"
 
-// VipTaskRewardReqJson 领取任务成长值请求参数
-type VipTaskRewardReqJson struct {
+// vipTaskRewardReqJson 领取 VIP 任务成长值请求参数
+type vipTaskRewardReqJson struct {
 	TaskIds string `json:"taskIds"`
 }
 
-// CreateVipTaskRewardReqJson 创建请求 json
+// CreateVipTaskRewardReqJson 创建 领取 VIP 任务成长值 请求json
 func CreateVipTaskRewardReqJson(taskID string) string {
-	reqBody := VipTaskRewardReqJson{TaskIds: taskID}
+	reqBody := vipTaskRewardReqJson{TaskIds: taskID}
 	reqBodyJson, _ := json.Marshal(reqBody)
 	return string(reqBodyJson)
 }
 
-// VipTaskReward 领取任务成长值奖励
+// VipTaskReward 领取 VIP 任务成长值奖励
 func VipTaskReward(data utils.RequestData, taskID string) (result types.VipTaskRewardData, err error) {
 	var options utils.EapiOption
 	options.Path = VipTaskRewardAPI

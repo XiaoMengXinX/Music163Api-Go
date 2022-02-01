@@ -20,16 +20,14 @@ type SongURLConfig struct {
 	Ids []int
 }
 
-// SongUrlReq SongURL API 的 body json
-type SongUrlReq struct {
-	ER         string `json:"e_r"`
+// songUrlReq SongURL API 的 body json
+type songUrlReq struct {
 	EncodeType string `json:"encodeType"`
-	Header     string `json:"header"`
 	Ids        string `json:"ids"`
 	Level      string `json:"level"`
 }
 
-// CreateSongURLJson 创建请求 body json
+// CreateSongURLJson 创建 获取歌曲试听URL 请求json
 func CreateSongURLJson(config SongURLConfig) string {
 	var IDs []string
 	for i := 0; i < len(config.Ids); i++ {
@@ -42,9 +40,7 @@ func CreateSongURLJson(config SongURLConfig) string {
 	if config.EncodeType == "" {
 		config.EncodeType = "mp3"
 	}
-	reqBody := SongUrlReq{
-		Header:     "{}",
-		ER:         "true",
+	reqBody := songUrlReq{
 		Ids:        string(IDsJson),
 		EncodeType: config.EncodeType,
 		Level:      config.Level,
@@ -53,13 +49,13 @@ func CreateSongURLJson(config SongURLConfig) string {
 	return string(reqBodyJson)
 }
 
-// GetSongURL 获取歌曲 URL
+// GetSongURL 获取歌曲试听 URL
 func GetSongURL(data utils.RequestData, config SongURLConfig) (result types.SongsURLData, err error) {
 	var options utils.EapiOption
 	options.Path = SongUrlAPI
 	options.Url = "https://music.163.com/eapi/song/enhance/player/url/v1"
 	options.Json = CreateSongURLJson(config)
-	resBody, _, err := utils.EapiRequest(options, data)
+	resBody, _, err := utils.ApiRequest(options, data)
 	if err != nil {
 		return result, err
 	}

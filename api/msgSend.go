@@ -9,17 +9,15 @@ import (
 // SendMsgAPI 发送私信 API
 const SendMsgAPI = "/api/msg/private/send"
 
-// SendMsgReq 发送私信 API 的 body json
-type SendMsgReq struct {
+// sendMsgReq 发送私信 API 的 body json
+type sendMsgReq struct {
 	UserIds string `json:"userIds"`
 	Msg     string `json:"msg"`
 	Type    string `json:"type"`
-	Header  string `json:"header"`
-	ER      string `json:"e_r"`
 }
 
-// MsgPicInfo 发送私信的图片信息
-type MsgPicInfo struct {
+// msgPicInfo 发送私信的图片信息
+type msgPicInfo struct {
 	PicIdStr string `json:"picIdStr"`
 	Width    int    `json:"width"`
 	Height   int    `json:"height"`
@@ -27,34 +25,30 @@ type MsgPicInfo struct {
 	Type     int    `json:"type"`
 }
 
-// SendPicMsgReq 发送图片私信 API 的 body json
-type SendPicMsgReq struct {
+// sendPicMsgReq 发送图片私信 API 的 body json
+type sendPicMsgReq struct {
 	UserIds string `json:"userIds"`
 	PicInfo string `json:"picinfo"`
 	Type    string `json:"type"`
-	Header  string `json:"header"`
-	ER      string `json:"e_r"`
 }
 
-// CreateTextMsgReqJson 创建请求 body json
+// CreateTextMsgReqJson 创建 发送私信 请求json
 func CreateTextMsgReqJson(userIDs []int, msg string) string {
 	var userID []int
 	for i := 0; i < len(userIDs); i++ {
 		userID = append(userID, userIDs[i])
 	}
 	userIDJson, _ := json.Marshal(userID)
-	reqBody := SendMsgReq{
+	reqBody := sendMsgReq{
 		UserIds: string(userIDJson),
 		Msg:     msg,
-		Header:  "{}",
 		Type:    "text",
-		ER:      "true",
 	}
 	reqBodyJson, _ := json.Marshal(reqBody)
 	return string(reqBodyJson)
 }
 
-// CreatePicMsgReqJson 创建请求 body json
+// CreatePicMsgReqJson 创建私信图片json数据
 func CreatePicMsgReqJson(userIDs []int, picData types.NosTokenData, picFile []byte) (string, error) {
 	var userID []int
 	for i := 0; i < len(userIDs); i++ {
@@ -66,7 +60,7 @@ func CreatePicMsgReqJson(userIDs []int, picData types.NosTokenData, picFile []by
 		return "", err
 	}
 	_, format := utils.DetectFileType(picFile)
-	picInfo := MsgPicInfo{
+	picInfo := msgPicInfo{
 		PicIdStr: picData.Result.DocId,
 		Width:    width,
 		Height:   height,
@@ -74,12 +68,10 @@ func CreatePicMsgReqJson(userIDs []int, picData types.NosTokenData, picFile []by
 		Type:     0,
 	}
 	picInfoJson, _ := json.Marshal(picInfo)
-	reqBody := SendPicMsgReq{
+	reqBody := sendPicMsgReq{
 		UserIds: string(userIDJson),
 		PicInfo: string(picInfoJson),
 		Type:    "pic",
-		Header:  "{}",
-		ER:      "true",
 	}
 	reqBodyJson, _ := json.Marshal(reqBody)
 	return string(reqBodyJson), nil
@@ -91,7 +83,7 @@ func SendTextMsg(data utils.RequestData, userIDs []int, text string) (result typ
 	options.Path = SendMsgAPI
 	options.Url = "https://music.163.com/eapi/msg/private/send"
 	options.Json = CreateTextMsgReqJson(userIDs, text)
-	resBody, _, err := utils.EapiRequest(options, data)
+	resBody, _, err := utils.ApiRequest(options, data)
 	if err != nil {
 		return result, err
 	}
@@ -117,7 +109,7 @@ func SendPicMsg(data utils.RequestData, userIDs []int, picPath string) (result t
 	if err != nil {
 		return result, err
 	}
-	resBody, _, err := utils.EapiRequest(options, data)
+	resBody, _, err := utils.ApiRequest(options, data)
 	if err != nil {
 		return result, err
 	}

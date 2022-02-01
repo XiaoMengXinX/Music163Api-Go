@@ -9,17 +9,17 @@ import (
 // SongLyricAPI 获取歌词 API
 const SongLyricAPI = "/api/song/lyric"
 
-// SongLyricReq SongLyric API 的 body json
-type SongLyricReq struct {
+// songLyricReq SongLyric API 的 body json
+type songLyricReq struct {
 	Id int `json:"id"`
 	Lv int `json:"lv"`
 	Kv int `json:"kv"`
 	Tv int `json:"tv"`
 }
 
-// CreateSongLyricReqJson 创建请求 body json
+// CreateSongLyricReqJson 创建 获取歌曲歌词 请求json
 func CreateSongLyricReqJson(id int) string {
-	reqBody := SongLyricReq{
+	reqBody := songLyricReq{
 		Id: id,
 		Lv: -1,
 		Kv: -1,

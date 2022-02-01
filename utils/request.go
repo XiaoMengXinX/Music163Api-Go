@@ -3,7 +3,6 @@ package utils
 import (
 	"crypto/md5"
 	"fmt"
-	log "github.com/sirupsen/logrus"
 	"io"
 	"io/ioutil"
 	"math/rand"
@@ -14,34 +13,32 @@ import (
 	"time"
 )
 
-// EapiRequest eapi 请求
+// DEBUG 是否开启打印调试信息
+var DEBUG bool
+
+// EapiRequest 返回内容加密的 API 请求
 func EapiRequest(eapiOption EapiOption, options RequestData) (result string, header http.Header, err error) {
 	data := SpliceStr(eapiOption.Path, eapiOption.Json)
 	answer, header, err := CreateNewRequest(Format2Params(data), eapiOption.Url, options)
 	if err == nil {
-		/*
-			if log.GetLevel() == log.DebugLevel {
-				log.Debugf("[EapiRespBodyHex]: %s", hex.EncodeToString([]byte(answer)))
-			}
-		*/
 		decrypted := EapiDecrypt([]byte(answer))
-		if log.GetLevel() == log.DebugLevel {
-			log.Debugf("[EapiRespBodyJson]: %s", string(decrypted))
-			log.Debugf("[EapiRespHeader]: %s", header)
+		if DEBUG {
+			log.Printf("[RespBodyJson]: %s", string(decrypted))
+			log.Printf("[RespHeader]: %s", header)
 		}
 		return string(decrypted), header, nil
 	}
 	return "", header, err
 }
 
-// ApiRequest 用于非 eapi (即返回 body 未加密的 API) 请求
+// ApiRequest 返回内容未加密的 API 请求
 func ApiRequest(eapiOption EapiOption, options RequestData) (result string, header http.Header, err error) {
 	data := SpliceStr(eapiOption.Path, eapiOption.Json)
 	answer, header, err := CreateNewRequest(Format2Params(data), eapiOption.Url, options)
 	if err == nil {
-		if log.GetLevel() == log.DebugLevel {
-			log.Debugf("[ApiRespBodyJson]: %s", answer)
-			log.Debugf("[ApiRespHeader]: %s", header)
+		if DEBUG {
+			log.Printf("[RespBodyJson]: %s", answer)
+			log.Printf("[RespHeader]: %s", header)
 		}
 		return answer, header, nil
 	}
@@ -52,8 +49,8 @@ func ApiRequest(eapiOption EapiOption, options RequestData) (result string, head
 func RawRequest(url string, options RequestData) (result string, err error) {
 	answer, _, err := CreateNewRequest(options.Body, url, options)
 	if err == nil {
-		if log.GetLevel() == log.DebugLevel {
-			log.Debugf("[RespBody]: %s", answer)
+		if DEBUG {
+			log.Printf("[RespBody]: %s", answer)
 		}
 		return answer, nil
 	}
@@ -144,10 +141,10 @@ func CreateNewRequest(data string, url string, options RequestData) (answer stri
 
 	req.Header.Set("User-Agent", ChooseUserAgent())
 
-	if log.GetLevel() == log.DebugLevel {
-		log.Debugf("[Req]: %+v", req)
+	if DEBUG {
+		log.Printf("[Request]: %+v", req)
 		if len([]byte(data)) < 51200 {
-			log.Debugf("[ReqBody]: %+v", data)
+			log.Printf("[ReqBody]: %+v", data)
 		}
 	}
 
@@ -159,17 +156,13 @@ func CreateNewRequest(data string, url string, options RequestData) (answer stri
 	defer func(Body io.ReadCloser) {
 		err := Body.Close()
 		if err != nil {
-			log.Errorln(err)
+			log.Println(err)
 		}
 	}(resp.Body)
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		return "", resHeader, err
-	}
-
-	if log.GetLevel() == log.DebugLevel {
-		log.Debugf("[EapiResp]: %+v", resp)
 	}
 
 	return string(body), resp.Header, nil

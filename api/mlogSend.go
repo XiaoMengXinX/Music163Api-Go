@@ -39,12 +39,10 @@ type MlogPic struct {
 	Width  int    `json:"width"`
 }
 
-// SendMlogReqJson 发送 Mlog 请求 json
-type SendMlogReqJson struct {
-	Type   string `json:"type"`
-	Mlog   string `json:"mlog"`
-	Header string `json:"header"`
-	ER     string `json:"e_r"`
+// sendMlogReqJson 发送 Mlog 请求 json
+type sendMlogReqJson struct {
+	Type string `json:"type"`
+	Mlog string `json:"mlog"`
 }
 
 // NewMlogPicObj 创建 Mlog 图片对象
@@ -63,7 +61,7 @@ func NewMlogPicObj(picFile []byte, picData types.NosTokenData) (MlogPic, error) 
 	return mlogPicData, err
 }
 
-// CreatePicMlogReqJson 创建请求 body json
+// CreatePicMlogReqJson 创建 发送mlog 请求json
 func CreatePicMlogReqJson(text string, songInfo types.SongDetailData, picData []MlogPic) string {
 	mlogSong := mlogSong{
 		EndTime:   0,
@@ -83,11 +81,9 @@ func CreatePicMlogReqJson(text string, songInfo types.SongDetailData, picData []
 		Type:    1,
 	}
 	mlogDataJson, _ := json.Marshal(mlogData)
-	mlogJson := SendMlogReqJson{
-		Type:   "1",
-		Mlog:   string(mlogDataJson),
-		Header: "{}",
-		ER:     "true",
+	mlogJson := sendMlogReqJson{
+		Type: "1",
+		Mlog: string(mlogDataJson),
 	}
 	resultJson, _ := json.Marshal(mlogJson)
 	return string(resultJson)
@@ -100,11 +96,14 @@ func SendPicMlog(data utils.RequestData, text string, songID int, picPath []stri
 	options.Url = "https://music.163.com/eapi/mlog/publish/v1"
 	var picData []MlogPic
 	if len(picPath) == 0 || text == "" || songID == 0 {
-		return types.SendMlogData{}, fmt.Errorf("参数错误 ")
+		return types.SendMlogData{}, fmt.Errorf("Wrong parameters ")
 	}
 	songInfo, err := GetSongDetail(data, []int{songID})
-	if err != nil || len(songInfo.Songs) == 0 {
-		return result, fmt.Errorf("获取音乐详细信息失败 %v", err)
+	if err != nil {
+		return result, err
+	}
+	if len(songInfo.Songs) == 0 {
+		return result, fmt.Errorf("Failed to get music details")
 	}
 	for i := 0; i < len(picPath); i++ {
 		nosToken, file, err := GetMlogNosToken(data, picPath[i])
@@ -122,7 +121,7 @@ func SendPicMlog(data utils.RequestData, text string, songID int, picPath []stri
 		picData = append(picData, picObj)
 	}
 	options.Json = CreatePicMlogReqJson(text, songInfo.Songs[0], picData)
-	resBody, _, err := utils.EapiRequest(options, data)
+	resBody, _, err := utils.ApiRequest(options, data)
 	if err != nil {
 		return result, err
 	}

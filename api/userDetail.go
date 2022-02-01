@@ -15,7 +15,6 @@ func GetUserDetail(data utils.RequestData, userID int) (result types.UserDetailD
 	var options utils.EapiOption
 	options.Path = fmt.Sprintf("%s/%d", UserDetailAPI, userID)
 	options.Url = "https://music.163.com/eapi/v1/user/detail"
-	options.Json = "{'all':true}"
 	resBody, _, err := utils.ApiRequest(options, data)
 	if err != nil {
 		return result, err

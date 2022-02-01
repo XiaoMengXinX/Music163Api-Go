@@ -15,10 +15,7 @@ func GetUserSetting(data utils.RequestData) (result types.UserSettingData, err e
 	options.Path = UserSettingAPI
 	options.Url = "https://music.163.com/eapi/user/setting"
 	resBody, _, err := utils.ApiRequest(options, data)
-	if err != nil {
-		return result, err
-	}
-	err = json.Unmarshal([]byte(resBody), &result)
+	_ = json.Unmarshal([]byte(resBody), &result)
 	result.RawJson = resBody
 	return result, err
 }

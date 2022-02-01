@@ -52,14 +52,12 @@ type CommentConfig struct {
 	Content string
 }
 
-// CommentReq 评论 API 的 body json
-type CommentReq struct {
+// commentReq 评论 API 的 body json
+type commentReq struct {
 	ForwardEvent string `json:"forwardEvent"`
 	ThreadId     string `json:"threadId"`
 	CommentId    string `json:"commentId"`
 	Content      string `json:"content"`
-	Header       string `json:"header"`
-	ER           string `json:"e_r"`
 }
 
 // GetCommentConfig 获取评论参数
@@ -78,26 +76,22 @@ type GetCommentConfig struct {
 	Cursor int
 }
 
-// GetCommentReq 获取评论 API 的 body json
-type GetCommentReq struct {
+// getCommentReq 获取评论 API 的 body json
+type getCommentReq struct {
 	Cursor    int    `json:"cursor"`
 	PageNo    int    `json:"pageNo"`
 	PageSize  int    `json:"pageSize"`
 	ShowInner bool   `json:"showInner"`
 	SortType  int    `json:"sortType"`
 	ThreadId  string `json:"threadId"`
-	Header    string `json:"header"`
-	ER        string `json:"e_r"`
 }
 
-// CreateCommentJson 创建请求 body json
+// CreateCommentJson 创建 发送/回复/删除评论 请求json
 func CreateCommentJson(config CommentConfig) string {
-	reqBody := CommentReq{
+	reqBody := commentReq{
 		Content:   config.Content,
 		ThreadId:  fmt.Sprintf("%s_%d", config.ResType, config.ResID),
 		CommentId: fmt.Sprintf("%d", config.CommentID),
-		Header:    "{}",
-		ER:        "true",
 	}
 	if config.ForwardEvent {
 		reqBody.ForwardEvent = "1"
@@ -108,13 +102,11 @@ func CreateCommentJson(config CommentConfig) string {
 	return string(reqBodyJson)
 }
 
-// CreateGetCommentJson 创建请求 body json
+// CreateGetCommentJson 创建 获取评论 请求json
 func CreateGetCommentJson(config GetCommentConfig) string {
-	reqBody := GetCommentReq{
+	reqBody := getCommentReq{
 		ShowInner: false,
 		ThreadId:  fmt.Sprintf("%s_%d", config.ResType, config.ResID),
-		Header:    "{}",
-		ER:        "true",
 	}
 	if config.PageNo == 0 {
 		reqBody.PageNo = 1
@@ -146,7 +138,7 @@ func AddComment(data utils.RequestData, config CommentConfig) (result types.AddC
 	options.Path = AddCommentAPI
 	options.Url = "https://music.163.com/eapi/v1/resource/comments/add"
 	options.Json = CreateCommentJson(config)
-	resBody, _, err := utils.EapiRequest(options, data)
+	resBody, _, err := utils.ApiRequest(options, data)
 	if err != nil {
 		return result, err
 	}
@@ -161,7 +153,7 @@ func ReplyComment(data utils.RequestData, config CommentConfig) (result types.Re
 	options.Path = ReplyCommentAPI
 	options.Url = "https://music.163.com/eapi/v1/resource/comments/reply"
 	options.Json = CreateCommentJson(config)
-	resBody, _, err := utils.EapiRequest(options, data)
+	resBody, _, err := utils.ApiRequest(options, data)
 	if err != nil {
 		return result, err
 	}
@@ -176,7 +168,7 @@ func DelComment(data utils.RequestData, config CommentConfig) (result types.DelC
 	options.Path = DelCommentAPI
 	options.Url = "https://music.163.com/eapi/resource/comments/delete"
 	options.Json = CreateCommentJson(config)
-	resBody, _, err := utils.EapiRequest(options, data)
+	resBody, _, err := utils.ApiRequest(options, data)
 	if err != nil {
 		return result, err
 	}
@@ -191,7 +183,7 @@ func GetComment(data utils.RequestData, config GetCommentConfig) (result types.G
 	options.Path = GetCommentAPI
 	options.Url = "https://music.163.com/eapi/v2/resource/comments"
 	options.Json = CreateGetCommentJson(config)
-	resBody, _, err := utils.EapiRequest(options, data)
+	resBody, _, err := utils.ApiRequest(options, data)
 	if err != nil {
 		return result, err
 	}

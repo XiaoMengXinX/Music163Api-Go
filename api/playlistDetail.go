@@ -11,24 +11,20 @@ import (
 const PlaylistDetailAPI = "/api/v6/playlist/detail"
 
 // PlaylistDetailReq PlaylistDetail API 的 body json
-type PlaylistDetailReq struct {
-	Id     string `json:"id"`
-	T      string `json:"t"`
-	N      string `json:"n"`
-	S      string `json:"s"`
-	Header string `json:"header"`
-	ER     string `json:"e_r"`
+type playlistDetailReq struct {
+	Id string `json:"id"`
+	T  string `json:"t"`
+	N  string `json:"n"`
+	S  string `json:"s"`
 }
 
-// CreatePlaylistDetailReqJson 创建请求 body json
+// CreatePlaylistDetailReqJson 创建 获取歌单 请求json
 func CreatePlaylistDetailReqJson(id int) string {
-	reqBody := PlaylistDetailReq{
-		Id:     fmt.Sprintf("%d", id),
-		T:      "0",
-		N:      "50",
-		S:      "5",
-		Header: "{}",
-		ER:     "true",
+	reqBody := playlistDetailReq{
+		Id: fmt.Sprintf("%d", id),
+		T:  "0",
+		N:  "50",
+		S:  "5",
 	}
 	reqBodyJson, _ := json.Marshal(reqBody)
 	return string(reqBodyJson)
@@ -41,7 +37,7 @@ func GetPlaylistDetail(data utils.RequestData, id int) (result types.PlaylistDet
 	options.Url = "https://music.163.com/eapi/v6/playlist/detail"
 	reqBodyJson := CreatePlaylistDetailReqJson(id)
 	options.Json = reqBodyJson
-	resBody, _, err := utils.EapiRequest(options, data)
+	resBody, _, err := utils.ApiRequest(options, data)
 	if err != nil {
 		return result, err
 	}

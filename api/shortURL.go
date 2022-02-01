@@ -10,18 +10,14 @@ import (
 const ShortUrlAPI = "/api/middle/shorturl/generate"
 
 // ShortUrlReq ShortUrl API 的 body json
-type ShortUrlReq struct {
-	Url    string `json:"url"`
-	Header string `json:"header"`
-	ER     string `json:"e_r"`
+type shortUrlReq struct {
+	Url string `json:"url"`
 }
 
-// CreateShortUrlJson 创建请求 body json
+// CreateShortUrlJson 创建 获取短链接 请求json
 func CreateShortUrlJson(url string) string {
-	reqBody := ShortUrlReq{
-		Header: "{}",
-		ER:     "true",
-		Url:    url,
+	reqBody := shortUrlReq{
+		Url: url,
 	}
 	reqBodyJson, _ := json.Marshal(reqBody)
 	return string(reqBodyJson)
@@ -33,7 +29,7 @@ func NewShortURL(data utils.RequestData, url string) (result types.ShortURLData,
 	options.Path = ShortUrlAPI
 	options.Url = "https://music.163.com/eapi/middle/shorturl/generate"
 	options.Json = CreateShortUrlJson(url)
-	resBody, _, err := utils.EapiRequest(options, data)
+	resBody, _, err := utils.ApiRequest(options, data)
 	if err != nil {
 		return result, err
 	}

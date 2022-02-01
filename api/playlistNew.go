@@ -11,33 +11,28 @@ const NewPlayListAPI = "/api/playlist/create"
 
 // NewPlaylistReq NewPlaylist API 的 body json
 type NewPlaylistReq struct {
-	Name string `json:"name"`
-	// Privacy 是否设置为隐私歌单，默认否，传'10'则设置成隐私歌单
+	Name    string `json:"name"`
 	Privacy int    `json:"privacy"`
-	Header  string `json:"header"`
-	ER      string `json:"e_r"`
 }
 
-// CreateNewPlaylistReqJson 创建请求 body json
-func CreateNewPlaylistReqJson(name string, privacy int) string {
-	reqBody := NewPlaylistReq{
-		Name:    name,
-		Privacy: privacy,
-		Header:  "{}",
-		ER:      "true",
+// CreateNewPlaylistReqJson 创建 新建歌单 请求json
+func CreateNewPlaylistReqJson(name string, isPrivate bool) string {
+	reqBody := NewPlaylistReq{Name: name, Privacy: 0}
+	if isPrivate {
+		reqBody.Privacy = 10
 	}
 	reqBodyJson, _ := json.Marshal(reqBody)
 	return string(reqBodyJson)
 }
 
 // NewPlaylist 新建歌单
-func NewPlaylist(data utils.RequestData, name string, privacy int) (result types.NewPlaylistData, err error) {
+func NewPlaylist(data utils.RequestData, name string, isPrivate bool) (result types.NewPlaylistData, err error) {
 	var options utils.EapiOption
 	options.Path = NewPlayListAPI
 	options.Url = "https://music.163.com/eapi/playlist/create"
-	reqBodyJson := CreateNewPlaylistReqJson(name, privacy)
+	reqBodyJson := CreateNewPlaylistReqJson(name, isPrivate)
 	options.Json = reqBodyJson
-	resBody, _, err := utils.EapiRequest(options, data)
+	resBody, _, err := utils.ApiRequest(options, data)
 	if err != nil {
 		return result, err
 	}

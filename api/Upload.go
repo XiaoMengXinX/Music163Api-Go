@@ -24,9 +24,6 @@ func GetUploadNode() (result types.UploadNodeData, err error) {
 
 // UploadFile 上传文件
 func UploadFile(data utils.RequestData, file []byte, nosToken types.NosTokenData) (result types.UploadFileData, err error) {
-	if len(file) <= 32 {
-		return types.UploadFileData{}, fmt.Errorf("文件不能为空 ")
-	}
 	if UploadNode == "" {
 		nodeData, err := GetUploadNode()
 		if err != nil {
@@ -35,7 +32,7 @@ func UploadFile(data utils.RequestData, file []byte, nosToken types.NosTokenData
 		if len(nodeData.Upload) != 0 {
 			UploadNode = nodeData.Upload[0]
 		} else {
-			return result, fmt.Errorf("获取上传加速节点失败")
+			return result, fmt.Errorf("Failed to get upload acceleration node ")
 		}
 	}
 	fileType, fileSubtype := utils.DetectFileType(file[:32])
@@ -81,17 +78,13 @@ const UploadEventImgAPI = "/api/upload/event/img/v1"
 type EventImgReq struct {
 	ImgID  string `json:"imgid"`
 	Format string `json:"format"`
-	Header string `json:"header"`
-	ER     string `json:"e_r"`
 }
 
-// CreateEventImgReqJson 创建请求 body json
+// CreateEventImgReqJson 创建 动态上传图片 请求json
 func CreateEventImgReqJson(imgID, imgSubtype string) string {
 	reqBody := EventImgReq{
 		ImgID:  imgID,
 		Format: imgSubtype,
-		Header: "{}",
-		ER:     "true",
 	}
 	reqBodyJson, _ := json.Marshal(reqBody)
 	return string(reqBodyJson)
@@ -103,7 +96,7 @@ func UploadEventImg(data utils.RequestData, imgID, imgType string) (result types
 	options.Path = UploadEventImgAPI
 	options.Url = "https://music.163.com/eapi/upload/event/img/v1"
 	options.Json = CreateEventImgReqJson(imgID, imgType)
-	resBody, _, err := utils.EapiRequest(options, data)
+	resBody, _, err := utils.ApiRequest(options, data)
 	if err != nil {
 		return result, err
 	}

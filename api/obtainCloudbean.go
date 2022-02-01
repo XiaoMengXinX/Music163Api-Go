@@ -9,15 +9,15 @@ import (
 // ObtainCloudbeanAPI 领取云豆 API
 const ObtainCloudbeanAPI = "/api/nmusician/workbench/mission/reward/obtain/new"
 
-// ObtainCloudbeanReqJson 领取云豆参数
-type ObtainCloudbeanReqJson struct {
+// obtainCloudbeanReqJson 领取云豆参数
+type obtainCloudbeanReqJson struct {
 	UserMissionId int `json:"userMissionId"`
 	Period        int `json:"period"`
 }
 
-// CreateObtainCloudbeanReqJson 创建请求 json
+// CreateObtainCloudbeanReqJson 创建 领取云豆 请求json
 func CreateObtainCloudbeanReqJson(userMissionID, period int) string {
-	reqBody := ObtainCloudbeanReqJson{
+	reqBody := obtainCloudbeanReqJson{
 		UserMissionId: userMissionID,
 		Period:        period,
 	}

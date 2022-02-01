@@ -1,7 +1,6 @@
 package utils
 
 import (
-	log "github.com/sirupsen/logrus"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -9,19 +8,16 @@ import (
 )
 
 // ReadFile 读取文件
-func ReadFile(filePath string) ([]byte, error) {
+func ReadFile(filePath string) (b []byte, err error) {
 	file, err := os.Open(filePath)
 	if err != nil {
 		return []byte{}, err
 	}
 	defer func(file *os.File) {
-		err := file.Close()
-		if err != nil {
-			log.Errorln(err)
-		}
+		err = file.Close()
 	}(file)
-	fileContent, err := ioutil.ReadAll(file)
-	return fileContent, err
+	b, err = ioutil.ReadAll(file)
+	return b, err
 }
 
 // DetectFileType 检测文件类型

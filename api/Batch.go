@@ -39,7 +39,7 @@ func (b *Batch) Do(data utils.RequestData) *Batch {
 	options.Path = "/api/batch"
 	options.Url = "https://music.163.com/eapi/batch"
 	options.Json = string(reqBodyJson)
-	b.Result, b.Header, b.Error = utils.EapiRequest(options, data)
+	b.Result, b.Header, b.Error = utils.ApiRequest(options, data)
 	return b
 }
 
@@ -59,8 +59,6 @@ func (b *Batch) Parse() (*Batch, map[string]string) {
 func NewBatch(apis ...BatchAPI) *Batch {
 	b := &Batch{}
 	b.API = make(map[string]interface{})
-	b.API["e_r"] = "true"
-	b.API["header"] = "{}"
 	for _, api := range apis {
 		b.API[api.Key] = api.Json
 	}

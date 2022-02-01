@@ -18,27 +18,21 @@ const SearchComplexAPI = "/api/search/complex/get/v2"
 // SearchSongAPI 歌曲搜索 API
 const SearchSongAPI = "/api/v1/search/song/get"
 
-// SearchSuggestReq SearchSuggest API 的 body json
-type SearchSuggestReq struct {
-	S      string `json:"s"`
-	Limit  int    `json:"limit"`
-	Header string `json:"header"`
-	ER     string `json:"e_r"`
+// searchSuggestReq SearchSuggest API 的 body json
+type searchSuggestReq struct {
+	S     string `json:"s"`
+	Limit int    `json:"limit"`
 }
 
 // SearchMultiReq SearchMulti API 的 body json
 type SearchMultiReq struct {
-	Limit  int    `json:"limit"`
-	S      string `json:"s"`
-	Header string `json:"header"`
-	ER     string `json:"e_r"`
+	Limit int    `json:"limit"`
+	S     string `json:"s"`
 }
 
 // SearchComplexReq SearchComplex API 的 body json
 type SearchComplexReq struct {
 	Keyword string `json:"keyword"`
-	Header  string `json:"header"`
-	ER      string `json:"e_r"`
 }
 
 // SearchSongReq 歌曲搜索
@@ -46,8 +40,6 @@ type SearchSongReq struct {
 	S      string `json:"s"`
 	Offset int    `json:"offset"`
 	Limit  int    `json:"limit"`
-	Header string `json:"header"`
-	ER     string `json:"e_r"`
 }
 
 // SearchSongConfig 搜索歌曲参数
@@ -60,13 +52,11 @@ type SearchSongConfig struct {
 	Offset int
 }
 
-// CreateSearchSuggestReqJson 创建请求 body json
+// CreateSearchSuggestReqJson 创建 搜索 请求json
 func CreateSearchSuggestReqJson(keyword string) string {
-	reqBody := SearchSuggestReq{
-		S:      keyword,
-		Limit:  10,
-		Header: "{}",
-		ER:     "true",
+	reqBody := searchSuggestReq{
+		S:     keyword,
+		Limit: 10,
 	}
 	reqBodyJson, _ := json.Marshal(reqBody)
 	return string(reqBodyJson)
@@ -75,10 +65,8 @@ func CreateSearchSuggestReqJson(keyword string) string {
 // CreateSearchMultiReqJson 创建请求 body json
 func CreateSearchMultiReqJson(keyword string) string {
 	reqBody := SearchMultiReq{
-		Limit:  5,
-		S:      keyword,
-		Header: "{}",
-		ER:     "true",
+		Limit: 5,
+		S:     keyword,
 	}
 	reqBodyJson, _ := json.Marshal(reqBody)
 	return string(reqBodyJson)
@@ -88,8 +76,6 @@ func CreateSearchMultiReqJson(keyword string) string {
 func CreateSearchComplexReqJson(keyword string) string {
 	reqBody := SearchComplexReq{
 		Keyword: keyword,
-		Header:  "{}",
-		ER:      "true",
 	}
 	reqBodyJson, _ := json.Marshal(reqBody)
 	return string(reqBodyJson)
@@ -104,8 +90,6 @@ func CreateSearchSongReqJson(config SearchSongConfig) string {
 		S:      config.Keyword,
 		Offset: config.Offset,
 		Limit:  config.Limit,
-		Header: "{}",
-		ER:     "true",
 	}
 	reqBodyJson, _ := json.Marshal(reqBody)
 	return string(reqBodyJson)
@@ -118,7 +102,7 @@ func GetSearchSuggest(data utils.RequestData, keyword string) (result types.Sear
 	options.Url = "https://music.163.com/eapi/search/suggest/keyword"
 	reqBodyJson := CreateSearchSuggestReqJson(keyword)
 	options.Json = reqBodyJson
-	resBody, _, err := utils.EapiRequest(options, data)
+	resBody, _, err := utils.ApiRequest(options, data)
 	if err != nil {
 		return result, err
 	}
@@ -134,7 +118,7 @@ func SearchMultiMatch(data utils.RequestData, keyword string) (result types.Sear
 	options.Url = "https://music.163.com/eapi/search/suggest/multimatch"
 	reqBodyJson := CreateSearchMultiReqJson(keyword)
 	options.Json = reqBodyJson
-	resBody, _, err := utils.EapiRequest(options, data)
+	resBody, _, err := utils.ApiRequest(options, data)
 	if err != nil {
 		return result, err
 	}
@@ -150,7 +134,7 @@ func SearchComplex(data utils.RequestData, keyword string) (result types.SearchC
 	options.Url = "https://music.163.com/eapi/search/complex/get/v2"
 	reqBodyJson := CreateSearchComplexReqJson(keyword)
 	options.Json = reqBodyJson
-	resBody, _, err := utils.EapiRequest(options, data)
+	resBody, _, err := utils.ApiRequest(options, data)
 	if err != nil {
 		return result, err
 	}
@@ -166,7 +150,7 @@ func SearchSong(data utils.RequestData, config SearchSongConfig) (result types.S
 	options.Url = "https://music.163.com/eapi/v1/search/song/get"
 	reqBodyJson := CreateSearchSongReqJson(config)
 	options.Json = reqBodyJson
-	resBody, _, err := utils.EapiRequest(options, data)
+	resBody, _, err := utils.ApiRequest(options, data)
 	if err != nil {
 		return result, err
 	}

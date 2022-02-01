@@ -9,19 +9,20 @@ import (
 // SongDownloadURL 歌曲下载 URL API
 const SongDownloadURL = "/api/song/enhance/download/url"
 
-// SongDownloadURLReq 歌曲下载 URL 的参数配置
-type SongDownloadURLReq struct {
-	// Br 码率,默认设置了 999000 即最大码率
+// songDownloadURLReq 歌曲下载 URL 的参数配置
+type songDownloadURLReq struct {
 	Id int `json:"id"`
-	// Ids 歌曲 ID
 	Br int `json:"br"`
 }
 
-// CreateSongDownloadURLJson 创建请求 body json
-func CreateSongDownloadURLJson(id int) string {
-	reqBody := SongDownloadURLReq{
+// CreateSongDownloadURLJson 创建 获取歌曲下载 URL 的 JSON 数据
+func CreateSongDownloadURLJson(id int, bitrate int) string {
+	reqBody := songDownloadURLReq{
 		Id: id,
-		Br: 999000,
+		Br: bitrate,
+	}
+	if bitrate == 0 {
+		reqBody.Br = 999000
 	}
 	reqBodyJson, _ := json.Marshal(reqBody)
 	return string(reqBodyJson)
@@ -32,7 +33,7 @@ func GetSongDownloadURL(data utils.RequestData, id int) (result types.SongDownlo
 	var options utils.EapiOption
 	options.Path = SongDownloadURL
 	options.Url = "https://music.163.com/eapi/song/enhance/download/url"
-	options.Json = CreateSongDownloadURLJson(id)
+	options.Json = CreateSongDownloadURLJson(id, 999000)
 	resBody, _, err := utils.ApiRequest(options, data)
 	if err != nil {
 		return result, err

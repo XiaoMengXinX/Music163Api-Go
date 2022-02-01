@@ -6,10 +6,10 @@ import (
 	"github.com/XiaoMengXinX/Music163Api-Go/utils"
 )
 
-// VipTaskRewardAllAPI 领取所有任务成长值奖励 API
+// VipTaskRewardAllAPI 领取所有 VIP 任务成长值奖励 API
 const VipTaskRewardAllAPI = "/api/vipnewcenter/app/level/task/reward/getall"
 
-// VipTaskRewardAll 领取所有任务成长值奖励
+// VipTaskRewardAll 领取所有 VIP 任务成长值奖励
 func VipTaskRewardAll(data utils.RequestData) (result types.VipTaskRewardData, err error) {
 	var options utils.EapiOption
 	options.Path = VipTaskRewardAllAPI

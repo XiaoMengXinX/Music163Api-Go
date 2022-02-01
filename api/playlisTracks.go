@@ -9,24 +9,20 @@ import (
 // PlaylistTracksAPI 管理歌单歌曲 API
 const PlaylistTracksAPI = "/api/playlist/manipulate/tracks"
 
-// PlayListTracksReq PlaylistTracks API 的 body json
-type PlayListTracksReq struct {
+// playListTracksReq PlaylistTracks API 的 body json
+type playListTracksReq struct {
 	TrackIds []int  `json:"trackIds"`
 	Pid      int    `json:"pid"`
 	Op       string `json:"op"`
 	Imme     string `json:"imme"`
-	ER       string `json:"e_r"`
-	Header   string `json:"header"`
 }
 
-// CreatePlayListTracksReqJson 创建请求 body json, operation: 1为添加, 0或其他值为删除
+// CreatePlayListTracksReqJson 创建 歌单操作 请求json, operation: 1为添加, 0或其他值为删除
 func CreatePlayListTracksReqJson(musicIds []int, playlistID, operation int) string {
-	reqBody := PlayListTracksReq{
+	reqBody := playListTracksReq{
 		TrackIds: musicIds,
 		Pid:      playlistID,
 		Imme:     "true",
-		ER:       "true",
-		Header:   "{}",
 	}
 	switch operation {
 	case 1:
@@ -45,7 +41,7 @@ func AddPlaylistTracks(data utils.RequestData, musicIds []int, playlistID int) (
 	options.Url = "https://music.163.com/eapi/playlist/manipulate/tracks"
 	reqBodyJson := CreatePlayListTracksReqJson(musicIds, playlistID, 1)
 	options.Json = reqBodyJson
-	resBody, _, err := utils.EapiRequest(options, data)
+	resBody, _, err := utils.ApiRequest(options, data)
 	if err != nil {
 		return result, err
 	}
@@ -61,7 +57,7 @@ func DelPlaylistTracks(data utils.RequestData, trackIds []int, playlistID int) (
 	options.Url = "https://music.163.com/eapi/playlist/manipulate/tracks"
 	reqBodyJson := CreatePlayListTracksReqJson(trackIds, playlistID, 0)
 	options.Json = reqBodyJson
-	resBody, _, err := utils.EapiRequest(options, data)
+	resBody, _, err := utils.ApiRequest(options, data)
 	if err != nil {
 		return result, err
 	}

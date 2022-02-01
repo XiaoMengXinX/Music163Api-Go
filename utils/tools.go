@@ -10,9 +10,23 @@ import (
 	_ "image/jpeg"
 	// 解析 png 图片信息
 	_ "image/png"
+	l "log"
 	"math/rand"
 	"time"
 )
+
+var log Logger = l.Default()
+
+// Logger 日志接口
+type Logger interface {
+	Println(v ...interface{})
+	Printf(format string, v ...interface{})
+}
+
+// SetLogger 设置日志记录器
+func SetLogger(logger Logger) {
+	log = logger
+}
 
 // ImageSize 获取图片尺寸
 func ImageSize(file []byte) (width, height int, err error) {

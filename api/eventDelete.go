@@ -10,19 +10,15 @@ import (
 // DelEventAPI 删除动态 API
 const DelEventAPI = "/api/event/delete"
 
-// DelEventReq DelEvent API 的 body json
-type DelEventReq struct {
-	ID     string `json:"id"`
-	Header string `json:"header"`
-	ER     string `json:"e_r"`
+// delEventReq DelEvent API 的 body json
+type delEventReq struct {
+	ID string `json:"id"`
 }
 
-// CreateDelEventReqJson 创建请求 body json
+// CreateDelEventReqJson 创建 删除动态 请求json
 func CreateDelEventReqJson(eventID int) string {
-	delEventConfig := DelEventReq{
-		ID:     fmt.Sprintf("%d", eventID),
-		Header: "{}",
-		ER:     "true",
+	delEventConfig := delEventReq{
+		ID: fmt.Sprintf("%d", eventID),
 	}
 	bodyJson, _ := json.Marshal(delEventConfig)
 	return string(bodyJson)
@@ -34,7 +30,7 @@ func DelEvent(data utils.RequestData, eventID int) (result types.DelEventData, e
 	options.Path = DelEventAPI
 	options.Url = "https://music.163.com/eapi/event/delete"
 	options.Json = CreateDelEventReqJson(eventID)
-	resBody, _, err := utils.EapiRequest(options, data)
+	resBody, _, err := utils.ApiRequest(options, data)
 	if err != nil {
 		return result, err
 	}

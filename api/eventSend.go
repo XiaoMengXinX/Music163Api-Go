@@ -11,36 +11,32 @@ import (
 // SendEventAPI 发送动态 API
 const SendEventAPI = "/api/share/friends/resource"
 
-// SendEventReq SendEvent API 的 body json
-type SendEventReq struct {
+// sendEventReq SendEvent API 的 body json
+type sendEventReq struct {
 	Msg        string `json:"msg"`
 	Type       string `json:"type"`
 	UUID       string `json:"uuid"`
 	Pics       string `json:"pics"`
 	AddComment string `json:"addComment"`
-	Header     string `json:"header"`
-	ER         string `json:"e_r"`
 }
 
-// EventPic 用于发送动态的图片数据
-type EventPic struct {
+// eventPic 用于发送动态的图片数据
+type eventPic struct {
 	OriginId    int    `json:"originId"`
 	SquareId    int    `json:"squareId"`
 	RectangleId int    `json:"rectangleId"`
 	Format      string `json:"format"`
 }
 
-// CreateEventReqJson 创建请求 body json
+// CreateEventReqJson 创建 发送动态 请求json
 func CreateEventReqJson(text, pics string) string {
 	UUID := uuid.New()
-	shareConfig := SendEventReq{
+	shareConfig := sendEventReq{
 		Msg:        text,
 		Pics:       pics,
 		Type:       "noresource",
 		UUID:       strings.Replace(UUID.String(), "-", "", -1),
 		AddComment: "false",
-		Header:     "{}",
-		ER:         "true",
 	}
 	reqBodyJson, _ := json.Marshal(shareConfig)
 	return string(reqBodyJson)
@@ -48,9 +44,9 @@ func CreateEventReqJson(text, pics string) string {
 
 // CreateEventPicsJson 创建动态图片数据 json
 func CreateEventPicsJson(picData []types.UploadEventImgData) string {
-	var eventPicData []EventPic
+	var eventPicData []eventPic
 	for i := 0; i < len(picData); i++ {
-		eventPicData = append(eventPicData, EventPic{
+		eventPicData = append(eventPicData, eventPic{
 			OriginId:    picData[i].PicInfo.OriginId,
 			SquareId:    picData[i].PicInfo.SquareId,
 			RectangleId: picData[i].PicInfo.RectangleId,
@@ -90,7 +86,7 @@ func SendEvent(data utils.RequestData, text string, picPath []string) (result ty
 	} else {
 		options.Json = CreateEventReqJson(text, "[]")
 	}
-	resBody, _, err := utils.EapiRequest(options, data)
+	resBody, _, err := utils.ApiRequest(options, data)
 	if err != nil {
 		return result, err
 	}

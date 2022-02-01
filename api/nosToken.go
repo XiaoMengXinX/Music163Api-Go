@@ -12,8 +12,8 @@ import (
 // NosTokenAPI 获取 NosToken API （用于文件上传）
 const NosTokenAPI = "/api/nos/token/alloc"
 
-// NosTokenReq 获取 NosToken 的 body json
-type NosTokenReq struct {
+// nosTokenReq 获取 NosToken 的 body json
+type nosTokenReq struct {
 	Filename   string `json:"filename"`
 	Local      string `json:"local"`
 	NosProduct int    `json:"nos_product"`
@@ -21,22 +21,20 @@ type NosTokenReq struct {
 	Type       string `json:"type"`
 	Md5        string `json:"md5"`
 	Ext        string `json:"ext"`
-	Header     string `json:"header"`
-	ER         string `json:"e_r"`
 }
 
-// CreateNosTokenReqJson 创建请求 body json
+// CreateNosTokenReqJson 创建 获取NosToken 请求json
 func CreateNosTokenReqJson(filePath string) (string, []byte, error) {
 	file, err := utils.ReadFile(filePath)
 	if len(file) <= 32 {
-		return "", file, fmt.Errorf("文件不能为空 ")
+		return "", file, fmt.Errorf("Empty file %s ", filePath)
 	}
 	fileType, _ := utils.DetectFileType(file[:32])
 	size := len(file)
 	md5str := fmt.Sprintf("%+x", md5.Sum(file))
 	fileName := path.Base(filePath)
 	fileExt := path.Ext(filePath)
-	reqBody := NosTokenReq{
+	reqBody := nosTokenReq{
 		Filename:   fileName,
 		Local:      "false",
 		NosProduct: 0,
@@ -44,8 +42,6 @@ func CreateNosTokenReqJson(filePath string) (string, []byte, error) {
 		Md5:        md5str,
 		Ext:        fileExt,
 		Type:       fileType,
-		Header:     "{}",
-		ER:         "true",
 	}
 	reqBodyJson, _ := json.Marshal(reqBody)
 	return string(reqBodyJson), file, err
@@ -61,7 +57,7 @@ func GetNosToken(data utils.RequestData, filePath string) (result types.NosToken
 		return result, file, err
 	}
 	options.Json = reqBodyJson
-	resBody, _, err := utils.EapiRequest(options, data)
+	resBody, _, err := utils.ApiRequest(options, data)
 	if err != nil {
 		return result, file, err
 	}
@@ -70,37 +66,33 @@ func GetNosToken(data utils.RequestData, filePath string) (result types.NosToken
 	return result, file, err
 }
 
-// MlogNosTokenReq 获取 NosToken 的 body json
-type MlogNosTokenReq struct {
+// mlogNosTokenReq 获取 NosToken 的 body json
+type mlogNosTokenReq struct {
 	BizKey   string `json:"bizKey"`
 	Filename string `json:"filename"`
 	Bucket   string `json:"bucket"`
 	Md5      string `json:"md5"`
 	Type     string `json:"type"`
 	FileSize int    `json:"fileSize"`
-	Header   string `json:"header"`
-	ER       string `json:"e_r"`
 }
 
-// CreateMlogNosTokenReqJson 创建请求 body json
+// CreateMlogNosTokenReqJson 创建 获取mlog的NosToken 请求json
 func CreateMlogNosTokenReqJson(filePath string) (string, []byte, error) {
 	file, err := utils.ReadFile(filePath)
 	if len(file) <= 32 {
-		return "", file, fmt.Errorf("文件不能为空 ")
+		return "", file, fmt.Errorf("Empty file: %s ", filePath)
 	}
 	fileType, _ := utils.DetectFileType(file[:32])
 	size := len(file)
 	md5str := fmt.Sprintf("%+x", md5.Sum(file))
 	fileName := path.Base(filePath)
-	reqBody := MlogNosTokenReq{
+	reqBody := mlogNosTokenReq{
 		BizKey:   string(utils.RandHex(8)),
 		Filename: fileName,
 		Bucket:   "yyimgs",
 		Md5:      md5str,
 		Type:     fileType,
 		FileSize: size,
-		Header:   "{}",
-		ER:       "true",
 	}
 	reqBodyJson, _ := json.Marshal(reqBody)
 	return string(reqBodyJson), file, err
@@ -116,7 +108,7 @@ func GetMlogNosToken(data utils.RequestData, filePath string) (result types.NosT
 		return result, file, err
 	}
 	options.Json = reqBodyJson
-	resBody, _, err := utils.EapiRequest(options, data)
+	resBody, _, err := utils.ApiRequest(options, data)
 	if err != nil {
 		return result, file, err
 	}
