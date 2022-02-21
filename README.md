@@ -165,6 +165,6 @@ Batch 可用的 API 列表详见 https://pkg.go.dev/github.com/XiaoMengXinX/Musi
 
 ## 已知问题
 
-#### 待解决：
+#### 已解决：
 
 - API 的返回内容解密是多余的，理论上可以移除所有解密相关代码
