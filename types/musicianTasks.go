@@ -60,20 +60,23 @@ type MusicianWeeklyTasksData struct {
 			EndTime             int64  `json:"endTime"`
 			ExtendInfo          string `json:"extendInfo"`
 			Period              int    `json:"period"`
-			NeedToReceive       int    `json:"needToReceive"`
+			NeedToReceive       int    `json:"needToReceive,omitempty"`
 			UserStageTargetList []struct {
-				SortValue    int `json:"sortValue"`
-				StageType    int `json:"stageType"`
-				Times        int `json:"times"`
-				Value        int `json:"value"`
-				ProgressRate int `json:"progressRate"`
-				SumTarget    int `json:"sumTarget"`
-				RewardId     int `json:"rewardId"`
-				RewardType   int `json:"rewardType"`
-				Worth        int `json:"worth"`
-				Status       int `json:"status"`
+				SortValue     int   `json:"sortValue"`
+				StageType     int   `json:"stageType"`
+				Times         int   `json:"times"`
+				Value         int   `json:"value"`
+				ProgressRate  int   `json:"progressRate"`
+				SumTarget     int   `json:"sumTarget"`
+				RewardId      int   `json:"rewardId"`
+				RewardType    int   `json:"rewardType"`
+				Worth         int   `json:"worth"`
+				Status        int   `json:"status"`
+				UserMissionId int64 `json:"userMissionId,omitempty"`
 			} `json:"userStageTargetList"`
-			HasSendWorth int `json:"hasSendWorth"`
+			HasSendWorth  int   `json:"hasSendWorth"`
+			UserMissionId int64 `json:"userMissionId,omitempty"`
+			UpdateTime    int64 `json:"updateTime,omitempty"`
 		} `json:"list"`
 	} `json:"data"`
 }
