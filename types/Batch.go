@@ -37,9 +37,15 @@ type BatchCloudbeanNumData struct {
 }
 
 // BatchMusicianTasksData 批处理 MusicianTasks 数据
-type BatchMusicianTasksData struct {
-	Api  MusicianTasksData `json:"/api/nmusician/workbench/mission/cycle/list"`
-	Code int               `json:"code"`
+type BatchMusicianDailyTasksData struct {
+	Api  MusicianDailyTasksData `json:"/api/nmusician/workbench/mission/cycle/list"`
+	Code int                    `json:"code"`
+}
+
+// BatchMusicianWeeklyTasksData 批处理 MusicianTasks 数据
+type BatchMusicianWeeklyTasksData struct {
+	Api  MusicianWeeklyTasksData `json:"/api/nmusician/workbench/mission/stage/list"`
+	Code int                     `json:"code"`
 }
 
 // BatchLoginStatusData 批处理 LoginStatus 数据
