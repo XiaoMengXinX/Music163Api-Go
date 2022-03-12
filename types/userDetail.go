@@ -19,62 +19,65 @@ type UserDetailData struct {
 		RoleName string      `json:"roleName"`
 		Level    interface{} `json:"level"`
 	} `json:"expertArray"`
-	CurrentProduct struct {
-		ProductionTypeName string `json:"productionTypeName"`
-		ProductionTypeId   int    `json:"productionTypeId"`
-	} `json:"currentProduct"`
-	Products []struct {
+	CurrentProduct interface{} `json:"currentProduct"`
+	Products       []struct {
 		ProductionTypeName string `json:"productionTypeName"`
 		ProductionTypeId   int    `json:"productionTypeId"`
 	} `json:"products"`
 	Level       int `json:"level"`
 	ListenSongs int `json:"listenSongs"`
 	UserPoint   struct {
-		UserId       int `json:"userId"`
-		Balance      int `json:"balance"`
-		UpdateTime   int `json:"updateTime"`
-		Version      int `json:"version"`
-		Status       int `json:"status"`
-		BlockBalance int `json:"blockBalance"`
+		UserId       int   `json:"userId"`
+		Balance      int   `json:"balance"`
+		UpdateTime   int64 `json:"updateTime"`
+		Version      int   `json:"version"`
+		Status       int   `json:"status"`
+		BlockBalance int   `json:"blockBalance"`
 	} `json:"userPoint"`
 	MobileSign bool `json:"mobileSign"`
 	PcSign     bool `json:"pcSign"`
 	Profile    struct {
+		PrivacyItemUnlimit struct {
+			Area       bool `json:"area"`
+			College    bool `json:"college"`
+			Age        bool `json:"age"`
+			VillageAge bool `json:"villageAge"`
+		} `json:"privacyItemUnlimit"`
 		AvatarDetail struct {
 			UserType        interface{} `json:"userType"`
 			IdentityLevel   int         `json:"identityLevel"`
 			IdentityIconUrl string      `json:"identityIconUrl"`
 		} `json:"avatarDetail"`
-		BackgroundImgIdStr string      `json:"backgroundImgIdStr"`
-		UserId             int         `json:"userId"`
-		DjStatus           int         `json:"djStatus"`
-		AccountStatus      int         `json:"accountStatus"`
-		Province           int         `json:"province"`
-		VipType            int         `json:"vipType"`
-		Followed           bool        `json:"followed"`
-		CreateTime         int         `json:"createTime"`
-		AvatarImgId        int         `json:"avatarImgId"`
-		Birthday           int         `json:"birthday"`
-		Gender             int         `json:"gender"`
-		Nickname           string      `json:"nickname"`
 		AvatarImgIdStr     string      `json:"avatarImgIdStr"`
-		Description        string      `json:"description"`
+		BackgroundImgIdStr string      `json:"backgroundImgIdStr"`
 		Mutual             bool        `json:"mutual"`
 		RemarkName         interface{} `json:"remarkName"`
+		CreateTime         int64       `json:"createTime"`
+		Birthday           int64       `json:"birthday"`
+		AvatarImgId        int64       `json:"avatarImgId"`
+		Province           int         `json:"province"`
+		City               int         `json:"city"`
+		Gender             int         `json:"gender"`
+		Followed           bool        `json:"followed"`
+		Nickname           string      `json:"nickname"`
+		AvatarUrl          string      `json:"avatarUrl"`
+		BackgroundImgId    int64       `json:"backgroundImgId"`
+		BackgroundUrl      string      `json:"backgroundUrl"`
 		UserType           int         `json:"userType"`
+		DefaultAvatar      bool        `json:"defaultAvatar"`
+		DjStatus           int         `json:"djStatus"`
+		AccountStatus      int         `json:"accountStatus"`
+		VipType            int         `json:"vipType"`
 		AuthStatus         int         `json:"authStatus"`
 		DetailDescription  string      `json:"detailDescription"`
 		Experts            struct {
 		} `json:"experts"`
-		ExpertTags      interface{} `json:"expertTags"`
-		City            int         `json:"city"`
-		DefaultAvatar   bool        `json:"defaultAvatar"`
-		BackgroundImgId int         `json:"backgroundImgId"`
-		BackgroundUrl   string      `json:"backgroundUrl"`
-		AvatarUrl       string      `json:"avatarUrl"`
-		Signature       string      `json:"signature"`
-		Authority       int         `json:"authority"`
-		AllAuthTypes    []struct {
+		ExpertTags   interface{} `json:"expertTags"`
+		Description  string      `json:"description"`
+		UserId       int         `json:"userId"`
+		Signature    string      `json:"signature"`
+		Authority    int         `json:"authority"`
+		AllAuthTypes []struct {
 			Type int      `json:"type"`
 			Desc string   `json:"desc"`
 			Tags []string `json:"tags"`
@@ -96,6 +99,7 @@ type UserDetailData struct {
 		FollowMe        bool        `json:"followMe"`
 		ArtistIdentity  []int       `json:"artistIdentity"`
 		CCount          int         `json:"cCount"`
+		InBlacklist     bool        `json:"inBlacklist"`
 		SDJPCount       int         `json:"sDJPCount"`
 		ArtistName      string      `json:"artistName"`
 		PlaylistCount   int         `json:"playlistCount"`
@@ -104,23 +108,23 @@ type UserDetailData struct {
 	} `json:"profile"`
 	PeopleCanSeeMyPlayRecord bool `json:"peopleCanSeeMyPlayRecord"`
 	Bindings                 []struct {
-		UserId       int         `json:"userId"`
-		Url          string      `json:"url"`
 		ExpiresIn    int         `json:"expiresIn"`
 		RefreshTime  int         `json:"refreshTime"`
-		BindingTime  int         `json:"bindingTime"`
+		BindingTime  int64       `json:"bindingTime"`
 		TokenJsonStr interface{} `json:"tokenJsonStr"`
+		Url          string      `json:"url"`
 		Expired      bool        `json:"expired"`
-		Id           int         `json:"id"`
+		UserId       int         `json:"userId"`
+		Id           int64       `json:"id"`
 		Type         int         `json:"type"`
 	} `json:"bindings"`
-	AdValid            bool `json:"adValid"`
-	Code               int  `json:"code"`
-	CreateTime         int  `json:"createTime"`
-	CreateDays         int  `json:"createDays"`
+	AdValid            bool  `json:"adValid"`
+	Code               int   `json:"code"`
+	CreateTime         int64 `json:"createTime"`
+	CreateDays         int   `json:"createDays"`
 	ProfileVillageInfo struct {
-		Title     string      `json:"title"`
-		ImageUrl  interface{} `json:"imageUrl"`
-		TargetUrl string      `json:"targetUrl"`
+		Title     string `json:"title"`
+		ImageUrl  string `json:"imageUrl"`
+		TargetUrl string `json:"targetUrl"`
 	} `json:"profileVillageInfo"`
 }
