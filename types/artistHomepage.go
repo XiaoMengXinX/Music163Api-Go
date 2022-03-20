@@ -1,7 +1,7 @@
 package types
 
-// ArtistDetailData 获取歌手详细API返回数据
-type ArtistDetailData struct {
+// ArtistHomepageData 获取歌手详细API返回数据
+type ArtistHomepageData struct {
 	RawJson string
 	Code    int `json:"code"`
 	Data    struct {
@@ -16,7 +16,7 @@ type ArtistDetailData struct {
 			Position  string      `json:"position"`
 			Md5       interface{} `json:"md5"`
 			Channel   string      `json:"channel"`
-			UiElement *struct {
+			UiElement struct {
 				MainTitle struct {
 					Title       string      `json:"title"`
 					TitleImgId  interface{} `json:"titleImgId"`
@@ -45,9 +45,9 @@ type ArtistDetailData struct {
 				Id           interface{} `json:"id"`
 				BlockId      interface{} `json:"blockId"`
 				CreativeId   interface{} `json:"creativeId"`
-				CreativeType *string     `json:"creativeType"`
+				CreativeType string      `json:"creativeType"`
 				Position     string      `json:"position"`
-				Action       *struct {
+				Action       struct {
 					ClickAction struct {
 						Action    int    `json:"action"`
 						TargetUrl string `json:"targetUrl"`
@@ -57,10 +57,10 @@ type ArtistDetailData struct {
 				AdInfo    interface{} `json:"adInfo"`
 				Code      interface{} `json:"code"`
 				Resources []struct {
-					ResourceType    *string     `json:"resourceType"`
-					ResourceId      *string     `json:"resourceId"`
+					ResourceType    string      `json:"resourceType"`
+					ResourceId      string      `json:"resourceId"`
 					ResourceUrl     interface{} `json:"resourceUrl"`
-					ResourceExtInfo *struct {
+					ResourceExtInfo struct {
 						CommentCount int `json:"commentCount,omitempty"`
 						PlayCount    int `json:"playCount"`
 						Users        []struct {
@@ -203,7 +203,7 @@ type ArtistDetailData struct {
 								Single               int           `json:"single"`
 								NoCopyrightRcmd      interface{}   `json:"noCopyrightRcmd"`
 								HMusic               struct {
-									Name        *string `json:"name"`
+									Name        string  `json:"name"`
 									Id          int64   `json:"id"`
 									Size        int     `json:"size"`
 									Extension   string  `json:"extension"`
@@ -214,7 +214,7 @@ type ArtistDetailData struct {
 									VolumeDelta float64 `json:"volumeDelta"`
 								} `json:"hMusic"`
 								MMusic struct {
-									Name        *string `json:"name"`
+									Name        string  `json:"name"`
 									Id          int64   `json:"id"`
 									Size        int     `json:"size"`
 									Extension   string  `json:"extension"`
@@ -225,7 +225,7 @@ type ArtistDetailData struct {
 									VolumeDelta float64 `json:"volumeDelta"`
 								} `json:"mMusic"`
 								LMusic struct {
-									Name        *string `json:"name"`
+									Name        string  `json:"name"`
 									Id          int64   `json:"id"`
 									Size        int     `json:"size"`
 									Extension   string  `json:"extension"`
@@ -236,7 +236,7 @@ type ArtistDetailData struct {
 									VolumeDelta float64 `json:"volumeDelta"`
 								} `json:"lMusic"`
 								BMusic struct {
-									Name        *string `json:"name"`
+									Name        string  `json:"name"`
 									Id          int64   `json:"id"`
 									Size        int     `json:"size"`
 									Extension   string  `json:"extension"`
@@ -372,7 +372,7 @@ type ArtistDetailData struct {
 						RadioFeeType   int    `json:"radioFeeType,omitempty"`
 						RadioFeeScope  int    `json:"radioFeeScope,omitempty"`
 					} `json:"resourceExtInfo"`
-					ResourceExt *struct {
+					ResourceExt struct {
 						LikeCount int  `json:"likeCount,omitempty"`
 						Liked     bool `json:"liked,omitempty"`
 						Song      struct {
@@ -756,15 +756,15 @@ type ArtistDetailData struct {
 							ParentCommentId        int         `json:"parentCommentId"`
 						} `json:"comments,omitempty"`
 					} `json:"resourceExt"`
-					ResourcePolicyId *string `json:"resourcePolicyId"`
-					Action           *struct {
+					ResourcePolicyId string `json:"resourcePolicyId"`
+					Action           struct {
 						ClickAction struct {
 							Action    int    `json:"action"`
 							TargetUrl string `json:"targetUrl"`
 						} `json:"clickAction"`
 					} `json:"action"`
 					UiElement struct {
-						MainTitle *struct {
+						MainTitle struct {
 							Title       string      `json:"title"`
 							TitleImgId  interface{} `json:"titleImgId"`
 							TitleImgUrl interface{} `json:"titleImgUrl"`
@@ -787,15 +787,26 @@ type ArtistDetailData struct {
 							Height      int         `json:"height"`
 							Action      interface{} `json:"action"`
 						} `json:"images"`
-						Labels       interface{} `json:"labels"`
-						TextLinks    interface{} `json:"textLinks"`
-						Descriptions interface{} `json:"descriptions"`
-						Icons        interface{} `json:"icons"`
-						Buttons      []struct {
+						Labels    interface{} `json:"labels"`
+						TextLinks []struct {
+							Tag  interface{} `json:"tag"`
+							Text string      `json:"text"`
+							Url  interface{} `json:"url"`
+						} `json:"textLinks"`
+						Descriptions []struct {
+							Tag         interface{} `json:"tag"`
+							Description string      `json:"description"`
+						} `json:"descriptions"`
+						Icons []struct {
+							Tag    interface{} `json:"tag"`
+							ImgId  int         `json:"imgId"`
+							ImgUrl string      `json:"imgUrl"`
+						} `json:"icons"`
+						Buttons []struct {
 							Tag      interface{} `json:"tag"`
 							Text     string      `json:"text"`
 							ImageUrl interface{} `json:"imageUrl"`
-							Action   *struct {
+							Action   struct {
 								ClickAction struct {
 									Action    int    `json:"action"`
 									TargetUrl string `json:"targetUrl"`
@@ -810,11 +821,11 @@ type ArtistDetailData struct {
 					Valid         bool        `json:"valid"`
 					Alg           interface{} `json:"alg"`
 					Scm           interface{} `json:"scm"`
-					VisibleStatus *string     `json:"visibleStatus"`
+					VisibleStatus string      `json:"visibleStatus"`
 				} `json:"resources"`
 			} `json:"creatives"`
 			CanRefresh    bool        `json:"canRefresh"`
-			VisibleStatus *string     `json:"visibleStatus"`
+			VisibleStatus string      `json:"visibleStatus"`
 			BlockConfig   interface{} `json:"blockConfig"`
 			BlockCursor   interface{} `json:"blockCursor"`
 			HasMore       bool        `json:"hasMore"`
