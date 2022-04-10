@@ -4,9 +4,10 @@ import (
 	"crypto/md5"
 	"encoding/json"
 	"fmt"
+	"path"
+
 	"github.com/XiaoMengXinX/Music163Api-Go/types"
 	"github.com/XiaoMengXinX/Music163Api-Go/utils"
-	"path"
 )
 
 // NosTokenAPI 获取 NosToken API （用于文件上传）

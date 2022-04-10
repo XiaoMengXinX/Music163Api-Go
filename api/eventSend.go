@@ -2,10 +2,11 @@ package api
 
 import (
 	"encoding/json"
+	"strings"
+
 	"github.com/XiaoMengXinX/Music163Api-Go/types"
 	"github.com/XiaoMengXinX/Music163Api-Go/utils"
 	"github.com/google/uuid"
-	"strings"
 )
 
 // SendEventAPI 发送动态 API
