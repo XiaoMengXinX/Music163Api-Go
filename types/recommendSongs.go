@@ -2,8 +2,8 @@ package types
 
 // RecommendSongsData 获取日推歌曲 API 返回数据类型
 type RecommendSongsData struct {
-	RawJson string
-	Code    int `json:"code"`
+	RawJson string `json:"-"`
+	Code    int    `json:"code"`
 	Data    struct {
 		DailySongs []struct {
 			Name string `json:"name"`

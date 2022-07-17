@@ -2,8 +2,8 @@ package types
 
 // UserInfoData 用户信息数据
 type UserInfoData struct {
-	RawJson   string
-	Level     int `json:"level"`
+	RawJson   string `json:"-"`
+	Level     int    `json:"level"`
 	UserPoint struct {
 		Balance      int `json:"balance"`
 		BlockBalance int `json:"blockBalance"`

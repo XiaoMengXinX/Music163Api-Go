@@ -2,7 +2,7 @@ package types
 
 // VipInfoData VIP 信息数据
 type VipInfoData struct {
-	RawJson string
+	RawJson string `json:"-"`
 	Message string `json:"message"`
 	Data    struct {
 		RedVipLevel       int   `json:"redVipLevel"`

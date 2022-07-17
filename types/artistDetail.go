@@ -2,8 +2,8 @@ package types
 
 // ArtistDetailData 获取歌手详细API返回数据
 type ArtistDetailData struct {
-	RawJson string
-	Code    int `json:"code"`
+	RawJson string `json:"-"`
+	Code    int    `json:"code"`
 	Data    struct {
 		Cursor string `json:"cursor"`
 		Blocks []struct {

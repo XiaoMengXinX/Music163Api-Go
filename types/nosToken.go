@@ -2,7 +2,7 @@ package types
 
 // NosTokenData NosToken 数据
 type NosTokenData struct {
-	RawJson string
+	RawJson string `json:"-"`
 	Type    int
 	Code    int    `json:"code"`
 	Message string `json:"message"`

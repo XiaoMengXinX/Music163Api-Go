@@ -2,7 +2,7 @@ package types
 
 // UserPlaylistData 获取用户歌单 API 的返回数据
 type UserPlaylistData struct {
-	RawJson  string
+	RawJson  string `json:"-"`
 	Version  string `json:"version"`
 	More     bool   `json:"more"`
 	Playlist []struct {

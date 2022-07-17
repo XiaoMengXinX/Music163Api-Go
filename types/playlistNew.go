@@ -2,8 +2,8 @@ package types
 
 // NewPlaylistData 新建歌单 API 的返回数据
 type NewPlaylistData struct {
-	RawJson  string
-	Code     int `json:"code"`
+	RawJson  string `json:"-"`
+	Code     int    `json:"code"`
 	Playlist struct {
 		Subscribers           []interface{} `json:"subscribers"`
 		Subscribed            interface{}   `json:"subscribed"`

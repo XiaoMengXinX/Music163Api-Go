@@ -2,7 +2,7 @@ package types
 
 // SearchSuggestData 搜索建议数据
 type SearchSuggestData struct {
-	RawJson string
+	RawJson string `json:"-"`
 	Result  struct {
 		AllMatch []struct {
 			Keyword     string `json:"keyword"`
@@ -17,7 +17,7 @@ type SearchSuggestData struct {
 
 // SearchMultiMatchData 搜索多重匹配返回数据
 type SearchMultiMatchData struct {
-	RawJson string
+	RawJson string `json:"-"`
 	Result  struct {
 		Artist []struct {
 			Name         string        `json:"name"`

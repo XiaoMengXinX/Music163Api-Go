@@ -2,14 +2,14 @@ package types
 
 // SongsURLData 获取歌曲 URL API 的返回数据
 type SongsURLData struct {
-	RawJson string
+	RawJson string        `json:"-"`
 	Data    []SongURLData `json:"data"`
 	Code    int           `json:"code"`
 }
 
 // SongDownloadURLData SongDownloadURL API 的返回数据
 type SongDownloadURLData struct {
-	RawJson string
+	RawJson string      `json:"-"`
 	Data    SongURLData `json:"data"`
 	Code    int         `json:"code"`
 }

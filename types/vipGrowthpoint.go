@@ -2,7 +2,7 @@ package types
 
 // VipGrowthpointData VIP 成长值信息数据
 type VipGrowthpointData struct {
-	RawJson string
+	RawJson string `json:"-"`
 	Code    int    `json:"code"`
 	Message string `json:"message"`
 	Data    struct {

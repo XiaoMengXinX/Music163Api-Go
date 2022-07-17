@@ -2,8 +2,8 @@ package types
 
 // UserStatusDetailData 用户状态详情数据
 type UserStatusDetailData struct {
-	RawJson string
-	Code    int `json:"code"`
+	RawJson string `json:"-"`
+	Code    int    `json:"code"`
 	Data    struct {
 		Id       int         `json:"id"`
 		UserId   int         `json:"userId"`

@@ -2,8 +2,7 @@ package types
 
 // UserDetailData 用户详细信息数据
 type UserDetailData struct {
-	RawJson string
-
+	RawJson  string `json:"-"`
 	Identify struct {
 		ImageUrl  string      `json:"imageUrl"`
 		ImageDesc string      `json:"imageDesc"`

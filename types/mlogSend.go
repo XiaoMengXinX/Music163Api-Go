@@ -2,7 +2,7 @@ package types
 
 // SendMlogData 发送 Mlog 返回数据
 type SendMlogData struct {
-	RawJson string
+	RawJson string `json:"-"`
 	Code    int    `json:"code"`
 	Message string `json:"message"`
 	Data    struct {

@@ -2,8 +2,8 @@ package types
 
 // AddCommentData 新增评论返回数据
 type AddCommentData struct {
-	RawJson          string
-	Code             int `json:"code"`
+	RawJson          string `json:"-"`
+	Code             int    `json:"code"`
 	MusicianSaidTips struct {
 		Toast          string `json:"toast"`
 		InviteTitle    string `json:"inviteTitle"`

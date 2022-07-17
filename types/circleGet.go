@@ -2,7 +2,7 @@ package types
 
 // GetCircleData 获取云圈动态API返回数据
 type GetCircleData struct {
-	RawJson string
+	RawJson string `json:"-"`
 	Code    int    `json:"code"`
 	Message string `json:"message"`
 	Data    struct {

@@ -2,7 +2,7 @@ package types
 
 // VipTaskslistDetailData VIP 任务列表数据
 type VipTaskslistDetailData struct {
-	RawJson string
+	RawJson string `json:"-"`
 	Code    int    `json:"code"`
 	Message string `json:"message"`
 	Data    struct {

@@ -2,8 +2,8 @@ package types
 
 // PlaylistDetailData 获取歌单详细 API 的返回数据
 type PlaylistDetailData struct {
-	RawJson       string
-	Code          int `json:"code"`
+	RawJson       string `json:"-"`
+	Code          int    `json:"code"`
 	RelatedVideos struct {
 	} `json:"relatedVideos"`
 	Playlist struct {

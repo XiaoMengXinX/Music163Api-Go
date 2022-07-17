@@ -2,8 +2,8 @@ package types
 
 // SendMsgData 发送私信 API 的返回数据
 type SendMsgData struct {
-	RawJson string
-	Code    int `json:"code"`
+	RawJson string `json:"-"`
+	Code    int    `json:"code"`
 	NewMsgs []struct {
 		FromUser struct {
 			Description        string      `json:"description"`
