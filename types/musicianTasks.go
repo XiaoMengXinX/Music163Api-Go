@@ -1,7 +1,7 @@
 package types
 
-// MusicianTasksData 音乐人任务列表数据
-type MusicianTasksData struct {
+// MusicianDailyTasksData 音乐人每日任务列表
+type MusicianDailyTasksData struct {
 	RawJson string `json:"-"`
 	Code    int    `json:"code"`
 	Message string `json:"message"`

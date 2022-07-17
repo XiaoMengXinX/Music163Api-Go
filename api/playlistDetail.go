@@ -3,6 +3,7 @@ package api
 import (
 	"encoding/json"
 	"fmt"
+
 	"github.com/XiaoMengXinX/Music163Api-Go/types"
 	"github.com/XiaoMengXinX/Music163Api-Go/utils"
 )
@@ -12,7 +13,7 @@ const PlaylistDetailAPI = "/api/v6/playlist/detail"
 
 // PlaylistDetailReq PlaylistDetail API 的 body json
 type playlistDetailReq struct {
-	Id string `json:"id"`
+	ID string `json:"id"`
 	T  string `json:"t"`
 	N  string `json:"n"`
 	S  string `json:"s"`
@@ -21,7 +22,7 @@ type playlistDetailReq struct {
 // CreatePlaylistDetailReqJson 创建 获取歌单 请求json
 func CreatePlaylistDetailReqJson(id int) string {
 	reqBody := playlistDetailReq{
-		Id: fmt.Sprintf("%d", id),
+		ID: fmt.Sprintf("%d", id),
 		T:  "0",
 		N:  "50",
 		S:  "5",
