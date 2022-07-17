@@ -1,7 +1,7 @@
 package types
 
 type ProgramDetailData struct {
-	RawJson string
+	RawJson string `json:"-"`
 	Program struct {
 		MainSong                 ProgramSong   `json:"mainSong"`
 		Songs                    []ProgramSong `json:"songs"`
