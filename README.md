@@ -64,6 +64,7 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/XiaoMengXinX/Music163Api-Go/api"
 	"github.com/XiaoMengXinX/Music163Api-Go/utils"
 )
@@ -92,9 +93,10 @@ package main
 
 import (
 	"fmt"
+	"net/http"
+
 	"github.com/XiaoMengXinX/Music163Api-Go/api"
 	"github.com/XiaoMengXinX/Music163Api-Go/utils"
-	"net/http"
 )
 
 func main() {
@@ -131,10 +133,11 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"net/http"
+
 	"github.com/XiaoMengXinX/Music163Api-Go/api"
 	"github.com/XiaoMengXinX/Music163Api-Go/types"
 	"github.com/XiaoMengXinX/Music163Api-Go/utils"
-	"net/http"
 )
 
 func main() {

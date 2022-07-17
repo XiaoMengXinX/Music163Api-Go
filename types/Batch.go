@@ -36,7 +36,7 @@ type BatchCloudbeanNumData struct {
 	Code int              `json:"code"`
 }
 
-// BatchMusicianTasksData 批处理 MusicianTasks 数据
+// BatchMusicianDailyTasksData 批处理 MusicianTasks 数据
 type BatchMusicianDailyTasksData struct {
 	Api  MusicianDailyTasksData `json:"/api/nmusician/workbench/mission/cycle/list"`
 	Code int                    `json:"code"`

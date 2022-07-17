@@ -104,7 +104,7 @@ func SendPicMlog(data utils.RequestData, text string, songID int, picPath []stri
 		return result, err
 	}
 	if len(songInfo.Songs) == 0 {
-		return result, fmt.Errorf("Failed to get music details")
+		return result, fmt.Errorf("failed to get music details")
 	}
 	for i := 0; i < len(picPath); i++ {
 		nosToken, file, err := GetMlogNosToken(data, picPath[i])
