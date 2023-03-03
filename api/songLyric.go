@@ -16,6 +16,7 @@ type songLyricReq struct {
 	Lv int `json:"lv"`
 	Kv int `json:"kv"`
 	Tv int `json:"tv"`
+	Yv int `json:"yv"`
 }
 
 // CreateSongLyricReqJson 创建 获取歌曲歌词 请求json
@@ -25,6 +26,7 @@ func CreateSongLyricReqJson(id int) string {
 		Lv: -1,
 		Kv: -1,
 		Tv: -1,
+		Yv: -1,
 	}
 	reqBodyJson, _ := json.Marshal(reqBody)
 	return string(reqBodyJson)
