@@ -15,7 +15,7 @@ const SongUrlAPI = "/api/song/enhance/player/url/v1"
 type SongURLConfig struct {
 	// EncodeType 编码类型, 可选 "mp3", "aac"
 	EncodeType string
-	// Level 音质等级, 可选 "lossless", "higher", "standard"
+	// Level 音质等级, 可选 "lossless", "higher", "standard", "hires", "jyeffect", "jymaster"
 	Level string
 	// Ids 歌曲 ID
 	Ids []int
@@ -36,7 +36,7 @@ func CreateSongURLJson(config SongURLConfig) string {
 	}
 	IDsJson, _ := json.Marshal(IDs)
 	if config.Level == "" {
-		config.Level = "lossless"
+		config.Level = "hires"
 	}
 	if config.EncodeType == "" {
 		config.EncodeType = "mp3"

@@ -115,8 +115,7 @@ func CreateNewRequest(data string, url string, options RequestData) (answer stri
 		req.Header.Set(v.Name, v.Value)
 	}
 
-	cookie["appver"] = "6.5.0"
-	cookie["versioncode"] = "164"
+	cookie["appver"] = "8.9.70"
 	cookie["buildver"] = strconv.FormatInt(time.Now().Unix(), 10)[0:10]
 	cookie["resolution"] = "1920x1080"
 	cookie["os"] = "android"
