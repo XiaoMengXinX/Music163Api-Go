@@ -115,10 +115,10 @@ func CreateNewRequest(data string, url string, options RequestData) (answer stri
 		req.Header.Set(v.Name, v.Value)
 	}
 
-	cookie["appver"] = "8.9.70"
+	cookie["appver"] = "8.10.05"
 	cookie["buildver"] = strconv.FormatInt(time.Now().Unix(), 10)[0:10]
 	cookie["resolution"] = "1920x1080"
-	cookie["os"] = "android"
+	cookie["os"] = "Android"
 
 	_, ok := cookie["MUSIC_U"]
 	if !ok {

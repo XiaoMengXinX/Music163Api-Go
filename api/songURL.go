@@ -15,7 +15,7 @@ const SongUrlAPI = "/api/song/enhance/player/url/v1"
 type SongURLConfig struct {
 	// EncodeType 编码类型, 可选 "mp3", "aac"
 	EncodeType string
-	// Level 音质等级, 可选 "lossless", "higher", "standard", "hires", "jyeffect", "jymaster"
+	// Level 音质等级, 可选 "lossless", "higher", "standard", "hires", "jyeffect"(高清环绕声), "sky"(沉浸环绕声), "jymaster"(超清母带)
 	Level string
 	// Ids 歌曲 ID
 	Ids []int
@@ -23,9 +23,10 @@ type SongURLConfig struct {
 
 // songUrlReq SongURL API 的 body json
 type songUrlReq struct {
-	EncodeType string `json:"encodeType"`
-	Ids        string `json:"ids"`
-	Level      string `json:"level"`
+	EncodeType  string `json:"encodeType"`
+	Ids         string `json:"ids"`
+	Level       string `json:"level"`
+	ImmerseType string `json:"immerseType,omitempty"`
 }
 
 // CreateSongURLJson 创建 获取歌曲试听URL 请求json
@@ -45,6 +46,9 @@ func CreateSongURLJson(config SongURLConfig) string {
 		Ids:        string(IDsJson),
 		EncodeType: config.EncodeType,
 		Level:      config.Level,
+	}
+	if config.Level == "sky" {
+		reqBody.ImmerseType = "c51"
 	}
 	reqBodyJson, _ := json.Marshal(reqBody)
 	return string(reqBodyJson)
