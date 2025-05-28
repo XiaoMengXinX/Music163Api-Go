@@ -175,7 +175,7 @@ type SearchComplexData struct {
 							ChargeType    int         `json:"chargeType"`
 						} `json:"chargeInfoList"`
 					} `json:"privilege"`
-					Lyrics      string        `json:"lyrics"`
+					Lyrics      interface{}   `json:"lyrics"`
 					Alg         string        `json:"alg"`
 					SpecialTags []interface{} `json:"specialTags"`
 				} `json:"songs"`
