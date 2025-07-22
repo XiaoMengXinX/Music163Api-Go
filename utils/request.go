@@ -83,7 +83,7 @@ func ChooseUserAgent() string {
 		"Mozilla/5.0 (Linux; Android 5.1.1; Nexus 6 Build/LYZ28E) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Mobile Safari/537.36",
 		"Mozilla/5.0 (iPhone; CPU iPhone OS 10_3_2 like Mac OS X) AppleWebKit/603.2.4 (KHTML, like Gecko) Mobile/14F89;GameHelper",
 		"Mozilla/5.0 (iPhone; CPU iPhone OS 10_0 like Mac OS X) AppleWebKit/602.1.38 (KHTML, like Gecko) Version/10.0 Mobile/14A300 Safari/602.1",
-		"NeteaseMusic/6.5.0.1575377963(164);Dalvik/2.1.0 (Linux; U; Android 9; MIX 2 MIUI/V12.0.1.0.PDECNXM)",
+		"NeteaseMusic/9.3.40.1753206443(164);Dalvik/2.1.0 (Linux; U; Android 9; MIX 2 MIUI/V12.0.1.0.PDECNXM)",
 	}
 	rand.Seed(time.Now().UnixNano())
 	var index int
@@ -115,7 +115,7 @@ func CreateNewRequest(data string, url string, options RequestData) (answer stri
 		req.Header.Set(v.Name, v.Value)
 	}
 
-	cookie["appver"] = "8.10.05"
+	cookie["appver"] = "9.3.40"
 	cookie["buildver"] = strconv.FormatInt(time.Now().Unix(), 10)[0:10]
 	cookie["resolution"] = "1920x1080"
 	cookie["os"] = "Android"
