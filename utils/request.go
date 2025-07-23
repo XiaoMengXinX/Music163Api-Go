@@ -2,9 +2,11 @@ package utils
 
 import (
 	"crypto/md5"
+	cryptoRand "crypto/rand"
 	"fmt"
 	"io"
 	"io/ioutil"
+	"math/big"
 	"math/rand"
 	"net/http"
 	netUrl "net/url"
@@ -15,6 +17,18 @@ import (
 
 // DEBUG 是否开启打印调试信息
 var DEBUG bool
+
+// 默认DeviceId
+var DeviceId string
+
+func init() {
+	g, err := generateRandomString(32)
+	if err != nil {
+		DeviceId = "00000000000000000000000000000000"
+	} else {
+		DeviceId = g
+	}
+}
 
 // EapiRequest 返回内容加密的 API 请求
 func EapiRequest(eapiOption EapiOption, options RequestData) (result string, header http.Header, err error) {
@@ -73,6 +87,19 @@ func Format2Params(str string) (data string) {
 	return data
 }
 
+func generateRandomString(length int) (string, error) {
+	const charset = "0123456789abcdefghijklmnopqrstuvwxyz"
+	b := make([]byte, length)
+	for i := range b {
+		num, err := cryptoRand.Int(cryptoRand.Reader, big.NewInt(int64(len(charset))))
+		if err != nil {
+			return "", err
+		}
+		b[i] = charset[num.Int64()]
+	}
+	return string(b), nil
+}
+
 // ChooseUserAgent 随机 UserAgent
 func ChooseUserAgent() string {
 	userAgentList := []string{
@@ -107,6 +134,8 @@ func CreateNewRequest(data string, url string, options RequestData) (answer stri
 	}
 
 	cookie := map[string]interface{}{}
+	cookie["deviceId"] = DeviceId
+
 	for _, v := range options.Cookies {
 		cookie[v.Name] = v.Value
 	}
