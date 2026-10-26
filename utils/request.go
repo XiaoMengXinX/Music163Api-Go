@@ -126,7 +126,10 @@ func encodeURIComponent(str string) string {
 
 // CreateNewRequest 创建 eapi 请求
 func CreateNewRequest(data string, url string, options RequestData) (answer string, resHeader http.Header, err error) {
-	client := &http.Client{}
+	client := options.HTTPClient
+	if client == nil {
+		client = &http.Client{}
+	}
 	reqBody := strings.NewReader(data)
 	req, err := http.NewRequest("POST", url, reqBody)
 	if err != nil {

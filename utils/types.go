@@ -10,9 +10,10 @@ type Headers []struct {
 
 // RequestData 传入请求数据类型
 type RequestData struct {
-	Cookies []*http.Cookie
-	Headers Headers
-	Body    string
+	Cookies    []*http.Cookie
+	Headers    Headers
+	Body       string
+	HTTPClient *http.Client
 }
 
 // EapiOption eapi 请求所需要的参数

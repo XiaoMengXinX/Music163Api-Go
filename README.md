@@ -58,6 +58,38 @@ Eapi(即网易云音乐客户端使用的API)
 
 ## API 调用文档
 
+### 自定义 HTTP 客户端
+
+`utils.RequestData.HTTPClient` 可指定请求使用的 `*http.Client`，用于配置代理、超时等；为空时保留默认行为。HTTP 和 SOCKS5 代理均可通过标准库配置：
+
+```go
+package main
+
+import (
+	"net/http"
+	"net/url"
+	"time"
+
+	"github.com/XiaoMengXinX/Music163Api-Go/api"
+	"github.com/XiaoMengXinX/Music163Api-Go/utils"
+)
+
+func main() {
+	proxyURL, err := url.Parse("socks5://127.0.0.1:1080") // HTTP 代理使用 http://127.0.0.1:8080
+	if err != nil {
+		panic(err)
+	}
+	transport := http.DefaultTransport.(*http.Transport).Clone()
+	transport.Proxy = http.ProxyURL(proxyURL)
+	data := utils.RequestData{
+		HTTPClient: &http.Client{Transport: transport, Timeout: 30 * time.Second},
+	}
+	_, _ = api.GetSongDetail(data, []int{1295601353})
+}
+```
+
+复用该客户端的请求都会使用指定代理，代理失败时返回错误。代理认证可使用 `http://user:password@host:port` 或 `socks5://user:password@host:port`。
+
 #### GetSongDetail 获取歌曲详细信息
 
 [在 replit 上试试](https://replit.com/@xibaole2333/Music163Api-Go-demo1)
