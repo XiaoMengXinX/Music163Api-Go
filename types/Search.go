@@ -595,3 +595,14 @@ type SearchSongData struct {
 	} `json:"result"`
 	Code int `json:"code"`
 }
+
+// CloudSearchSongData 云搜索歌曲数据
+type CloudSearchSongData struct {
+	RawJson string `json:"-"`
+	Result  struct {
+		Songs     []SongDetailData `json:"songs"`
+		HasMore   bool             `json:"hasMore"`
+		SongCount int              `json:"songCount"`
+	} `json:"result"`
+	Code int `json:"code"`
+}
